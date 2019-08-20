@@ -100,19 +100,18 @@ class ModuleManager implements ModuleManagerInterface
         $modules = ConfigUtils::coreConfig(CoreEnum::MODULES_SECTION);
         $this->checkModulesConfigStructure($modules);
         foreach ($modules as $name => $module) {
-            //try {
-            //dd($modules);
+           try {
                 $module = app($module);
 
                 $this->checkModuleInstance($module);
                 $this->modules->put($name, $module);
 
                 event(new ModuleRegisterEvent($module));
-            //} catch (InvestmentCMSException | ReflectionException $exception) {
-            //    report($exception);
-            //
-            //    continue;
-            //}
+            } catch (InvestmentCMSException | ReflectionException $exception) {
+                report($exception);
+
+                continue;
+            }
         }
     }
 
