@@ -8,7 +8,7 @@ namespace Zdrojowa\InvestmentCMS\Utils\Enums;
 class CoreEnum
 {
 
-    public const CMS_CONFIG = 'cms-core-config';
+    public const CMS_CONFIG = 'cms-core';
 
     public const CMS_ENABLED_OPTION = 'cms-enabled';
 

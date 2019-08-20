@@ -31,7 +31,7 @@ class ModuleUtils
     {
         $module = new ReflectionClass($module);
         $module->dir = dirname($module->getFileName());
-        $module->config = $module->dir . '/' . $config;
+        $module->config = $module->dir . '/module-config/' . $config;
 
         if (!file_exists($module->config)) {
             throw new ModuleConfigNotFoundException([$module->getShortName(), $config]);
