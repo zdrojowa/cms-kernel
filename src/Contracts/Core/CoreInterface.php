@@ -23,6 +23,10 @@ interface CoreInterface
      */
     public function getModuleManager(): ?ModuleManagerInterface;
 
+    /**
+     * @return bool
+     */
+    public function hasModuleManager(): bool;
 
     /**
      * @return string

@@ -4,11 +4,13 @@ namespace Zdrojowa\InvestmentCMS\Contracts\Modules;
 
 use Exception;
 use Route;
+use Symfony\Component\Yaml\Yaml;
 use Validator;
 use Zdrojowa\InvestmentCMS\Contracts\Acl\AclPresence;
 use Zdrojowa\InvestmentCMS\Exceptions\Acl\AclPresenceDataException;
 use Zdrojowa\InvestmentCMS\Facades\AclRepository;
 use Zdrojowa\InvestmentCMS\Utils\Config\ConfigUtils;
+use Zdrojowa\InvestmentCMS\Utils\Enums\CoreEnum;
 use Zdrojowa\InvestmentCMS\Utils\Enums\ModuleConfigEnum;
 use Zdrojowa\InvestmentCMS\Utils\Module\ModuleUtils;
 use Zdrojowa\InvestmentCMS\Utils\Traits\Propertiable;
@@ -38,7 +40,7 @@ abstract class Module
         'version' => 'string',
         'aclAnchor' => 'string',
         'aclName' => 'string',
-        'routePrefix' => 'string'
+        'routePrefix' => 'string',
     ];
 
     /**
@@ -133,11 +135,11 @@ abstract class Module
      */
     final public function loadConfig()
     {
-        $this->routes = ModuleUtils::moduleConfig($this, ModuleConfigEnum::MODULE_ROUTES_FILE());
-        $this->apiRoutes = ModuleUtils::moduleConfig($this, ModuleConfigEnum::MODULE_ROUTES_API_FILE());
-        $this->permissions = ModuleUtils::moduleConfig($this, ModuleConfigEnum::MODULE_PERMISSIONS_FILE());
+        $this->routes = ModuleUtils::moduleConfig($this, ModuleConfigEnum::MODULE_ROUTES_FILE(), false);
+        $this->apiRoutes = ModuleUtils::moduleConfig($this, ModuleConfigEnum::MODULE_ROUTES_API_FILE(), false);
+        $this->permissions = ModuleUtils::moduleConfig($this, ModuleConfigEnum::MODULE_PERMISSIONS_FILE(), false);
 
-        $moduleData = ModuleUtils::moduleConfig($this, ModuleConfigEnum::MODULE_CONFIG_FILE());
+        $moduleData = ModuleUtils::moduleConfig($this, ModuleConfigEnum::MODULE_CONFIG_FILE(), true) ?? [];
 
         $this->bindProperties($moduleData, $this->requiredProperties, $this->propertiesRules, true);
         $this->bindProperties($moduleData, $this->optionalProperties, $this->propertiesRules, false);
@@ -146,6 +148,16 @@ abstract class Module
         $this->mapsRoutes(true);
 
         AclRepository::addPresence($this, AclPresence::createPresenceFromData($this->permissions));
+
+        $moduleReflection = new \ReflectionClass($this);
+        $configFile = ModuleConfigEnum::MODULE_EXTRA_FILE;
+        $configFile = str_replace('%name%', $moduleReflection->getShortName(), $configFile);
+        $file = base_path(CoreEnum::MODULES_CONFIG_DIR)."/".$configFile;
+        if(file_exists($file)) {
+            $extra = array_merge(Yaml::parseFile($file, Yaml::PARSE_OBJECT) ?? [], ModuleUtils::moduleConfig($this, ModuleConfigEnum::MODULE_EXTRA_FILE()) ?? []);
+
+            $this->bindProperties($extra, array_keys($extra));
+        }
     }
 
     /**
@@ -161,16 +173,7 @@ abstract class Module
             if ($this->checkRouteStructure($routeConfig)) {
                 if (!isset($routeConfig['methods'])) $routeConfig['methods'] = ConfigUtils::getAvailableHttpMethods();
 
-                Route::match(
-                    $routeConfig['methods'],
-                    $api ? '/api' . $routeConfig['path'] : $routeConfig['path'],
-                    $routeConfig['controller']
-                )
-                    ->middleware($api ? 'api' : [])
-                    ->middleware(
-                        $routeConfig['middlewares'] ?? []
-                    )
-                    ->name($this->getRoutePrefix()."::".$routeName);
+                Route::match($routeConfig['methods'], $api ? '/api' . $routeConfig['path'] : $routeConfig['path'], $routeConfig['controller'])->middleware($api ? 'api' : [])->middleware($routeConfig['middlewares'] ?? [])->name($this->getRoutePrefix() . "::" . $routeName);
             }
         }
     }
@@ -202,8 +205,13 @@ abstract class Module
         return !$validator->fails();
     }
 
-    public function getRoutes(): array
+    final public function getRoutes(): array
     {
         return $this->routes ?? [];
+    }
+
+    final public function route(string $route, array $data = [])
+    {
+        return route($this->routePrefix . "::" . $route, $data);
     }
 }

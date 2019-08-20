@@ -8,7 +8,6 @@ use Zdrojowa\InvestmentCMS\Console\Commands\ListModuleCommand;
 use Zdrojowa\InvestmentCMS\Contracts\Acl\AclRepository;
 use Zdrojowa\InvestmentCMS\Contracts\Core\BooterInterface;
 use Zdrojowa\InvestmentCMS\Contracts\Core\CoreInterface;
-use Zdrojowa\InvestmentCMS\Contracts\Modules\ModuleManagerInterface;
 use Zdrojowa\InvestmentCMS\Events\Booter\BooterRegisterEvent;
 use Zdrojowa\InvestmentCMS\Events\Core\AclRepositoryRegisterEvent;
 use Zdrojowa\InvestmentCMS\Events\Core\CoreBootedEvent;
@@ -19,6 +18,10 @@ use Zdrojowa\InvestmentCMS\Utils\Config\ConfigUtils;
 use Zdrojowa\InvestmentCMS\Utils\Enums\CoreEnum;
 use Zdrojowa\InvestmentCMS\Utils\Enums\CoreModulesEnum;
 
+/**
+ * Class CoreServiceProvider
+ * @package Zdrojowa\InvestmentCMS\Providers
+ */
 class CoreServiceProvider extends ServiceProvider
 {
     /**
@@ -26,17 +29,10 @@ class CoreServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->publishConfig();
-
-        Core::getModuleManager()->initialize();
-
-        Booter::markCmsEnabled();
-
-        $this->registerCommands()->registerMigrations();
+        $this->publishConfig()->registerCommands()->registerMigrations();
 
         event(new CoreBootedEvent(app(CoreModulesEnum::CORE)));
-
-        Schema::defaultStringLength(191);
+        Booter::markCmsEnabled();
     }
 
     /**
@@ -48,10 +44,7 @@ class CoreServiceProvider extends ServiceProvider
 
         if (!Booter::canCmsBoot()) return;
 
-        $this->registerCoreModule();
-        $this->registerAclRepository();
-
-        Core::setModuleManager(app(ConfigUtils::coreModules(CoreModulesEnum::MODULE_MANAGER())));
+        $this->registerCoreModule()->registerAclRepository();
     }
 
     /**
@@ -102,6 +95,9 @@ class CoreServiceProvider extends ServiceProvider
         return $this;
     }
 
+    /**
+     * @return CoreServiceProvider
+     */
     protected function registerAclRepository(): CoreServiceProvider
     {
         $this->app->singleton(CoreModulesEnum::ACL_REPOSITORY, AclRepository::class);
@@ -111,6 +107,9 @@ class CoreServiceProvider extends ServiceProvider
         return $this;
     }
 
+    /**
+     * @return CoreServiceProvider
+     */
     protected function registerCommands(): CoreServiceProvider
     {
         if($this->app->runningInConsole()) {
@@ -119,9 +118,12 @@ class CoreServiceProvider extends ServiceProvider
         return $this;
     }
 
+    /**
+     * @return CoreServiceProvider
+     */
     protected function registerMigrations(): CoreServiceProvider
     {
-        $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
+        $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
 
         return $this;
     }

@@ -24,6 +24,6 @@ class ModuleConfigNotFoundException extends InvestmentCMSException
      */
     function formatMessage($data): string
     {
-        return "Module ".$data[0]."'s config ".$data[1]." not found";
+        return $data[0]."'s config ".$data[1]." not found";
     }
 }

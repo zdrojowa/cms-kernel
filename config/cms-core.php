@@ -15,7 +15,7 @@ return [
     // Section with declaration of reusable modules
 
     CoreEnum::MODULES_SECTION => [
-        //\Zdrojowa\AuthModule\AuthModule::class
+        \Zdrojowa\AuthModule\AuthModule::class
     ],
 
     // Section with declaration of core modules

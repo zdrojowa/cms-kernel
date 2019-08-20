@@ -28,7 +28,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Zdrojowa\\InvestmentCMS\\": "src/"
+            "Zdrojowa\\InvestmentCMS\\": "src"
         }
     },
     "autoload-dev": {
@@ -39,7 +39,8 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Zdrojowa\\InvestmentCMS\\Providers\\CoreServiceProvider"
+                "Zdrojowa\\InvestmentCMS\\Providers\\CoreServiceProvider",
+                "Zdrojowa\\InvestmentCMS\\Providers\\ModuleManagerServiceProvider"
             ]
         }
     }

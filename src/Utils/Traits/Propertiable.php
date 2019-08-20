@@ -26,6 +26,10 @@ trait Propertiable
      */
     final private function bindProperties(array $data, array $properties, array $rules = [], bool $required = false)
     {
+        if($data === null) {
+
+        }
+
         foreach ($properties as $property) {
             if (!is_string($property)) throw new PropertyNameMustBeAStringException();
 

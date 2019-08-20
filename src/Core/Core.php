@@ -41,6 +41,14 @@ class Core implements CoreInterface
     /**
      * @inheritDoc
      */
+    public function hasModuleManager(): bool
+    {
+        return $this->getModuleManager() ? true : false;
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function version(): string
     {
         return $this->version;

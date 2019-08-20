@@ -24,16 +24,23 @@ class ModuleUtils
      * @param Module $module
      * @param ModuleConfigEnum $config
      *
+     * @param bool $required
+     *
      * @return array|null
-     * @throws Exception
+     * @throws ModuleConfigNotFoundException
+     * @throws ReflectionException
      */
-    public static function moduleConfig(Module $module, ModuleConfigEnum $config): ?array
+    public static function moduleConfig(Module $module, ModuleConfigEnum $config, bool $required = false): ?array
     {
         $module = new ReflectionClass($module);
+        $config = str_replace('%name%', $module->getShortName(), $config);
         $module->dir = dirname($module->getFileName());
-        $module->config = $module->dir . '/module-config/' . $config;
+        $module->config = $module->dir . '/../module-config/' . $config;
 
         if (!file_exists($module->config)) {
+            if(!$required) {
+                return [];
+            }
             throw new ModuleConfigNotFoundException([$module->getShortName(), $config]);
         }
 

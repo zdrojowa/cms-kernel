@@ -24,4 +24,6 @@ class CoreEnum
 
     public const CMS_SUPER_ADMIN_COLUMN_NAME = 'is_admin';
     public const CMS_SUPER_PERMISSION_ANCHOR = 'cms-super-permission-anchor';
+
+    public const MODULES_CONFIG_DIR = 'modules';
 }

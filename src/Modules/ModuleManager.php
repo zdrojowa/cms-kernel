@@ -109,7 +109,7 @@ class ModuleManager implements ModuleManagerInterface
                 event(new ModuleRegisterEvent($module));
             } catch (InvestmentCMSException | ReflectionException $exception) {
                 report($exception);
-
+                dd($exception);
                 continue;
             }
         }
