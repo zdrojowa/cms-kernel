@@ -1,0 +1,46 @@
+{
+    "name": "zdrojowa/investmentcms",
+    "description": ":description",
+    "version": "0.0.1",
+    "license": "Miliony Monet",
+    "authors": [
+        {
+            "name": "Jakub Kosinski",
+            "email": "j.kosinski@zdrojowainvest.pl"
+        },
+        {
+            "name": "Gustaw Bzinkowski",
+            "email": "g.bzinkowski@zdrojowainvest.pl"
+        }
+    ],
+    "homepage": "https://github.com/zdrojowa/investmentcms",
+    "keywords": ["Laravel", "InvestmentCMS"],
+    "require": {
+        "illuminate/support": "~5",
+        "myclabs/php-enum": "^1.7",
+        "symfony/yaml": "^4.3"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~7.0",
+        "mockery/mockery": "^1.1",
+        "orchestra/testbench": "~3.0",
+        "sempro/phpunit-pretty-print": "^1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Zdrojowa\\InvestmentCMS\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Zdrojowa\\InvestmentCMS\\Tests\\": "tests"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Zdrojowa\\InvestmentCMS\\Providers\\CoreServiceProvider"
+            ]
+        }
+    }
+}
