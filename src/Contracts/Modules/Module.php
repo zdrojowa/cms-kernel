@@ -179,6 +179,7 @@ abstract class Module
             if ($this->checkRouteStructure($routeConfig)) {
 
                 foreach ($routeConfig as $propertyName => $routeProperty) {
+                    if(is_array($routeProperty)) continue;
                     $routeConfig[$propertyName] = Variabler::replace($this, $routeProperty);
                 }
 
