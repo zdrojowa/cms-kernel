@@ -2,9 +2,7 @@
 
 namespace Zdrojowa\InvestmentCMS\Providers;
 
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
-use Zdrojowa\InvestmentCMS\Console\Commands\ListModuleCommand;
 use Zdrojowa\InvestmentCMS\Contracts\Acl\AclRepository;
 use Zdrojowa\InvestmentCMS\Contracts\Core\BooterInterface;
 use Zdrojowa\InvestmentCMS\Contracts\Core\CoreInterface;
@@ -13,7 +11,6 @@ use Zdrojowa\InvestmentCMS\Events\Core\AclRepositoryRegisterEvent;
 use Zdrojowa\InvestmentCMS\Events\Core\CoreBootedEvent;
 use Zdrojowa\InvestmentCMS\Events\Core\CoreRegisterEvent;
 use Zdrojowa\InvestmentCMS\Facades\Booter;
-use Zdrojowa\InvestmentCMS\Facades\Core;
 use Zdrojowa\InvestmentCMS\Utils\Config\ConfigUtils;
 use Zdrojowa\InvestmentCMS\Utils\Enums\CoreEnum;
 use Zdrojowa\InvestmentCMS\Utils\Enums\CoreModulesEnum;
@@ -53,7 +50,7 @@ class CoreServiceProvider extends ServiceProvider
     protected function publishConfig(): CoreServiceProvider
     {
         $this->publishes([
-            __DIR__ . '/../../config/cms-core.php' => config_path('cms-core.php')
+            __DIR__ . '/../../config/cms-core.php' => config_path('cms-core.php'),
         ]);
 
         return $this;
@@ -112,9 +109,10 @@ class CoreServiceProvider extends ServiceProvider
      */
     protected function registerCommands(): CoreServiceProvider
     {
-        if($this->app->runningInConsole()) {
+        if ($this->app->runningInConsole()) {
             $this->commands(ConfigUtils::coreConfig(CoreEnum::CORE_COMMANDS_SECTION));
         }
+
         return $this;
     }
 

@@ -12,6 +12,7 @@ use Zdrojowa\InvestmentCMS\Utils\Enums\CoreModulesEnum;
  *
  * @method static markCmsEnabled()
  * @method static canCmsBoot()
+ * @method static isCmsEnabled()
  */
 class Booter extends Facade
 {

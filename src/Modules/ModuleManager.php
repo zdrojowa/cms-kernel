@@ -4,7 +4,6 @@ namespace Zdrojowa\InvestmentCMS\Modules;
 
 use Exception;
 use Illuminate\Support\Collection;
-use Psr\Log\LogLevel;
 use ReflectionException;
 use Zdrojowa\InvestmentCMS\Contracts\Modules\Module;
 use Zdrojowa\InvestmentCMS\Contracts\Modules\ModuleManagerInterface;
@@ -12,10 +11,13 @@ use Zdrojowa\InvestmentCMS\Events\Module\ModuleRegisterEvent;
 use Zdrojowa\InvestmentCMS\Exceptions\InvestmentCMSException;
 use Zdrojowa\InvestmentCMS\Exceptions\Modules\ModuleConfigException;
 use Zdrojowa\InvestmentCMS\Exceptions\Modules\ModuleInstanceException;
-use Zdrojowa\InvestmentCMS\Facades\Core;
 use Zdrojowa\InvestmentCMS\Utils\Config\ConfigUtils;
 use Zdrojowa\InvestmentCMS\Utils\Enums\CoreEnum;
 
+/**
+ * Class ModuleManager
+ * @package Zdrojowa\InvestmentCMS\Modules
+ */
 class ModuleManager implements ModuleManagerInterface
 {
     /**
@@ -78,7 +80,7 @@ class ModuleManager implements ModuleManagerInterface
      *
      * @return ModuleManagerInterface|null
      */
-    public function getModule(string $name): ?ModuleManagerInterface
+    public function getModule(string $name): ?Module
     {
         return $this->modules->get($name);
     }
@@ -99,17 +101,19 @@ class ModuleManager implements ModuleManagerInterface
     {
         $modules = ConfigUtils::coreConfig(CoreEnum::MODULES_SECTION);
         $this->checkModulesConfigStructure($modules);
-        foreach ($modules as $name => $module) {
-           try {
+        foreach ($modules as  $module) {
+            try {
                 $module = app($module);
 
                 $this->checkModuleInstance($module);
-                $this->modules->put($name, $module);
+
+                $this->addModule($module->getName(), $module);
 
                 event(new ModuleRegisterEvent($module));
             } catch (InvestmentCMSException | ReflectionException $exception) {
-                report($exception);
                 dd($exception);
+                report($exception);
+
                 continue;
             }
         }

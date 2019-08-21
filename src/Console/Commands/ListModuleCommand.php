@@ -1,23 +1,32 @@
 <?php
 
-
 namespace Zdrojowa\InvestmentCMS\Console\Commands;
-
 
 use Illuminate\Console\Command;
 use Zdrojowa\InvestmentCMS\Contracts\Core\CoreInterface;
 
+/**
+ * Class ListModuleCommand
+ * @package Zdrojowa\InvestmentCMS\Console\Commands
+ */
 class ListModuleCommand extends Command
 {
 
+    /**
+     * @var string
+     */
     protected $signature = 'cms:modules {module?}';
 
-    public function handle(CoreInterface $core) {
+    /**
+     * @param CoreInterface $core
+     */
+    public function handle(CoreInterface $core)
+    {
         $module = $this->argument('module');
 
         $headers = ['Name', 'Version', 'AclAnchor', 'AclName', 'RoutePrefix'];
 
-        if($module === null) {
+        if ($module === null) {
 
 
             $data = [];

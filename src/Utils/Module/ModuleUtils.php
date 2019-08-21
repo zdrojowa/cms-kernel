@@ -2,16 +2,13 @@
 
 namespace Zdrojowa\InvestmentCMS\Utils\Module;
 
-use Exception;
-use Illuminate\Support\Facades\Log;
 use ReflectionClass;
 use ReflectionException;
 use Symfony\Component\Yaml\Yaml;
 use Zdrojowa\InvestmentCMS\Contracts\Modules\Module;
 use Zdrojowa\InvestmentCMS\Exceptions\Modules\ModuleConfigNotFoundException;
-use Zdrojowa\InvestmentCMS\Facades\Core;
 use Zdrojowa\InvestmentCMS\Utils\Enums\ModuleConfigEnum;
-use Zdrojowa\InvestmentCMS\Utils\Enums\ModuleEnum;
+use Zdrojowa\InvestmentCMS\Utils\Variabler\Variabler;
 
 /**
  * Class ModuleUtils
@@ -33,12 +30,12 @@ class ModuleUtils
     public static function moduleConfig(Module $module, ModuleConfigEnum $config, bool $required = false): ?array
     {
         $module = new ReflectionClass($module);
-        $config = str_replace('%name%', $module->getShortName(), $config);
+        $config = Variabler::replace($module, $config);
         $module->dir = dirname($module->getFileName());
-        $module->config = $module->dir . '/../module-config/' . $config;
+        $module->config = $module->dir . '/' . ModuleConfigEnum::MODULES_CONFIG_FOLDER . $config;
 
         if (!file_exists($module->config)) {
-            if(!$required) {
+            if (!$required) {
                 return [];
             }
             throw new ModuleConfigNotFoundException([$module->getShortName(), $config]);

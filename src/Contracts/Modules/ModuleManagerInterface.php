@@ -24,6 +24,7 @@ interface ModuleManagerInterface
 
     /**
      * Check if module exists
+     *
      * @param string $name
      *
      * @return bool
@@ -44,7 +45,7 @@ interface ModuleManagerInterface
      *
      * @return ModuleManagerInterface|null
      */
-    public function getModule(string $name): ?ModuleManagerInterface;
+    public function getModule(string $name): ?Module;
 
     /**
      * @return Collection

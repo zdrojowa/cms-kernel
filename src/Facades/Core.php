@@ -13,6 +13,8 @@ use Zdrojowa\InvestmentCMS\Utils\Enums\CoreModulesEnum;
  * @method static setModuleManager(ModuleManagerInterface $moduleManager)
  * @method static loadModuleManagerModules()
  * @method static getModuleManager(): ModuleManagerInterface
+ * @method static getModulesManager()
+ * @method static hasModuleManager()
  */
 class Core extends Facade
 {

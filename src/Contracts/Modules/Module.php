@@ -3,17 +3,21 @@
 namespace Zdrojowa\InvestmentCMS\Contracts\Modules;
 
 use Exception;
+use ReflectionClass;
+use ReflectionException;
 use Route;
 use Symfony\Component\Yaml\Yaml;
 use Validator;
 use Zdrojowa\InvestmentCMS\Contracts\Acl\AclPresence;
-use Zdrojowa\InvestmentCMS\Exceptions\Acl\AclPresenceDataException;
 use Zdrojowa\InvestmentCMS\Facades\AclRepository;
+use Zdrojowa\InvestmentCMS\Facades\Booter;
+use Zdrojowa\InvestmentCMS\Facades\Core;
 use Zdrojowa\InvestmentCMS\Utils\Config\ConfigUtils;
 use Zdrojowa\InvestmentCMS\Utils\Enums\CoreEnum;
 use Zdrojowa\InvestmentCMS\Utils\Enums\ModuleConfigEnum;
 use Zdrojowa\InvestmentCMS\Utils\Module\ModuleUtils;
 use Zdrojowa\InvestmentCMS\Utils\Traits\Propertiable;
+use Zdrojowa\InvestmentCMS\Utils\Variabler\Variabler;
 
 /**
  * Class Module
@@ -144,20 +148,22 @@ abstract class Module
         $this->bindProperties($moduleData, $this->requiredProperties, $this->propertiesRules, true);
         $this->bindProperties($moduleData, $this->optionalProperties, $this->propertiesRules, false);
 
-        $this->mapsRoutes();
-        $this->mapsRoutes(true);
-
         AclRepository::addPresence($this, AclPresence::createPresenceFromData($this->permissions));
 
-        $moduleReflection = new \ReflectionClass($this);
+        $moduleReflection = new ReflectionClass($this);
         $configFile = ModuleConfigEnum::MODULE_EXTRA_FILE;
-        $configFile = str_replace('%name%', $moduleReflection->getShortName(), $configFile);
-        $file = base_path(CoreEnum::MODULES_CONFIG_DIR)."/".$configFile;
-        if(file_exists($file)) {
-            $extra = array_merge(Yaml::parseFile($file, Yaml::PARSE_OBJECT) ?? [], ModuleUtils::moduleConfig($this, ModuleConfigEnum::MODULE_EXTRA_FILE()) ?? []);
+        $configFile = Variabler::replace($this, ModuleConfigEnum::MODULE_EXTRA_FILE);
 
-            $this->bindProperties($extra, array_keys($extra));
+        $file = base_path(CoreEnum::MODULES_CONFIG_DIR) . "/" . $configFile;
+        if (file_exists($file)) {
+            $extra = array_merge(ModuleUtils::moduleConfig($this, ModuleConfigEnum::MODULE_EXTRA_FILE()) ?? [], Yaml::parseFile($file, Yaml::PARSE_OBJECT) ?? []);
+        } else {
+            $extra = ModuleUtils::moduleConfig($this, ModuleConfigEnum::MODULE_EXTRA_FILE() ?? []);
         }
+
+        $this->bindProperties($extra, array_keys($extra));
+        $this->mapsRoutes();
+        $this->mapsRoutes(true);
     }
 
     /**
@@ -171,6 +177,11 @@ abstract class Module
 
         foreach ($routes as $routeName => $routeConfig) {
             if ($this->checkRouteStructure($routeConfig)) {
+
+                foreach ($routeConfig as $propertyName => $routeProperty) {
+                    $routeConfig[$propertyName] = Variabler::replace($this, $routeProperty);
+                }
+
                 if (!isset($routeConfig['methods'])) $routeConfig['methods'] = ConfigUtils::getAvailableHttpMethods();
 
                 Route::match($routeConfig['methods'], $api ? '/api' . $routeConfig['path'] : $routeConfig['path'], $routeConfig['controller'])->middleware($api ? 'api' : [])->middleware($routeConfig['middlewares'] ?? [])->name($this->getRoutePrefix() . "::" . $routeName);
@@ -205,13 +216,38 @@ abstract class Module
         return !$validator->fails();
     }
 
+    /**
+     * @return array
+     */
     final public function getRoutes(): array
     {
         return $this->routes ?? [];
     }
 
+    /**
+     * @param string $route
+     * @param array $data
+     *
+     * @return string
+     */
     final public function route(string $route, array $data = [])
     {
         return route($this->routePrefix . "::" . $route, $data);
+    }
+
+    /**
+     * @param $name
+     * @param $arguments
+     *
+     * @return void|null
+     * @throws ReflectionException
+     */
+    public static function __callStatic($name, $arguments)
+    {
+        if(!Booter::isCmsEnabled() || !Core::hasModuleManager()) return;
+
+        $reflection = new ReflectionClass(get_called_class());
+
+        return Core::getModuleManager()->getModule($reflection->getShortName())->$name ?? null;
     }
 }

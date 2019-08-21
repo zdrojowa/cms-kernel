@@ -2,8 +2,8 @@
 
 namespace Zdrojowa\InvestmentCMS\Contracts\Acl;
 
-use Validator;
 use Illuminate\Support\Collection;
+use Validator;
 use Zdrojowa\InvestmentCMS\Exceptions\Acl\AclPresenceDataException;
 
 /**

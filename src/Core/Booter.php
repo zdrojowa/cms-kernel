@@ -8,6 +8,10 @@ use Zdrojowa\InvestmentCMS\Utils\Enums\BooterEnum;
 use Zdrojowa\InvestmentCMS\Utils\Enums\CoreEnum;
 use Zdrojowa\InvestmentCMS\Utils\Enums\CoreModulesEnum;
 
+/**
+ * Class Booter
+ * @package Zdrojowa\InvestmentCMS\Core
+ */
 class Booter implements BooterInterface
 {
     /**

@@ -15,7 +15,7 @@ return [
     // Section with declaration of reusable modules
 
     CoreEnum::MODULES_SECTION => [
-        \Zdrojowa\AuthModule\AuthModule::class
+        \Zdrojowa\AuthModule\AuthModule::class,
     ],
 
     // Section with declaration of core modules
@@ -23,7 +23,7 @@ return [
     CoreEnum::CORE_MODULES_SECTION => [
         CoreModulesEnum::CORE => Core::class,
         CoreModulesEnum::BOOTER => Booter::class,
-        CoreModulesEnum::MODULE_MANAGER => ModuleManager::class
+        CoreModulesEnum::MODULE_MANAGER => ModuleManager::class,
     ],
 
     CoreEnum::CMS_MIGRATIONS_USERS_TABLE_OPTION => 'users',
@@ -33,7 +33,7 @@ return [
     CoreEnum::CMS_MIGRATIONS_PERMISSIONS_TABLE_OPTION => 'permission_packages',
 
     CoreEnum::CORE_COMMANDS_SECTION => [
-        ListModuleCommand::class
+        ListModuleCommand::class,
     ],
 
     CoreEnum::CMS_SUPER_ADMIN_COLUMN_NAME => 'admin',

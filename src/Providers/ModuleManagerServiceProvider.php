@@ -14,6 +14,7 @@ use Zdrojowa\InvestmentCMS\Utils\Enums\CoreEnum;
 use Zdrojowa\InvestmentCMS\Utils\Enums\CoreModulesEnum;
 use Zdrojowa\InvestmentCMS\Utils\Enums\ModuleConfigEnum;
 use Zdrojowa\InvestmentCMS\Utils\Module\ModuleUtils;
+use Zdrojowa\InvestmentCMS\Utils\Variabler\Variabler;
 
 /**
  * Class ModuleManagerServiceProvider
@@ -79,12 +80,11 @@ class ModuleManagerServiceProvider extends ServiceProvider
         foreach ($this->core()->getModuleManager()->getModules() as $module) {
             try {
                 $extraData = ModuleUtils::moduleConfig($module, ModuleConfigEnum::MODULE_EXTRA_FILE());
-
                 if ($extraData) {
                     $module = new ReflectionClass($module);
                     $fileName = ModuleConfigEnum::MODULE_EXTRA_FILE;
 
-                    $fileName = str_replace('%name%', $module->getShortName(), $fileName);
+                    $fileName = Variabler::replace($module, $fileName);
 
                     $this->publishes([
                         dirname($module->getFileName()) . "/" . ModuleConfigEnum::MODULES_CONFIG_FOLDER . $fileName => base_path(CoreEnum::MODULES_CONFIG_DIR) . "/$fileName",

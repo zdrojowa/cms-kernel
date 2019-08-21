@@ -68,6 +68,7 @@ class AclRepository
 
     /**
      * @param string $moduleName
+     *
      * @return AclPresence
      */
     public function getModulePresence(string $moduleName): AclPresence
@@ -79,6 +80,7 @@ class AclRepository
 
     /**
      * @param string $presence
+     *
      * @return AclPresence|null
      */
     public function get(string $presence): ?AclPresence
@@ -89,7 +91,7 @@ class AclRepository
         array_shift($exploded);
 
         foreach ($exploded as $toSearch) {
-            if($currentPresence === null || $currentPresence->getChildren() === null) return null;
+            if ($currentPresence === null || $currentPresence->getChildren() === null) return null;
 
             $currentPresence = $currentPresence->getChildren()->get($toSearch);
         }
