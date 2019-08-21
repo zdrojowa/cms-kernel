@@ -1,5 +1,5 @@
 {
-    "name": "zdrojowa/investmentcms",
+    "name": "zdrojowa/cms-kernel",
     "description": ":description",
     "version": "0.0.1",
     "license": "Miliony Monet",
@@ -13,8 +13,8 @@
             "email": "g.bzinkowski@zdrojowainvest.pl"
         }
     ],
-    "homepage": "https://github.com/zdrojowa/investmentcms",
-    "keywords": ["Laravel", "InvestmentCMS"],
+    "homepage": "https://github.com/zdrojowa/cms-kernel",
+    "keywords": ["Laravel", "CMS kernel"],
     "require": {
         "illuminate/support": "~5",
         "myclabs/php-enum": "^1.7",
@@ -42,6 +42,6 @@
                 "Zdrojowa\\InvestmentCMS\\Providers\\CoreServiceProvider",
                 "Zdrojowa\\InvestmentCMS\\Providers\\ModuleManagerServiceProvider"
             ]
-        }
+        }git
     }
 }
