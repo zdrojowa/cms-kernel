@@ -2,7 +2,7 @@
     "name": "zdrojowa/cms-kernel",
     "description": ":description",
     "version": "0.0.1",
-    "license": "Miliony Monet",
+    "license": "MIT",
     "authors": [
         {
             "name": "Jakub Kosinski",
