@@ -42,6 +42,6 @@
                 "Zdrojowa\\InvestmentCMS\\Providers\\CoreServiceProvider",
                 "Zdrojowa\\InvestmentCMS\\Providers\\ModuleManagerServiceProvider"
             ]
-        }git
+        }
     }
 }
