@@ -10,7 +10,9 @@ use Zdrojowa\InvestmentCMS\Events\Booter\BooterRegisterEvent;
 use Zdrojowa\InvestmentCMS\Events\Core\AclRepositoryRegisterEvent;
 use Zdrojowa\InvestmentCMS\Events\Core\CoreBootedEvent;
 use Zdrojowa\InvestmentCMS\Events\Core\CoreRegisterEvent;
+use Zdrojowa\InvestmentCMS\Events\Core\MenuRepositoryRegisterEvent;
 use Zdrojowa\InvestmentCMS\Facades\Booter;
+use Zdrojowa\InvestmentCMS\Menu\MenuRepository;
 use Zdrojowa\InvestmentCMS\Utils\Config\ConfigUtils;
 use Zdrojowa\InvestmentCMS\Utils\Enums\CoreEnum;
 use Zdrojowa\InvestmentCMS\Utils\Enums\CoreModulesEnum;
@@ -41,7 +43,7 @@ class CoreServiceProvider extends ServiceProvider
 
         if (!Booter::canCmsBoot()) return;
 
-        $this->registerCoreModule()->registerAclRepository();
+        $this->registerCoreModule()->registerAclRepository()->registerMenuRepository();
     }
 
     /**
@@ -100,6 +102,18 @@ class CoreServiceProvider extends ServiceProvider
         $this->app->singleton(CoreModulesEnum::ACL_REPOSITORY, AclRepository::class);
 
         event(new AclRepositoryRegisterEvent(app(CoreModulesEnum::ACL_REPOSITORY)));
+
+        return $this;
+    }
+
+    /**
+     * @return CoreServiceProvider
+     */
+    protected function registerMenuRepository(): CoreServiceProvider
+    {
+        $this->app->singleton(CoreModulesEnum::MENU_REPOSITORY, MenuRepository::class);
+
+        event(new MenuRepositoryRegisterEvent(app(CoreModulesEnum::MENU_REPOSITORY)));
 
         return $this;
     }
