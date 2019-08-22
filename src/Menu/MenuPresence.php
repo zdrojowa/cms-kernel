@@ -59,7 +59,7 @@ class MenuPresence
     /**
      * @return mixed
      */
-    private function getName()
+    public function getName()
     {
         return $this->name;
     }
