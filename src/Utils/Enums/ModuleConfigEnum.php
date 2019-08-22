@@ -23,5 +23,6 @@ class ModuleConfigEnum extends Enum
     const MODULE_ROUTES_FILE = 'routes.yml';
     const MODULE_ROUTES_API_FILE = 'routes-api.yml';
     const MODULE_PERMISSIONS_FILE = 'permissions.yml';
+    const MODULE_MENU_FILE = 'menu.yml';
     const MODULE_EXTRA_FILE = '__name__.yml';
 }

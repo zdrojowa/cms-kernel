@@ -12,6 +12,8 @@ use Zdrojowa\InvestmentCMS\Contracts\Acl\AclPresence;
 use Zdrojowa\InvestmentCMS\Facades\AclRepository;
 use Zdrojowa\InvestmentCMS\Facades\Booter;
 use Zdrojowa\InvestmentCMS\Facades\Core;
+use Zdrojowa\InvestmentCMS\Facades\MenuRepository;
+use Zdrojowa\InvestmentCMS\Menu\MenuPresence;
 use Zdrojowa\InvestmentCMS\Utils\Config\ConfigUtils;
 use Zdrojowa\InvestmentCMS\Utils\Enums\CoreEnum;
 use Zdrojowa\InvestmentCMS\Utils\Enums\ModuleConfigEnum;
@@ -86,6 +88,11 @@ abstract class Module
     private $routePrefix;
 
     /**
+     * @var array
+     */
+    private $menu;
+
+    /**
      * Module constructor.
      * @throws Exception
      */
@@ -142,6 +149,7 @@ abstract class Module
         $this->routes = ModuleUtils::moduleConfig($this, ModuleConfigEnum::MODULE_ROUTES_FILE(), false);
         $this->apiRoutes = ModuleUtils::moduleConfig($this, ModuleConfigEnum::MODULE_ROUTES_API_FILE(), false);
         $this->permissions = ModuleUtils::moduleConfig($this, ModuleConfigEnum::MODULE_PERMISSIONS_FILE(), false);
+        $this->menu = ModuleUtils::moduleConfig($this, ModuleConfigEnum::MODULE_MENU_FILE());
 
         $moduleData = ModuleUtils::moduleConfig($this, ModuleConfigEnum::MODULE_CONFIG_FILE(), true) ?? [];
 
@@ -149,6 +157,7 @@ abstract class Module
         $this->bindProperties($moduleData, $this->optionalProperties, $this->propertiesRules, false);
 
         AclRepository::addPresence($this, AclPresence::createPresenceFromData($this->permissions));
+        MenuRepository::addPresence($this, MenuPresence::createPresenceFromData($this->menu));
 
         $moduleReflection = new ReflectionClass($this);
         $configFile = ModuleConfigEnum::MODULE_EXTRA_FILE;
