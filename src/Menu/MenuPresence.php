@@ -20,6 +20,10 @@ class MenuPresence
      */
     private $name;
     /**
+     * @var string
+     */
+    private $route;
+    /**
      * @var Collection
      */
     private $children;
@@ -30,20 +34,23 @@ class MenuPresence
     protected static $rules = [
         'name' => 'string|required',
         'permission' => 'required',
+        'route' => 'sometimes|string',
         'children' => 'sometimes|array',
     ];
 
-
     /**
      * AclPresence constructor.
-     * @param $anchor
-     * @param $name
+     *
+     * @param string $anchor
+     * @param string $name
+     * @param string $route
      * @param Collection|null $children
      */
-    public function __construct(string $anchor, string $name, Collection $children = null)
+    public function __construct(string $anchor, string $name, string $route = null, Collection $children = null)
     {
         $this->anchor = $anchor;
         $this->name = $name;
+        $this->route = $route;
         $this->children = $children;
     }
 
@@ -121,11 +128,11 @@ class MenuPresence
                 //TODO: Log bad structure for menu data
             }
 
-            $aclPresence = new self($anchor, $probablyMenuPresence['name']);
+            $menuPresence = new self($anchor, $probablyMenuPresence['name']);
 
-            if (isset($probablyMenuPresence['children'])) $aclPresence->setChildren(self::createPresenceFromData($probablyMenuPresence['children']));
+            if (isset($probablyMenuPresence['children'])) $menuPresence->setChildren(self::createPresenceFromData($probablyMenuPresence['children']));
 
-            $menuPresence->put($aclPresence->getAnchor(), $aclPresence);
+            $menuPresence->put($menuPresence->getAnchor(), $menuPresence);
         }
 
         return $menuPresence;
