@@ -1,11 +1,11 @@
 <?php
 
-namespace Zdrojowa\InvestmentCMS\Events\Core;
+namespace Zdrojowa\CmsKernel\Events\Core;
 
-use Zdrojowa\InvestmentCMS\Contracts\Acl\AclRepository;
-use Zdrojowa\InvestmentCMS\Events\InvestmentCMSEvent;
+use Zdrojowa\CmsKernel\Contracts\Acl\AclRepository;
+use Zdrojowa\CmsKernel\Events\CmsKernelEvent;
 
-class AclRepositoryRegisterEvent extends InvestmentCMSEvent
+class AclRepositoryRegisterEvent extends CmsKernelEvent
 {
 
     public $repository;

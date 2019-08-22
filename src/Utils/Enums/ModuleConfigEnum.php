@@ -1,14 +1,14 @@
 <?php
 
 
-namespace Zdrojowa\InvestmentCMS\Utils\Enums;
+namespace Zdrojowa\CmsKernel\Utils\Enums;
 
 
 use MyCLabs\Enum\Enum;
 
 /**
  * Class ModuleConfigEnum
- * @package Zdrojowa\InvestmentCMS\Utils\Enums
+ * @package Zdrojowa\CmsKernel\Utils\Enums
  *
  * @method static MODULE_CONFIG_FILE()
  * @method static MODULE_ROUTES_FILE()

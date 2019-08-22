@@ -1,25 +1,25 @@
 <?php
 
-namespace Zdrojowa\InvestmentCMS\Providers;
+namespace Zdrojowa\CmsKernel\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Zdrojowa\InvestmentCMS\Contracts\Acl\AclRepository;
-use Zdrojowa\InvestmentCMS\Contracts\Core\BooterInterface;
-use Zdrojowa\InvestmentCMS\Contracts\Core\CoreInterface;
-use Zdrojowa\InvestmentCMS\Events\Booter\BooterRegisterEvent;
-use Zdrojowa\InvestmentCMS\Events\Core\AclRepositoryRegisterEvent;
-use Zdrojowa\InvestmentCMS\Events\Core\CoreBootedEvent;
-use Zdrojowa\InvestmentCMS\Events\Core\CoreRegisterEvent;
-use Zdrojowa\InvestmentCMS\Events\Core\MenuRepositoryRegisterEvent;
-use Zdrojowa\InvestmentCMS\Facades\Booter;
-use Zdrojowa\InvestmentCMS\Menu\MenuRepository;
-use Zdrojowa\InvestmentCMS\Utils\Config\ConfigUtils;
-use Zdrojowa\InvestmentCMS\Utils\Enums\CoreEnum;
-use Zdrojowa\InvestmentCMS\Utils\Enums\CoreModulesEnum;
+use Zdrojowa\CmsKernel\Contracts\Acl\AclRepository;
+use Zdrojowa\CmsKernel\Contracts\Core\BooterInterface;
+use Zdrojowa\CmsKernel\Contracts\Core\CoreInterface;
+use Zdrojowa\CmsKernel\Events\Booter\BooterRegisterEvent;
+use Zdrojowa\CmsKernel\Events\Core\AclRepositoryRegisterEvent;
+use Zdrojowa\CmsKernel\Events\Core\CoreBootedEvent;
+use Zdrojowa\CmsKernel\Events\Core\CoreRegisterEvent;
+use Zdrojowa\CmsKernel\Events\Core\MenuRepositoryRegisterEvent;
+use Zdrojowa\CmsKernel\Facades\Booter;
+use Zdrojowa\CmsKernel\Menu\MenuRepository;
+use Zdrojowa\CmsKernel\Utils\Config\ConfigUtils;
+use Zdrojowa\CmsKernel\Utils\Enums\CoreEnum;
+use Zdrojowa\CmsKernel\Utils\Enums\CoreModulesEnum;
 
 /**
  * Class CoreServiceProvider
- * @package Zdrojowa\InvestmentCMS\Providers
+ * @package Zdrojowa\CmsKernel\Providers
  */
 class CoreServiceProvider extends ServiceProvider
 {

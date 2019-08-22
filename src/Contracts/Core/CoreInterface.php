@@ -1,12 +1,12 @@
 <?php
 
-namespace Zdrojowa\InvestmentCMS\Contracts\Core;
+namespace Zdrojowa\CmsKernel\Contracts\Core;
 
-use Zdrojowa\InvestmentCMS\Contracts\Modules\ModuleManagerInterface;
+use Zdrojowa\CmsKernel\Contracts\Modules\ModuleManagerInterface;
 
 /**
  * Interface CoreInterface
- * @package Zdrojowa\InvestmentCMS\Contracts\Core
+ * @package Zdrojowa\CmsKernel\Contracts\Core
  */
 interface CoreInterface
 {

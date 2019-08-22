@@ -1,18 +1,18 @@
 <?php
 
 
-namespace Zdrojowa\InvestmentCMS\Events\Module;
+namespace Zdrojowa\CmsKernel\Events\Module;
 
 
-use Zdrojowa\InvestmentCMS\Contracts\Acl\AclPresence;
-use Zdrojowa\InvestmentCMS\Contracts\Modules\Module;
-use Zdrojowa\InvestmentCMS\Events\InvestmentCMSEvent;
+use Zdrojowa\CmsKernel\Contracts\Acl\AclPresence;
+use Zdrojowa\CmsKernel\Contracts\Modules\Module;
+use Zdrojowa\CmsKernel\Events\CmsKernelEvent;
 
 /**
  * Class ModuleAclPresenceRegisterEvent
- * @package Zdrojowa\InvestmentCMS\Events\Module
+ * @package Zdrojowa\CmsKernel\Events\Module
  */
-class ModuleAclPresenceRegisterEvent extends InvestmentCMSEvent
+class ModuleAclPresenceRegisterEvent extends CmsKernelEvent
 {
 
     /**

@@ -1,24 +1,24 @@
 <?php
 
-namespace Zdrojowa\Investmentcms\Providers;
+namespace Zdrojowa\CmsKernel\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use ReflectionClass;
 use ReflectionException;
-use Zdrojowa\InvestmentCMS\Contracts\Core\BooterInterface;
-use Zdrojowa\InvestmentCMS\Contracts\Core\CoreInterface;
-use Zdrojowa\InvestmentCMS\Contracts\Modules\ModuleManagerInterface;
-use Zdrojowa\InvestmentCMS\Exceptions\Modules\ModuleConfigNotFoundException;
-use Zdrojowa\InvestmentCMS\Utils\Config\ConfigUtils;
-use Zdrojowa\InvestmentCMS\Utils\Enums\CoreEnum;
-use Zdrojowa\InvestmentCMS\Utils\Enums\CoreModulesEnum;
-use Zdrojowa\InvestmentCMS\Utils\Enums\ModuleConfigEnum;
-use Zdrojowa\InvestmentCMS\Utils\Module\ModuleUtils;
-use Zdrojowa\InvestmentCMS\Utils\Variabler\Variabler;
+use Zdrojowa\CmsKernel\Contracts\Core\BooterInterface;
+use Zdrojowa\CmsKernel\Contracts\Core\CoreInterface;
+use Zdrojowa\CmsKernel\Contracts\Modules\ModuleManagerInterface;
+use Zdrojowa\CmsKernel\Exceptions\Modules\ModuleConfigNotFoundException;
+use Zdrojowa\CmsKernel\Utils\Config\ConfigUtils;
+use Zdrojowa\CmsKernel\Utils\Enums\CoreEnum;
+use Zdrojowa\CmsKernel\Utils\Enums\CoreModulesEnum;
+use Zdrojowa\CmsKernel\Utils\Enums\ModuleConfigEnum;
+use Zdrojowa\CmsKernel\Utils\Module\ModuleUtils;
+use Zdrojowa\CmsKernel\Utils\Variabler\Variabler;
 
 /**
  * Class ModuleManagerServiceProvider
- * @package Zdrojowa\Investmentcms\Providers
+ * @package Zdrojowa\CmsKernel\Providers
  */
 class ModuleManagerServiceProvider extends ServiceProvider
 {

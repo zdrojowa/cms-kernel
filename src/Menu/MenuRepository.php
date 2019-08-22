@@ -1,11 +1,11 @@
 <?php
 
-namespace Zdrojowa\InvestmentCMS\Menu;
+namespace Zdrojowa\CmsKernel\Menu;
 
 use Illuminate\Support\Collection;
-use Zdrojowa\InvestmentCMS\Contracts\Modules\Module;
-use Zdrojowa\InvestmentCMS\Events\Module\ModuleMenuPresenceRegisterEvent;
-use Zdrojowa\InvestmentCMS\Exceptions\Acl\AclRepositoryHasPresenceException;
+use Zdrojowa\CmsKernel\Contracts\Modules\Module;
+use Zdrojowa\CmsKernel\Events\Module\ModuleMenuPresenceRegisterEvent;
+use Zdrojowa\CmsKernel\Exceptions\Acl\AclRepositoryHasPresenceException;
 
 class MenuRepository
 {

@@ -1,15 +1,15 @@
 <?php
 
-namespace Zdrojowa\InvestmentCMS\Exceptions\PropertyBinder;
+namespace Zdrojowa\CmsKernel\Exceptions\PropertyBinder;
 
 use Psr\Log\LogLevel;
-use Zdrojowa\InvestmentCMS\Exceptions\InvestmentCMSException;
+use Zdrojowa\CmsKernel\Exceptions\CmsKernelException;
 
 /**
  * Class PropertyIsRequiredException
- * @package Zdrojowa\InvestmentCMS\Exceptions\PropertyBinder
+ * @package Zdrojowa\CmsKernel\Exceptions\PropertyBinder
  */
-class PropertyIsRequiredException extends InvestmentCMSException
+class PropertyIsRequiredException extends CmsKernelException
 {
     /**
      * @var string

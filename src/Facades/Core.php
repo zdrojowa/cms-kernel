@@ -1,14 +1,14 @@
 <?php
 
-namespace Zdrojowa\InvestmentCMS\Facades;
+namespace Zdrojowa\CmsKernel\Facades;
 
 use Illuminate\Support\Facades\Facade;
-use Zdrojowa\InvestmentCMS\Contracts\Modules\ModuleManagerInterface;
-use Zdrojowa\InvestmentCMS\Utils\Enums\CoreModulesEnum;
+use Zdrojowa\CmsKernel\Contracts\Modules\ModuleManagerInterface;
+use Zdrojowa\CmsKernel\Utils\Enums\CoreModulesEnum;
 
 /**
  * Class Core
- * @package Zdrojowa\InvestmentCMS\Facades
+ * @package Zdrojowa\CmsKernel\Facades
  *
  * @method static setModuleManager(ModuleManagerInterface $moduleManager)
  * @method static loadModuleManagerModules()

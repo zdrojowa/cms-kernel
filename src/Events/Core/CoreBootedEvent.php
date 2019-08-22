@@ -1,17 +1,17 @@
 <?php
 
 
-namespace Zdrojowa\InvestmentCMS\Events\Core;
+namespace Zdrojowa\CmsKernel\Events\Core;
 
 
-use Zdrojowa\InvestmentCMS\Contracts\Core\CoreInterface;
-use Zdrojowa\InvestmentCMS\Events\InvestmentCMSEvent;
+use Zdrojowa\CmsKernel\Contracts\Core\CoreInterface;
+use Zdrojowa\CmsKernel\Events\CmsKernelEvent;
 
 /**
  * Class CoreBootedEvent
- * @package Zdrojowa\InvestmentCMS\Events\Core
+ * @package Zdrojowa\CmsKernel\Events\Core
  */
-class CoreBootedEvent extends InvestmentCMSEvent
+class CoreBootedEvent extends CmsKernelEvent
 {
 
     /**

@@ -1,16 +1,16 @@
 <?php
 
-namespace Zdrojowa\InvestmentCMS\Exceptions\Modules;
+namespace Zdrojowa\CmsKernel\Exceptions\Modules;
 
 use Psr\Log\LogLevel;
-use Zdrojowa\InvestmentCMS\Exceptions\InvestmentCMSException;
-use Zdrojowa\InvestmentCMS\Utils\Enums\CoreEnum;
+use Zdrojowa\CmsKernel\Exceptions\CmsKernelException;
+use Zdrojowa\CmsKernel\Utils\Enums\CoreEnum;
 
 /**
  * Class ModuleConfigException
- * @package Zdrojowa\InvestmentCMS\Exceptions\Modules
+ * @package Zdrojowa\CmsKernel\Exceptions\Modules
  */
-class ModuleConfigException extends InvestmentCMSException
+class ModuleConfigException extends CmsKernelException
 {
     /**
      * @var string

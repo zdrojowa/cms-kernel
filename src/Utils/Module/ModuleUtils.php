@@ -1,18 +1,18 @@
 <?php
 
-namespace Zdrojowa\InvestmentCMS\Utils\Module;
+namespace Zdrojowa\CmsKernel\Utils\Module;
 
 use ReflectionClass;
 use ReflectionException;
 use Symfony\Component\Yaml\Yaml;
-use Zdrojowa\InvestmentCMS\Contracts\Modules\Module;
-use Zdrojowa\InvestmentCMS\Exceptions\Modules\ModuleConfigNotFoundException;
-use Zdrojowa\InvestmentCMS\Utils\Enums\ModuleConfigEnum;
-use Zdrojowa\InvestmentCMS\Utils\Variabler\Variabler;
+use Zdrojowa\CmsKernel\Contracts\Modules\Module;
+use Zdrojowa\CmsKernel\Exceptions\Modules\ModuleConfigNotFoundException;
+use Zdrojowa\CmsKernel\Utils\Enums\ModuleConfigEnum;
+use Zdrojowa\CmsKernel\Utils\Variabler\Variabler;
 
 /**
  * Class ModuleUtils
- * @package Zdrojowa\InvestmentCMS\Utils\Module
+ * @package Zdrojowa\CmsKernel\Utils\Module
  */
 class ModuleUtils
 {

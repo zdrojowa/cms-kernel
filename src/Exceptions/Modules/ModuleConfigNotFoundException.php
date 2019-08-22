@@ -1,15 +1,15 @@
 <?php
 
-namespace Zdrojowa\InvestmentCMS\Exceptions\Modules;
+namespace Zdrojowa\CmsKernel\Exceptions\Modules;
 
 use Psr\Log\LogLevel;
-use Zdrojowa\InvestmentCMS\Exceptions\InvestmentCMSException;
+use Zdrojowa\CmsKernel\Exceptions\CmsKernelException;
 
 /**
  * Class ModuleConfigNotFoundException
- * @package Zdrojowa\InvestmentCMS\Exceptions\Modules
+ * @package Zdrojowa\CmsKernel\Exceptions\Modules
  */
-class ModuleConfigNotFoundException extends InvestmentCMSException
+class ModuleConfigNotFoundException extends CmsKernelException
 {
 
     /**

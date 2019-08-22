@@ -1,10 +1,10 @@
 <?php
 
-namespace Zdrojowa\InvestmentCMS\Utils\Variabler;
+namespace Zdrojowa\CmsKernel\Utils\Variabler;
 
 /**
  * Interface VariableProviderInterface
- * @package Zdrojowa\InvestmentCMS\Utils\Variabler
+ * @package Zdrojowa\CmsKernel\Utils\Variabler
  */
 interface VariableProviderInterface
 {

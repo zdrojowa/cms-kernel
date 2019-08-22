@@ -1,12 +1,12 @@
 <?php
 
-namespace Zdrojowa\InvestmentCMS\Contracts\Modules;
+namespace Zdrojowa\CmsKernel\Contracts\Modules;
 
 use Illuminate\Support\Collection;
 
 /**
  * Interface ModuleManagerInterface
- * @package Zdrojowa\InvestmentCMS\Contracts\Modules
+ * @package Zdrojowa\CmsKernel\Contracts\Modules
  */
 interface ModuleManagerInterface
 {

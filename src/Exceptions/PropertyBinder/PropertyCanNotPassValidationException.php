@@ -1,16 +1,16 @@
 <?php
 
-namespace Zdrojowa\InvestmentCMS\Exceptions\PropertyBinder;
+namespace Zdrojowa\CmsKernel\Exceptions\PropertyBinder;
 
 use Psr\Log\LogLevel;
 use Throwable;
-use Zdrojowa\InvestmentCMS\Exceptions\InvestmentCMSException;
+use Zdrojowa\CmsKernel\Exceptions\CmsKernelException;
 
 /**
  * Class PropertyCanNotPassValidationException
- * @package Zdrojowa\InvestmentCMS\Exceptions\PropertyBinder
+ * @package Zdrojowa\CmsKernel\Exceptions\PropertyBinder
  */
-class PropertyCanNotPassValidationException extends InvestmentCMSException
+class PropertyCanNotPassValidationException extends CmsKernelException
 {
     /**
      * @var string

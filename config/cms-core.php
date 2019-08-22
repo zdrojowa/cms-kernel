@@ -1,11 +1,11 @@
 <?php
 
-use Zdrojowa\InvestmentCMS\Console\Commands\ListModuleCommand;
-use Zdrojowa\InvestmentCMS\Core\Booter;
-use Zdrojowa\InvestmentCMS\Core\Core;
-use Zdrojowa\InvestmentCMS\Modules\ModuleManager;
-use Zdrojowa\InvestmentCMS\Utils\Enums\CoreEnum;
-use Zdrojowa\InvestmentCMS\Utils\Enums\CoreModulesEnum;
+use Zdrojowa\CmsKernel\Console\Commands\ListModuleCommand;
+use Zdrojowa\CmsKernel\Core\Booter;
+use Zdrojowa\CmsKernel\Core\Core;
+use Zdrojowa\CmsKernel\Modules\ModuleManager;
+use Zdrojowa\CmsKernel\Utils\Enums\CoreEnum;
+use Zdrojowa\CmsKernel\Utils\Enums\CoreModulesEnum;
 
 return [
     // Section with declaration of cms options

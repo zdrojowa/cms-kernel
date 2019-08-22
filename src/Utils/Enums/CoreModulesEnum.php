@@ -1,12 +1,12 @@
 <?php
 
-namespace Zdrojowa\InvestmentCMS\Utils\Enums;
+namespace Zdrojowa\CmsKernel\Utils\Enums;
 
 use MyCLabs\Enum\Enum;
 
 /**
  * Class CoreModulesEnum
- * @package Zdrojowa\InvestmentCMS\Utils\Enums
+ * @package Zdrojowa\CmsKernel\Utils\Enums
  *
  * @method static CORE()
  * @method static BOOTER()

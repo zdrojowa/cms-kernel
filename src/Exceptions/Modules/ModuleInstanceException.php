@@ -1,16 +1,16 @@
 <?php
 
-namespace Zdrojowa\InvestmentCMS\Exceptions\Modules;
+namespace Zdrojowa\CmsKernel\Exceptions\Modules;
 
 use Psr\Log\LogLevel;
-use Zdrojowa\InvestmentCMS\Contracts\Modules\Module;
-use Zdrojowa\InvestmentCMS\Exceptions\InvestmentCMSException;
+use Zdrojowa\CmsKernel\Contracts\Modules\Module;
+use Zdrojowa\CmsKernel\Exceptions\CmsKernelException;
 
 /**
  * Class ModuleInstanceException
- * @package Zdrojowa\InvestmentCMS\Exceptions\Modules
+ * @package Zdrojowa\CmsKernel\Exceptions\Modules
  */
-class ModuleInstanceException extends InvestmentCMSException
+class ModuleInstanceException extends CmsKernelException
 {
     /**
      * @var string

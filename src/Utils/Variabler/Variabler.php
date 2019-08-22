@@ -1,10 +1,10 @@
 <?php
 
-namespace Zdrojowa\InvestmentCMS\Utils\Variabler;
+namespace Zdrojowa\CmsKernel\Utils\Variabler;
 
-use Zdrojowa\InvestmentCMS\Utils\Enums\VariableEnum;
-use Zdrojowa\InvestmentCMS\Utils\Variabler\Providers\ObjectNameProvider;
-use Zdrojowa\InvestmentCMS\Utils\Variabler\Providers\ObjectPropertyProvider;
+use Zdrojowa\CmsKernel\Utils\Enums\VariableEnum;
+use Zdrojowa\CmsKernel\Utils\Variabler\Providers\ObjectNameProvider;
+use Zdrojowa\CmsKernel\Utils\Variabler\Providers\ObjectPropertyProvider;
 
 /**
  * @method static property($object, $int)

@@ -1,15 +1,15 @@
 <?php
 
-namespace Zdrojowa\InvestmentCMS\Events\Booter;
+namespace Zdrojowa\CmsKernel\Events\Booter;
 
-use Zdrojowa\InvestmentCMS\Contracts\Core\BooterInterface;
-use Zdrojowa\InvestmentCMS\Events\InvestmentCMSEvent;
+use Zdrojowa\CmsKernel\Contracts\Core\BooterInterface;
+use Zdrojowa\CmsKernel\Events\CmsKernelEvent;
 
 /**
  * Class BooterRegisterEvent
- * @package Zdrojowa\InvestmentCMS\Events\Booter
+ * @package Zdrojowa\CmsKernel\Events\Booter
  */
-class BooterRegisterEvent extends InvestmentCMSEvent
+class BooterRegisterEvent extends CmsKernelEvent
 {
 
     /**

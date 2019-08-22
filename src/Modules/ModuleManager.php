@@ -1,22 +1,22 @@
 <?php
 
-namespace Zdrojowa\InvestmentCMS\Modules;
+namespace Zdrojowa\CmsKernel\Modules;
 
 use Exception;
 use Illuminate\Support\Collection;
 use ReflectionException;
-use Zdrojowa\InvestmentCMS\Contracts\Modules\Module;
-use Zdrojowa\InvestmentCMS\Contracts\Modules\ModuleManagerInterface;
-use Zdrojowa\InvestmentCMS\Events\Module\ModuleRegisterEvent;
-use Zdrojowa\InvestmentCMS\Exceptions\InvestmentCMSException;
-use Zdrojowa\InvestmentCMS\Exceptions\Modules\ModuleConfigException;
-use Zdrojowa\InvestmentCMS\Exceptions\Modules\ModuleInstanceException;
-use Zdrojowa\InvestmentCMS\Utils\Config\ConfigUtils;
-use Zdrojowa\InvestmentCMS\Utils\Enums\CoreEnum;
+use Zdrojowa\CmsKernel\Contracts\Modules\Module;
+use Zdrojowa\CmsKernel\Contracts\Modules\ModuleManagerInterface;
+use Zdrojowa\CmsKernel\Events\Module\ModuleRegisterEvent;
+use Zdrojowa\CmsKernel\Exceptions\CmsKernelException;
+use Zdrojowa\CmsKernel\Exceptions\Modules\ModuleConfigException;
+use Zdrojowa\CmsKernel\Exceptions\Modules\ModuleInstanceException;
+use Zdrojowa\CmsKernel\Utils\Config\ConfigUtils;
+use Zdrojowa\CmsKernel\Utils\Enums\CoreEnum;
 
 /**
  * Class ModuleManager
- * @package Zdrojowa\InvestmentCMS\Modules
+ * @package Zdrojowa\CmsKernel\Modules
  */
 class ModuleManager implements ModuleManagerInterface
 {
@@ -110,7 +110,7 @@ class ModuleManager implements ModuleManagerInterface
                 $this->addModule($module->getName(), $module);
 
                 event(new ModuleRegisterEvent($module));
-            } catch (InvestmentCMSException | ReflectionException $exception) {
+            } catch (CmsKernelException | ReflectionException $exception) {
                 dd($exception);
                 report($exception);
 

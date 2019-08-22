@@ -1,15 +1,15 @@
 <?php
 
-namespace Zdrojowa\InvestmentCMS\Exceptions\Acl;
+namespace Zdrojowa\CmsKernel\Exceptions\Acl;
 
 use Psr\Log\LogLevel;
-use Zdrojowa\InvestmentCMS\Exceptions\InvestmentCMSException;
+use Zdrojowa\CmsKernel\Exceptions\CmsKernelException;
 
 /**
  * Class AclPresenceDataException
- * @package Zdrojowa\InvestmentCMS\Exceptions\Acl
+ * @package Zdrojowa\CmsKernel\Exceptions\Acl
  */
-class AclPresenceDataException extends InvestmentCMSException
+class AclPresenceDataException extends CmsKernelException
 {
     /**
      * @var string

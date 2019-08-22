@@ -1,13 +1,13 @@
 <?php
 
-namespace Zdrojowa\InvestmentCMS\Console\Commands;
+namespace Zdrojowa\CmsKernel\Console\Commands;
 
 use Illuminate\Console\Command;
-use Zdrojowa\InvestmentCMS\Contracts\Core\CoreInterface;
+use Zdrojowa\CmsKernel\Contracts\Core\CoreInterface;
 
 /**
  * Class ListModuleCommand
- * @package Zdrojowa\InvestmentCMS\Console\Commands
+ * @package Zdrojowa\CmsKernel\Console\Commands
  */
 class ListModuleCommand extends Command
 {

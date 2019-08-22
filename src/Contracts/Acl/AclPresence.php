@@ -1,14 +1,14 @@
 <?php
 
-namespace Zdrojowa\InvestmentCMS\Contracts\Acl;
+namespace Zdrojowa\CmsKernel\Contracts\Acl;
 
 use Illuminate\Support\Collection;
 use Validator;
-use Zdrojowa\InvestmentCMS\Exceptions\Acl\AclPresenceDataException;
+use Zdrojowa\CmsKernel\Exceptions\Acl\AclPresenceDataException;
 
 /**
  * Class AclPresence
- * @package Zdrojowa\InvestmentCMS\Contracts\Acl
+ * @package Zdrojowa\CmsKernel\Contracts\Acl
  */
 class AclPresence
 {

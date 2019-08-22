@@ -1,17 +1,17 @@
 <?php
 
-namespace Zdrojowa\InvestmentCMS\Utils\Traits;
+namespace Zdrojowa\CmsKernel\Utils\Traits;
 
 use Exception;
 use Validator;
-use Zdrojowa\InvestmentCMS\Exceptions\PropertyBinder\PropertyCanNotPassValidationException;
-use Zdrojowa\InvestmentCMS\Exceptions\PropertyBinder\PropertyIsRequiredException;
-use Zdrojowa\InvestmentCMS\Exceptions\PropertyBinder\PropertyNameMustBeAStringException;
-use Zdrojowa\InvestmentCMS\Utils\Variabler\Variabler;
+use Zdrojowa\CmsKernel\Exceptions\PropertyBinder\PropertyCanNotPassValidationException;
+use Zdrojowa\CmsKernel\Exceptions\PropertyBinder\PropertyIsRequiredException;
+use Zdrojowa\CmsKernel\Exceptions\PropertyBinder\PropertyNameMustBeAStringException;
+use Zdrojowa\CmsKernel\Utils\Variabler\Variabler;
 
 /**
  * Trait PropertyBinder
- * @package Zdrojowa\InvestmentCMS\Utils\Traits
+ * @package Zdrojowa\CmsKernel\Utils\Traits
  */
 trait Propertiable
 {

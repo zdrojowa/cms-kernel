@@ -1,6 +1,6 @@
 <?php
 
-namespace Zdrojowa\InvestmentCMS\Utils\Enums;
+namespace Zdrojowa\CmsKernel\Utils\Enums;
 
 use MyCLabs\Enum\Enum;
 

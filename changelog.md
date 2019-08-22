@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to `InvestmentCMS` will be documented in this file.
+All notable changes to `CmsKernel` will be documented in this file.
 
 ## Version 1.0
 

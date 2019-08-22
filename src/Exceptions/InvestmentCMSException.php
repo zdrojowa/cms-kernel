@@ -1,20 +1,20 @@
 <?php
 
-namespace Zdrojowa\InvestmentCMS\Exceptions;
+namespace Zdrojowa\CmsKernel\Exceptions;
 
 use Exception;
 use Psr\Log\LogLevel;
 use Throwable;
-use Zdrojowa\InvestmentCMS\Facades\Core;
+use Zdrojowa\CmsKernel\Facades\Core;
 
 /**
- * Class InvestmentCMSException
- * @package Zdrojowa\InvestmentCMS\Exceptions
+ * Class CmsKernelException
+ * @package Zdrojowa\CmsKernel\Exceptions
  */
-abstract class InvestmentCMSException extends Exception
+abstract class CmsKernelException extends Exception
 {
     /**
-     * InvestmentCMSException constructor.
+     * CmsKernelException constructor.
      *
      * @param string $data
      * @param int $code

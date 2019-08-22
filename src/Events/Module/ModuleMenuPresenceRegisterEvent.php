@@ -1,16 +1,16 @@
 <?php
 
-namespace Zdrojowa\InvestmentCMS\Events\Module;
+namespace Zdrojowa\CmsKernel\Events\Module;
 
-use Zdrojowa\InvestmentCMS\Contracts\Modules\Module;
-use Zdrojowa\InvestmentCMS\Events\InvestmentCMSEvent;
-use Zdrojowa\InvestmentCMS\Menu\MenuPresence;
+use Zdrojowa\CmsKernel\Contracts\Modules\Module;
+use Zdrojowa\CmsKernel\Events\CmsKernelEvent;
+use Zdrojowa\CmsKernel\Menu\MenuPresence;
 
 /**
  * Class ModuleMenuPresenceRegisterEvent
- * @package Zdrojowa\InvestmentCMS\Events\Module
+ * @package Zdrojowa\CmsKernel\Events\Module
  */
-class ModuleMenuPresenceRegisterEvent extends InvestmentCMSEvent
+class ModuleMenuPresenceRegisterEvent extends CmsKernelEvent
 {
     /**
      * @var Module

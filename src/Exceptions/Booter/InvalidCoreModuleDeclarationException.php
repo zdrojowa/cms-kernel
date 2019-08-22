@@ -1,15 +1,15 @@
 <?php
 
-namespace Zdrojowa\InvestmentCMS\Exceptions\Booter;
+namespace Zdrojowa\CmsKernel\Exceptions\Booter;
 
 use Psr\Log\LogLevel;
-use Zdrojowa\InvestmentCMS\Exceptions\InvestmentCMSException;
+use Zdrojowa\CmsKernel\Exceptions\CmsKernelException;
 
 /**
  * Class InvalidCoreModuleDeclarationException
- * @package Zdrojowa\InvestmentCMS\Exceptions\Booter
+ * @package Zdrojowa\CmsKernel\Exceptions\Booter
  */
-class InvalidCoreModuleDeclarationException extends InvestmentCMSException
+class InvalidCoreModuleDeclarationException extends CmsKernelException
 {
     /**
      * @var string

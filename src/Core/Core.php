@@ -1,14 +1,14 @@
 <?php
 
-namespace Zdrojowa\InvestmentCMS\Core;
+namespace Zdrojowa\CmsKernel\Core;
 
 use Illuminate\Support\Facades\Log;
-use Zdrojowa\InvestmentCMS\Contracts\Core\CoreInterface;
-use Zdrojowa\InvestmentCMS\Contracts\Modules\ModuleManagerInterface;
+use Zdrojowa\CmsKernel\Contracts\Core\CoreInterface;
+use Zdrojowa\CmsKernel\Contracts\Modules\ModuleManagerInterface;
 
 /**
  * Class Core
- * @package Zdrojowa\InvestmentCMS\Core
+ * @package Zdrojowa\CmsKernel\Core
  */
 class Core implements CoreInterface
 {

@@ -1,15 +1,15 @@
 <?php
 
-namespace Zdrojowa\InvestmentCMS\Contracts\Acl;
+namespace Zdrojowa\CmsKernel\Contracts\Acl;
 
 use Illuminate\Support\Collection;
-use Zdrojowa\InvestmentCMS\Contracts\Modules\Module;
-use Zdrojowa\InvestmentCMS\Events\Module\ModuleAclPresenceRegisterEvent;
-use Zdrojowa\InvestmentCMS\Exceptions\Acl\AclRepositoryHasPresenceException;
+use Zdrojowa\CmsKernel\Contracts\Modules\Module;
+use Zdrojowa\CmsKernel\Events\Module\ModuleAclPresenceRegisterEvent;
+use Zdrojowa\CmsKernel\Exceptions\Acl\AclRepositoryHasPresenceException;
 
 /**
  * Class AclRepository
- * @package Zdrojowa\InvestmentCMS\Contracts\Acl
+ * @package Zdrojowa\CmsKernel\Contracts\Acl
  */
 class AclRepository
 {

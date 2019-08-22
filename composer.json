@@ -28,19 +28,19 @@
     },
     "autoload": {
         "psr-4": {
-            "Zdrojowa\\InvestmentCMS\\": "src"
+            "Zdrojowa\\CmsKernel\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Zdrojowa\\InvestmentCMS\\Tests\\": "tests"
+            "Zdrojowa\\CmsKernel\\Tests\\": "tests"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Zdrojowa\\InvestmentCMS\\Providers\\CoreServiceProvider",
-                "Zdrojowa\\InvestmentCMS\\Providers\\ModuleManagerServiceProvider"
+                "Zdrojowa\\CmsKernel\\Providers\\CoreServiceProvider",
+                "Zdrojowa\\CmsKernel\\Providers\\ModuleManagerServiceProvider"
             ]
         }
     }

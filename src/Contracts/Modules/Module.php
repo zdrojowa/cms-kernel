@@ -1,6 +1,6 @@
 <?php
 
-namespace Zdrojowa\InvestmentCMS\Contracts\Modules;
+namespace Zdrojowa\CmsKernel\Contracts\Modules;
 
 use Exception;
 use ReflectionClass;
@@ -8,22 +8,22 @@ use ReflectionException;
 use Route;
 use Symfony\Component\Yaml\Yaml;
 use Validator;
-use Zdrojowa\InvestmentCMS\Contracts\Acl\AclPresence;
-use Zdrojowa\InvestmentCMS\Facades\AclRepository;
-use Zdrojowa\InvestmentCMS\Facades\Booter;
-use Zdrojowa\InvestmentCMS\Facades\Core;
-use Zdrojowa\InvestmentCMS\Facades\MenuRepository;
-use Zdrojowa\InvestmentCMS\Menu\MenuPresence;
-use Zdrojowa\InvestmentCMS\Utils\Config\ConfigUtils;
-use Zdrojowa\InvestmentCMS\Utils\Enums\CoreEnum;
-use Zdrojowa\InvestmentCMS\Utils\Enums\ModuleConfigEnum;
-use Zdrojowa\InvestmentCMS\Utils\Module\ModuleUtils;
-use Zdrojowa\InvestmentCMS\Utils\Traits\Propertiable;
-use Zdrojowa\InvestmentCMS\Utils\Variabler\Variabler;
+use Zdrojowa\CmsKernel\Contracts\Acl\AclPresence;
+use Zdrojowa\CmsKernel\Facades\AclRepository;
+use Zdrojowa\CmsKernel\Facades\Booter;
+use Zdrojowa\CmsKernel\Facades\Core;
+use Zdrojowa\CmsKernel\Facades\MenuRepository;
+use Zdrojowa\CmsKernel\Menu\MenuPresence;
+use Zdrojowa\CmsKernel\Utils\Config\ConfigUtils;
+use Zdrojowa\CmsKernel\Utils\Enums\CoreEnum;
+use Zdrojowa\CmsKernel\Utils\Enums\ModuleConfigEnum;
+use Zdrojowa\CmsKernel\Utils\Module\ModuleUtils;
+use Zdrojowa\CmsKernel\Utils\Traits\Propertiable;
+use Zdrojowa\CmsKernel\Utils\Variabler\Variabler;
 
 /**
  * Class Module
- * @package Zdrojowa\InvestmentCMS\Contracts\Modules
+ * @package Zdrojowa\CmsKernel\Contracts\Modules
  */
 abstract class Module
 {

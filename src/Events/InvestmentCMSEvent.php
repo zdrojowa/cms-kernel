@@ -1,12 +1,12 @@
 <?php
 
-namespace Zdrojowa\InvestmentCMS\Events;
+namespace Zdrojowa\CmsKernel\Events;
 
 /**
- * Class InvestmentCMSEvent
- * @package Zdrojowa\InvestmentCMS\Events
+ * Class CmsKernelEvent
+ * @package Zdrojowa\CmsKernel\Events
  */
-class InvestmentCMSEvent
+class CmsKernelEvent
 {
 
 }

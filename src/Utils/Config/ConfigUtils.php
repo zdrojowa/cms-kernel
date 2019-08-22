@@ -1,14 +1,14 @@
 <?php
 
-namespace Zdrojowa\InvestmentCMS\Utils\Config;
+namespace Zdrojowa\CmsKernel\Utils\Config;
 
 use Illuminate\Config\Repository;
-use Zdrojowa\InvestmentCMS\Utils\Enums\CoreEnum;
-use Zdrojowa\InvestmentCMS\Utils\Enums\CoreModulesEnum;
+use Zdrojowa\CmsKernel\Utils\Enums\CoreEnum;
+use Zdrojowa\CmsKernel\Utils\Enums\CoreModulesEnum;
 
 /**
  * Class ConfigUtils
- * @package Zdrojowa\InvestmentCMS\Utils\Config
+ * @package Zdrojowa\CmsKernel\Utils\Config
  */
 class ConfigUtils
 {

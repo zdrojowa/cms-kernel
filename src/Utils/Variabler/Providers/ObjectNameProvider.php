@@ -1,14 +1,14 @@
 <?php
 
-namespace Zdrojowa\InvestmentCMS\Utils\Variabler\Providers;
+namespace Zdrojowa\CmsKernel\Utils\Variabler\Providers;
 
 use ReflectionClass;
 use stdClass;
-use Zdrojowa\InvestmentCMS\Utils\Variabler\VariableProviderInterface;
+use Zdrojowa\CmsKernel\Utils\Variabler\VariableProviderInterface;
 
 /**
  * Class ObjectNameProvider
- * @package Zdrojowa\InvestmentCMS\Utils\Variabler\Providers
+ * @package Zdrojowa\CmsKernel\Utils\Variabler\Providers
  */
 class ObjectNameProvider implements VariableProviderInterface
 {

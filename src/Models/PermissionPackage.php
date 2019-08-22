@@ -1,14 +1,14 @@
 <?php
 
-namespace Zdrojowa\InvestmentCMS\Models;
+namespace Zdrojowa\CmsKernel\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Zdrojowa\InvestmentCMS\Utils\Config\ConfigUtils;
-use Zdrojowa\InvestmentCMS\Utils\Enums\CoreEnum;
+use Zdrojowa\CmsKernel\Utils\Config\ConfigUtils;
+use Zdrojowa\CmsKernel\Utils\Enums\CoreEnum;
 
 /**
  * Class PermissionPackage
- * @package Zdrojowa\InvestmentCMS\Models
+ * @package Zdrojowa\CmsKernel\Models
  */
 class PermissionPackage extends Model
 {

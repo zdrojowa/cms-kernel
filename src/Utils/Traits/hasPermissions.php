@@ -1,13 +1,13 @@
 <?php
 
-namespace Zdrojowa\InvestmentCMS\Utils\Traits;
+namespace Zdrojowa\CmsKernel\Utils\Traits;
 
-use Zdrojowa\InvestmentCMS\Utils\Config\ConfigUtils;
-use Zdrojowa\InvestmentCMS\Utils\Enums\CoreEnum;
+use Zdrojowa\CmsKernel\Utils\Config\ConfigUtils;
+use Zdrojowa\CmsKernel\Utils\Enums\CoreEnum;
 
 /**
  * Trait hasPermissions
- * @package Zdrojowa\InvestmentCMS\Utils\Traits
+ * @package Zdrojowa\CmsKernel\Utils\Traits
  */
 trait hasPermissions
 {
@@ -17,7 +17,7 @@ trait hasPermissions
      */
     public function permissions()
     {
-        return $this->hasOne('Zdrojowa\InvestmentCMS\Models\PermissionPackage', ConfigUtils::coreConfig(CoreEnum::CMS_MIGRATIONS_USERS_TABLE_COLUMN_NAME));
+        return $this->hasOne('Zdrojowa\CmsKernel\Models\PermissionPackage', ConfigUtils::coreConfig(CoreEnum::CMS_MIGRATIONS_USERS_TABLE_COLUMN_NAME));
     }
 
     /**

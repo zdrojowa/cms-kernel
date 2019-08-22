@@ -1,14 +1,14 @@
 <?php
 
-namespace Zdrojowa\InvestmentCMS\Facades;
+namespace Zdrojowa\CmsKernel\Facades;
 
 use Illuminate\Support\Facades\Facade;
-use Zdrojowa\InvestmentCMS\Utils\Enums\CoreEnum;
-use Zdrojowa\InvestmentCMS\Utils\Enums\CoreModulesEnum;
+use Zdrojowa\CmsKernel\Utils\Enums\CoreEnum;
+use Zdrojowa\CmsKernel\Utils\Enums\CoreModulesEnum;
 
 /**
  * Class Booter
- * @package Zdrojowa\InvestmentCMS\Facades
+ * @package Zdrojowa\CmsKernel\Facades
  *
  * @method static markCmsEnabled()
  * @method static canCmsBoot()

@@ -1,12 +1,12 @@
 <?php
 
-namespace Zdrojowa\InvestmentCMS\Utils\Variabler\Providers;
+namespace Zdrojowa\CmsKernel\Utils\Variabler\Providers;
 
-use Zdrojowa\InvestmentCMS\Utils\Variabler\VariableProviderInterface;
+use Zdrojowa\CmsKernel\Utils\Variabler\VariableProviderInterface;
 
 /**
  * Class ObjectPropertyProvider
- * @package Zdrojowa\InvestmentCMS\Utils\Variabler\Providers
+ * @package Zdrojowa\CmsKernel\Utils\Variabler\Providers
  */
 class ObjectPropertyProvider implements VariableProviderInterface
 {

@@ -1,16 +1,16 @@
 <?php
 
-namespace Zdrojowa\InvestmentCMS\Core;
+namespace Zdrojowa\CmsKernel\Core;
 
-use Zdrojowa\InvestmentCMS\Contracts\Core\BooterInterface;
-use Zdrojowa\InvestmentCMS\Utils\Config\ConfigUtils;
-use Zdrojowa\InvestmentCMS\Utils\Enums\BooterEnum;
-use Zdrojowa\InvestmentCMS\Utils\Enums\CoreEnum;
-use Zdrojowa\InvestmentCMS\Utils\Enums\CoreModulesEnum;
+use Zdrojowa\CmsKernel\Contracts\Core\BooterInterface;
+use Zdrojowa\CmsKernel\Utils\Config\ConfigUtils;
+use Zdrojowa\CmsKernel\Utils\Enums\BooterEnum;
+use Zdrojowa\CmsKernel\Utils\Enums\CoreEnum;
+use Zdrojowa\CmsKernel\Utils\Enums\CoreModulesEnum;
 
 /**
  * Class Booter
- * @package Zdrojowa\InvestmentCMS\Core
+ * @package Zdrojowa\CmsKernel\Core
  */
 class Booter implements BooterInterface
 {

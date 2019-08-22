@@ -1,10 +1,10 @@
 <?php
 
-namespace Zdrojowa\InvestmentCMS\Contracts\Core;
+namespace Zdrojowa\CmsKernel\Contracts\Core;
 
 /**
  * Interface BooterInterface
- * @package Zdrojowa\InvestmentCMS\Contracts\Core
+ * @package Zdrojowa\CmsKernel\Contracts\Core
  */
 interface BooterInterface
 {

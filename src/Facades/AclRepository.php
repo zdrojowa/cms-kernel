@@ -1,15 +1,15 @@
 <?php
 
-namespace Zdrojowa\InvestmentCMS\Facades;
+namespace Zdrojowa\CmsKernel\Facades;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Facade;
-use Zdrojowa\InvestmentCMS\Contracts\Modules\Module;
-use Zdrojowa\InvestmentCMS\Utils\Enums\CoreModulesEnum;
+use Zdrojowa\CmsKernel\Contracts\Modules\Module;
+use Zdrojowa\CmsKernel\Utils\Enums\CoreModulesEnum;
 
 /**
  * Class AclRepository
- * @package Zdrojowa\InvestmentCMS\Facades
+ * @package Zdrojowa\CmsKernel\Facades
  *
  * @method static addPresence(Module $module, Collection $presence): AclRepository
  */

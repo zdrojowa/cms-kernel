@@ -1,13 +1,13 @@
 <?php
 
-namespace Zdrojowa\InvestmentCMS\Menu;
+namespace Zdrojowa\CmsKernel\Menu;
 
 use Illuminate\Support\Collection;
 use Validator;
 
 /**
  * Class MenuPresence
- * @package Zdrojowa\InvestmentCMS\Menu
+ * @package Zdrojowa\CmsKernel\Menu
  */
 class MenuPresence
 {

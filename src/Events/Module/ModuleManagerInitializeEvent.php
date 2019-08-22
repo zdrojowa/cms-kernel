@@ -1,15 +1,15 @@
 <?php
 
-namespace Zdrojowa\InvestmentCMS\Events\Module;
+namespace Zdrojowa\CmsKernel\Events\Module;
 
-use Zdrojowa\InvestmentCMS\Contracts\Modules\ModuleManagerInterface;
-use Zdrojowa\InvestmentCMS\Events\InvestmentCMSEvent;
+use Zdrojowa\CmsKernel\Contracts\Modules\ModuleManagerInterface;
+use Zdrojowa\CmsKernel\Events\CmsKernelEvent;
 
 /**
  * Class ModuleManagerInitializeEvent
- * @package Zdrojowa\InvestmentCMS\Events\Module
+ * @package Zdrojowa\CmsKernel\Events\Module
  */
-class ModuleManagerInitializeEvent extends InvestmentCMSEvent
+class ModuleManagerInitializeEvent extends CmsKernelEvent
 {
 
     /**
