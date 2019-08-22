@@ -30,7 +30,6 @@ class MenuPresence
     protected static $rules = [
         'name' => 'string|required',
         'permission' => 'required',
-        'type' => 'in:GROUP,GET,POST',
         'children' => 'sometimes|array',
     ];
 
