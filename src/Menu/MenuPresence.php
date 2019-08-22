@@ -117,7 +117,7 @@ class MenuPresence
             return null;
         }
 
-        $menuPresence = new Collection();
+        $menuPresences = new Collection();
 
         foreach ($data as $anchor => $probablyMenuPresence) {
 
@@ -132,9 +132,9 @@ class MenuPresence
 
             if (isset($probablyMenuPresence['children'])) $menuPresence->setChildren(self::createPresenceFromData($probablyMenuPresence['children']));
 
-            $menuPresence->put($menuPresence->getAnchor(), $menuPresence);
+            $menuPresences->put($menuPresence->getAnchor(), $menuPresence);
         }
 
-        return $menuPresence;
+        return $menuPresences;
     }
 }
