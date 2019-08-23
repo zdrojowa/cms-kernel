@@ -24,6 +24,10 @@ class MenuPresence
      */
     private $route;
     /**
+     * @var string
+     */
+    private $icon;
+    /**
      * @var Collection
      */
     private $children;
@@ -44,13 +48,15 @@ class MenuPresence
      * @param string $anchor
      * @param string $name
      * @param string $route
+     * @param string|null $icon
      * @param Collection|null $children
      */
-    public function __construct(string $anchor, string $name, string $route = null, Collection $children = null)
+    public function __construct(string $anchor, string $name, string $route = null, string $icon = null, Collection $children = null)
     {
         $this->anchor = $anchor;
         $this->name = $name;
         $this->route = $route;
+        $this->icon = $route;
         $this->children = $children;
     }
 
@@ -68,6 +74,22 @@ class MenuPresence
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRoute()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIcon()
+    {
+        return $this->icon;
     }
 
     /**
@@ -104,6 +126,16 @@ class MenuPresence
     public static function checkDataStructure($data): bool
     {
         return is_array($data);
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasChildren(): bool
+    {
+        if ($this->children !== null && count($this->children) > 0) return true;
+
+        return false;
     }
 
     /**

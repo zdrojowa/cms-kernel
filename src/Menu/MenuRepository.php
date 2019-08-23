@@ -35,7 +35,7 @@ class MenuRepository
             throw new AclRepositoryHasPresenceException(get_class($module));
         }
 
-        $menuItemPresence = new MenuPresence($module->getAclAnchor(), $module->getAclName(), null,$presence);
+        $menuItemPresence = new MenuPresence($module->getAclAnchor(), $module->getAclName(), null, null, $presence);
         $this->presences->put($module->getName(), $menuItemPresence);
 
         event(new ModuleMenuPresenceRegisterEvent($module, $menuItemPresence));
