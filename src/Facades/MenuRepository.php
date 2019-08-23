@@ -12,6 +12,7 @@ use Zdrojowa\CmsKernel\Utils\Enums\CoreModulesEnum;
  * @package Zdrojowa\CmsKernel\Facades
  *
  * @method static addPresence(Module $module, Collection $presence): MenuRepository
+ * @method static getPresence(): Collection
  */
 class MenuRepository extends Facade
 {
