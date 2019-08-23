@@ -178,8 +178,8 @@ class MenuPresence
             $menuPresence = new self($anchor, $probablyMenuPresence['name']);
 
             if (isset($probablyMenuPresence['children'])) $menuPresence->setChildren(self::createPresenceFromData($probablyMenuPresence['children']));
-            if (isset($probablyMenuPresence['route'])) $menuPresence->setIcon($probablyMenuPresence['route']);
-            if (isset($probablyMenuPresence['icon'])) $menuPresence->setRoute($probablyMenuPresence['icon']);
+            if (isset($probablyMenuPresence['route'])) $menuPresence->setRoute($probablyMenuPresence['route']);
+            if (isset($probablyMenuPresence['icon'])) $menuPresence->setIcon($probablyMenuPresence['icon']);
 
             $menuPresences->put($menuPresence->getAnchor(), $menuPresence);
         }
