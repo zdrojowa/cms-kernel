@@ -71,7 +71,7 @@ class MenuPresence
     /**
      * @return mixed
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -79,15 +79,15 @@ class MenuPresence
     /**
      * @return string
      */
-    public function getRoute()
+    public function getRoute(): ?string
     {
-        return $this->name;
+        return $this->route;
     }
 
     /**
      * @return string
      */
-    public function getIcon()
+    public function getIcon(): ?string
     {
         return $this->icon;
     }
