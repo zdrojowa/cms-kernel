@@ -169,7 +169,6 @@ class MenuPresence
 
         foreach ($data as $anchor => $probablyMenuPresence) {
 
-            //dd($anchor, $probablyMenuPresence);
             if (!self::checkStructure($probablyMenuPresence)) {
                 continue;
 
@@ -179,8 +178,8 @@ class MenuPresence
             $menuPresence = new self($anchor, $probablyMenuPresence['name']);
 
             if (isset($probablyMenuPresence['children'])) $menuPresence->setChildren(self::createPresenceFromData($probablyMenuPresence['children']));
-            if (isset($probablyMenuPresence['route'])) $menuPresence->setIcon($probablyMenuPresence['children']);
-            if (isset($probablyMenuPresence['icon'])) $menuPresence->setRoute($probablyMenuPresence['children']);
+            if (isset($probablyMenuPresence['route'])) $menuPresence->setIcon($probablyMenuPresence['route']);
+            if (isset($probablyMenuPresence['icon'])) $menuPresence->setRoute($probablyMenuPresence['icon']);
 
             $menuPresences->put($menuPresence->getAnchor(), $menuPresence);
         }
