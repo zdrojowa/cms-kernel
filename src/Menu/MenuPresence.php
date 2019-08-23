@@ -109,6 +109,22 @@ class MenuPresence
     }
 
     /**
+     * @param string $route
+     */
+    public function setRoute(string $route)
+    {
+        $this->route = $route;
+    }
+
+    /**
+     * @param string $icon
+     */
+    public function setIcon(string $icon)
+    {
+        $this->icon = $icon;
+    }
+
+    /**
      * @param array $itemContent
      * @return bool
      */
@@ -163,6 +179,8 @@ class MenuPresence
             $menuPresence = new self($anchor, $probablyMenuPresence['name']);
 
             if (isset($probablyMenuPresence['children'])) $menuPresence->setChildren(self::createPresenceFromData($probablyMenuPresence['children']));
+            if (isset($probablyMenuPresence['route'])) $menuPresence->setIcon($probablyMenuPresence['children']);
+            if (isset($probablyMenuPresence['icon'])) $menuPresence->setRoute($probablyMenuPresence['children']);
 
             $menuPresences->put($menuPresence->getAnchor(), $menuPresence);
         }
