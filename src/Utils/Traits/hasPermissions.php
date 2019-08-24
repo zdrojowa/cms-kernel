@@ -7,12 +7,14 @@ use Zdrojowa\CmsKernel\Utils\Enums\CoreEnum;
 
 /**
  * Trait hasPermissions
+ * Trait for using in authenticatable models to check permissions based on table which can be configured in config file
  * @package Zdrojowa\CmsKernel\Utils\Traits
  */
 trait hasPermissions
 {
 
     /**
+     * Get model permission package
      * @return mixed
      */
     public function permissions()
@@ -21,6 +23,7 @@ trait hasPermissions
     }
 
     /**
+     * Check if model permission package has given anchor
      * @param string $permission
      *
      * @return bool
@@ -33,6 +36,7 @@ trait hasPermissions
     }
 
     /**
+     * Return bool from model's table
      * @return bool
      */
     public function isAdmin(): bool
