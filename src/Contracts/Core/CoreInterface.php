@@ -12,11 +12,15 @@ use Zdrojowa\CmsKernel\Contracts\Modules\ModuleManagerInterface;
 interface CoreInterface
 {
     /**
+     * Get registered aclRepository in IoC Container
+     *
      * @return AclRepositoryInterface|null
      */
     public function aclRepository(): ?AclRepositoryInterface;
 
     /**
+     * Get registered moduleManager in IoC Container
+     *
      * @return ModuleManagerInterface|null
      */
     public function moduleManager(): ?ModuleManagerInterface;
@@ -31,6 +35,8 @@ interface CoreInterface
     public function log($level, $message, array $context = null): CoreInterface;
 
     /**
+     * Get current version of mounted core
+     *
      * @return string
      */
     public function getVersion(): string;

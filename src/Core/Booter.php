@@ -41,7 +41,7 @@ class Booter implements BooterInterface
     }
 
     /**
-     * @return bool
+     * @inheritdoc
      */
     public function hasError(): bool
     {
@@ -51,9 +51,7 @@ class Booter implements BooterInterface
     }
 
     /**
-     * @param string $error
-     *
-     * @return BooterInterface
+     * @inheritdoc
      */
     public function addError(string $error): BooterInterface
     {
@@ -63,7 +61,7 @@ class Booter implements BooterInterface
     }
 
     /**
-     * @return array|null
+     * @inheritdoc
      */
     public function getErrors(): ?array
     {
@@ -71,7 +69,7 @@ class Booter implements BooterInterface
     }
 
     /**
-     * @return bool
+     * @inheritdoc
      */
     public function canBoot(): bool
     {
@@ -79,9 +77,7 @@ class Booter implements BooterInterface
     }
 
     /**
-     * @param CoreModulesEnum $coreModule
-     *
-     * @return bool
+     * @inheritdoc
      */
     public function isCoreModuleBooted(CoreModulesEnum $coreModule): bool
     {
@@ -89,9 +85,7 @@ class Booter implements BooterInterface
     }
 
     /**
-     * @param CoreModulesEnum $coreModule
-     *
-     * @return BooterInterface
+     * @inheritdoc
      */
     public function setCoreModuleBooted(CoreModulesEnum $coreModule): BooterInterface
     {
@@ -101,7 +95,7 @@ class Booter implements BooterInterface
     }
 
     /**
-     * @return bool
+     * @inheritdoc
      */
     public function allCoreModulesBooted(): bool
     {
@@ -115,7 +109,7 @@ class Booter implements BooterInterface
     }
 
     /**
-     * @return Collection
+     * @inheritdoc
      */
     public function getCoreModulesStatus(): Collection
     {
@@ -123,7 +117,7 @@ class Booter implements BooterInterface
     }
 
     /**
-     * @return string
+     * @inheritdoc
      */
     public function getVersion(): string
     {

@@ -9,19 +9,19 @@ use Zdrojowa\CmsKernel\Utils\Enums\CoreModulesEnum;
 use Illuminate\Support\Facades\Log;
 
 /**
- * @method app($instance)
+ * Class Core
+ * @package Zdrojowa\CmsKernel\Core
  */
 class Core implements CoreInterface
 {
 
+    /**
+     * @var string
+     */
     protected $version = '0.0.1';
 
     /**
-     * @param $level
-     * @param $message
-     * @param array|null $context
-     *
-     * @return CoreInterface
+     * @inheritdoc
      */
     public function log($level, $message, array $context = null): CoreInterface
     {
@@ -31,7 +31,7 @@ class Core implements CoreInterface
     }
 
     /**
-     * @return AclRepositoryInterface|null
+     * @inheritdoc
      */
     public function aclRepository(): ?AclRepositoryInterface
     {
@@ -39,7 +39,7 @@ class Core implements CoreInterface
     }
 
     /**
-     * @return ModuleManagerInterface|null
+     * @inheritdoc
      */
     public function moduleManager(): ?ModuleManagerInterface
     {
@@ -47,7 +47,7 @@ class Core implements CoreInterface
     }
 
     /**
-     * @return string
+     * @inheritdoc
      */
     public function getVersion(): string
     {

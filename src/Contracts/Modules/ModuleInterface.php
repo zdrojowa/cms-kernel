@@ -10,6 +10,9 @@ interface ModuleInterface
 {
 
     /**
+     * Method for loading all config files etc.
+     * Called in ModuleManagerServiceProvider
+     *
      * @return mixed
      */
     public function loadConfig();
