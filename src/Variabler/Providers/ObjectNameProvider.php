@@ -3,6 +3,7 @@
 namespace Zdrojowa\CmsKernel\Utils\Variabler\Providers;
 
 use ReflectionClass;
+use ReflectionException;
 use stdClass;
 use Zdrojowa\CmsKernel\Contracts\Variabler\VariableProviderInterface;
 
@@ -31,7 +32,7 @@ class ObjectNameProvider implements VariableProviderInterface
             }
 
             return $reflection->getShortName();
-        } catch (\ReflectionException $e) {
+        } catch (ReflectionException $e) {
             report($e);
 
             return $key;
