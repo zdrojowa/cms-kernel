@@ -2,7 +2,6 @@
 
 namespace Zdrojowa\CmsKernel\Utils\Traits;
 
-use Exception;
 use Illuminate\Support\Facades\Validator;
 use Zdrojowa\CmsKernel\Exceptions\CmsKernelException;
 use Zdrojowa\CmsKernel\Exceptions\PropertyBinder\PropertyCanNotPassValidationException;
