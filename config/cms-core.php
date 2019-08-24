@@ -21,7 +21,6 @@ return [
     // Section with declaration of reusable modules
 
     CoreEnum::MODULES_SECTION => [
-        AuthModule::class
     ],
 
     // Section with declaration of core modules
