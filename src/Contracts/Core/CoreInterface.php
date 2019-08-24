@@ -2,6 +2,7 @@
 
 namespace Zdrojowa\CmsKernel\Contracts\Core;
 
+use Zdrojowa\CmsKernel\Contracts\Acl\AclRepositoryInterface;
 use Zdrojowa\CmsKernel\Contracts\Modules\ModuleManagerInterface;
 
 /**
@@ -10,28 +11,15 @@ use Zdrojowa\CmsKernel\Contracts\Modules\ModuleManagerInterface;
  */
 interface CoreInterface
 {
-
     /**
-     * @param ModuleManagerInterface $moduleManager
-     *
-     * @return CoreInterface
+     * @return AclRepositoryInterface|null
      */
-    public function setModuleManager(ModuleManagerInterface $moduleManager): CoreInterface;
+    public function aclRepository(): ?AclRepositoryInterface;
 
     /**
      * @return ModuleManagerInterface|null
      */
-    public function getModuleManager(): ?ModuleManagerInterface;
-
-    /**
-     * @return bool
-     */
-    public function hasModuleManager(): bool;
-
-    /**
-     * @return string
-     */
-    public function version(): string;
+    public function moduleManager(): ?ModuleManagerInterface;
 
     /**
      * @param $level

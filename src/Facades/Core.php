@@ -10,11 +10,7 @@ use Zdrojowa\CmsKernel\Utils\Enums\CoreModulesEnum;
  * Class Core
  * @package Zdrojowa\CmsKernel\Facades
  *
- * @method static setModuleManager(ModuleManagerInterface $moduleManager)
- * @method static loadModuleManagerModules()
- * @method static getModuleManager(): ModuleManagerInterface
- * @method static getModulesManager()
- * @method static hasModuleManager()
+ * @method static moduleManager(): ModuleManagerInterface
  */
 class Core extends Facade
 {

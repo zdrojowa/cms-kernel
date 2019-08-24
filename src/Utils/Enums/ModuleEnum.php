@@ -2,6 +2,7 @@
 
 namespace Zdrojowa\CmsKernel\Utils\Enums;
 
-class ModuleEnum {
+class ModuleEnum
+{
     const MODULE_CONFIG_FILE = 'module.yml';
 }

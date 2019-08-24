@@ -6,6 +6,7 @@ use Exception;
 use Psr\Log\LogLevel;
 use Throwable;
 use Zdrojowa\CmsKernel\Facades\Core;
+use Zdrojowa\CmsKernel\Utils\Enums\CoreModulesEnum;
 
 /**
  * Class CmsKernelException
@@ -30,11 +31,17 @@ abstract class CmsKernelException extends Exception
      */
     public function report()
     {
-        if(!isset($this->level)) {
+        if (!isset($this->level)) {
             $this->level = LogLevel::ERROR;
         }
 
-        Core::log($this->level, $this->getMessage(), ['Exception' => get_class($this), 'File' => '`'.$this->getFile().'`', 'Line' => $this->getLine()]);
+        app(CoreModulesEnum::BOOTER)->addError($this->getMessage());
+
+        Core::log($this->level, $this->getMessage(), [
+            'Exception' => get_class($this),
+            'File' => '`' . $this->getFile() . '`',
+            'Line' => $this->getLine(),
+        ]);
     }
 
     /**

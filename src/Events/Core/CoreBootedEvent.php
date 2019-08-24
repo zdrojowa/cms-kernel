@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Zdrojowa\CmsKernel\Events\Core;
-
 
 use Zdrojowa\CmsKernel\Contracts\Core\CoreInterface;
 use Zdrojowa\CmsKernel\Events\CmsKernelEvent;
@@ -21,6 +19,7 @@ class CoreBootedEvent extends CmsKernelEvent
 
     /**
      * CoreBootedEvent constructor.
+     *
      * @param CoreInterface $core
      */
     public function __construct(CoreInterface $core)

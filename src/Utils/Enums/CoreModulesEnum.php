@@ -11,6 +11,8 @@ use MyCLabs\Enum\Enum;
  * @method static CORE()
  * @method static BOOTER()
  * @method static MODULE_MANAGER()
+ * @method static ACL_REPOSITORY()
+ * @method static MENU_REPOSITORY()
  */
 class CoreModulesEnum extends Enum
 {
@@ -19,6 +21,5 @@ class CoreModulesEnum extends Enum
     public const MODULE_MANAGER = 'cms-module-manager';
     public const ACL_REPOSITORY = 'cms-acl-repository';
     public const MENU_REPOSITORY = 'cms-menu-repository';
-    public const MIGRATION_REPOSITORY = 'cms-migration-repository';
-    public const MIGRATOR = 'cms-migrator';
+    public const VARIABLER = 'cms-variabler';
 }

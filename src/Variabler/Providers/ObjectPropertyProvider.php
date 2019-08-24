@@ -2,7 +2,7 @@
 
 namespace Zdrojowa\CmsKernel\Utils\Variabler\Providers;
 
-use Zdrojowa\CmsKernel\Utils\Variabler\VariableProviderInterface;
+use Zdrojowa\CmsKernel\Contracts\Variabler\VariableProviderInterface;
 
 /**
  * Class ObjectPropertyProvider
@@ -17,7 +17,7 @@ class ObjectPropertyProvider implements VariableProviderInterface
      *
      * @return mixed
      */
-    public function replace($object, $key)
+    public function replace($key, $object = null)
     {
         if (!is_object($object) || !isset($object->$key)) return $key;
 

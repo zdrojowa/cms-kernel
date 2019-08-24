@@ -12,11 +12,6 @@ interface ModuleManagerInterface
 {
 
     /**
-     *
-     */
-    public function initialize(): void;
-
-    /**
      * Get current ModuleManager version
      * @return string
      */
@@ -34,18 +29,18 @@ interface ModuleManagerInterface
     /**
      * @param string $name
      *
-     * @param Module $module
+     * @param ModuleInterface $module
      *
      * @return ModuleManagerInterface
      */
-    public function addModule(string $name, Module $module): ModuleManagerInterface;
+    public function addModule(string $name, ModuleInterface $module): ModuleManagerInterface;
 
     /**
      * @param string $name
      *
      * @return ModuleManagerInterface|null
      */
-    public function getModule(string $name): ?Module;
+    public function getModule(string $name): ?ModuleInterface;
 
     /**
      * @return Collection

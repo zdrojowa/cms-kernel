@@ -2,7 +2,7 @@
 
 namespace Zdrojowa\CmsKernel\Events\Module;
 
-use Zdrojowa\CmsKernel\Contracts\Modules\Module;
+use Zdrojowa\CmsKernel\Contracts\Modules\ModuleInterface;
 use Zdrojowa\CmsKernel\Events\CmsKernelEvent;
 
 /**
@@ -11,18 +11,17 @@ use Zdrojowa\CmsKernel\Events\CmsKernelEvent;
  */
 class ModuleRegisterEvent extends CmsKernelEvent
 {
-
     /**
-     * @var Module
+     * @var ModuleInterface
      */
     public $module;
 
     /**
      * ModuleRegisterEvent constructor.
      *
-     * @param Module $module
+     * @param ModuleInterface $module
      */
-    public function __construct(Module $module)
+    public function __construct(ModuleInterface $module)
     {
         $this->module = $module;
     }

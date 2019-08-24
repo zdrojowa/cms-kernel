@@ -4,6 +4,7 @@ namespace Zdrojowa\CmsKernel\Utils\Enums;
 
 /**
  * Class CoreEnum
+ * @package Zdrojowa\CmsKernel\Utils\Enums
  */
 class CoreEnum
 {
@@ -21,9 +22,12 @@ class CoreEnum
     public const CMS_MIGRATIONS_PERMISSIONS_USERS_FOREIGN_KEY = 'cms-migrations-permissions-users-foreign-key';
 
     public const CORE_COMMANDS_SECTION = 'core-commands';
+    public const CORE_OBLIGATORY_COMMANDS_SECTION = 'core-commands-obligatory';
 
     public const CMS_SUPER_ADMIN_COLUMN_NAME = 'is_admin';
     public const CMS_SUPER_PERMISSION_ANCHOR = 'cms-super-permission-anchor';
 
     public const MODULES_CONFIG_DIR = 'modules';
+
+    public const VARIABLER_PROVIDERS_SECTION = 'cms-variabler-providers-section';
 }

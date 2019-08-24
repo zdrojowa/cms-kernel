@@ -5,13 +5,14 @@ namespace Zdrojowa\CmsKernel\Facades;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Facade;
 use Zdrojowa\CmsKernel\Contracts\Modules\Module;
+use Zdrojowa\CmsKernel\Contracts\Modules\ModuleInterface;
 use Zdrojowa\CmsKernel\Utils\Enums\CoreModulesEnum;
 
 /**
  * Class MenuRepository
  * @package Zdrojowa\CmsKernel\Facades
  *
- * @method static addPresence(Module $module, Collection $presence): MenuRepository
+ * @method static addPresence(ModuleInterface $module, Collection $presence): MenuRepository
  * @method static getPresence(): Collection
  */
 class MenuRepository extends Facade

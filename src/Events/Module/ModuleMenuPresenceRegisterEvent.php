@@ -2,7 +2,7 @@
 
 namespace Zdrojowa\CmsKernel\Events\Module;
 
-use Zdrojowa\CmsKernel\Contracts\Modules\Module;
+use Zdrojowa\CmsKernel\Contracts\Modules\ModuleInterface;
 use Zdrojowa\CmsKernel\Events\CmsKernelEvent;
 use Zdrojowa\CmsKernel\Menu\MenuPresence;
 
@@ -12,9 +12,9 @@ use Zdrojowa\CmsKernel\Menu\MenuPresence;
  */
 class ModuleMenuPresenceRegisterEvent extends CmsKernelEvent
 {
+
     /**
-     * @var Module
-     *
+     * @var ModuleInterface
      */
     public $module;
     /**
@@ -25,10 +25,10 @@ class ModuleMenuPresenceRegisterEvent extends CmsKernelEvent
     /**
      * ModuleAclPresenceRegisterEvent constructor.
      *
-     * @param Module $module
+     * @param ModuleInterface $module
      * @param MenuPresence $menuPresence
      */
-    public function __construct(Module $module, MenuPresence $menuPresence)
+    public function __construct(ModuleInterface $module, MenuPresence $menuPresence)
     {
         $this->module = $module;
         $this->menuPresence = $menuPresence;

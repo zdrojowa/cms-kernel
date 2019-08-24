@@ -6,7 +6,9 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 use ReflectionClass;
 use ReflectionException;
+use Zdrojowa\CmsKernel\Contracts\Core\BooterInterface;
 use Zdrojowa\CmsKernel\Contracts\Modules\Module;
+use Zdrojowa\CmsKernel\Contracts\Modules\ModuleInterface;
 use Zdrojowa\CmsKernel\Contracts\Modules\ModuleManagerInterface;
 use Zdrojowa\CmsKernel\Modules\ModuleManager;
 use Zdrojowa\CmsKernel\Utils\Enums\CoreModulesEnum;
@@ -18,10 +20,17 @@ use Zdrojowa\CmsKernel\Utils\Enums\CoreModulesEnum;
 class ModuleAssetsServiceProvider extends ServiceProvider
 {
 
+    /**
+     *
+     */
     public function boot()
     {
-        if($this->core()->hasModuleManager()) {
-            $this->publishModulesAssets($this->core()->getModuleManager());
+        if (!$this->booter()->canBoot()) return;
+
+        try {
+            $this->publishModulesAssets($this->moduleManager());
+        } catch (ReflectionException $e) {
+            report($e);
         }
     }
 
@@ -41,11 +50,11 @@ class ModuleAssetsServiceProvider extends ServiceProvider
     }
 
     /**
-     * @param Module $module
+     * @param ModuleInterface $module
      *
      * @throws ReflectionException
      */
-    protected function loadAndPublishModuleAssets(Module $module)
+    protected function loadAndPublishModuleAssets(ModuleInterface $module)
     {
         $reflection = new ReflectionClass($module);
         $moduleSrc = dirname($reflection->getFileName());
@@ -83,10 +92,18 @@ class ModuleAssetsServiceProvider extends ServiceProvider
     }
 
     /**
-     * @return Application|mixed
+     * @return BooterInterface
      */
-    protected function core()
+    protected function booter(): BooterInterface
     {
-        return app(CoreModulesEnum::CORE);
+        return $this->app->get(CoreModulesEnum::BOOTER);
+    }
+
+    /**
+     * @return ModuleManagerInterface
+     */
+    protected function moduleManager(): ModuleManagerInterface
+    {
+        return $this->app->get(CoreModulesEnum::MODULE_MANAGER);
     }
 }

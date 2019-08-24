@@ -45,7 +45,7 @@ trait Propertiable
                 ]);
             }
 
-            $this->$property = Variabler::replace($this, $data[$property]);
+            $this->$property = $data[$property];
         }
     }
 }

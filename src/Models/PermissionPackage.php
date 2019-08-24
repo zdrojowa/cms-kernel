@@ -23,7 +23,7 @@ class PermissionPackage extends Model
      */
     protected $casts = [
         'name' => 'string',
-        'anchors' => 'array'
+        'anchors' => 'array',
     ];
 
     /**
@@ -48,13 +48,13 @@ class PermissionPackage extends Model
      *
      * @return bool
      */
-    public function hasPermission(string $permission): bool {
+    public function hasPermission(string $permission): bool
+    {
         foreach ($this->anchors as $anchor) {
-            if($anchor === ConfigUtils::coreConfig(CoreEnum::CMS_SUPER_PERMISSION_ANCHOR) || $anchor === $permission) return true;
+            if ($anchor === ConfigUtils::coreConfig(CoreEnum::CMS_SUPER_PERMISSION_ANCHOR) || $anchor === $permission) return true;
         }
 
         return false;
     }
-
 
 }

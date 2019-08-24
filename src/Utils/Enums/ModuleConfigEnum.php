@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Zdrojowa\CmsKernel\Utils\Enums;
-
 
 use MyCLabs\Enum\Enum;
 

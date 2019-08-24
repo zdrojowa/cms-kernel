@@ -5,7 +5,7 @@ namespace Zdrojowa\CmsKernel\Events\Module;
 
 
 use Zdrojowa\CmsKernel\Contracts\Acl\AclPresence;
-use Zdrojowa\CmsKernel\Contracts\Modules\Module;
+use Zdrojowa\CmsKernel\Contracts\Modules\ModuleInterface;
 use Zdrojowa\CmsKernel\Events\CmsKernelEvent;
 
 /**
@@ -16,7 +16,7 @@ class ModuleAclPresenceRegisterEvent extends CmsKernelEvent
 {
 
     /**
-     * @var Module
+     * @var ModuleInterface
      */
     public $module;
     /**
@@ -26,10 +26,11 @@ class ModuleAclPresenceRegisterEvent extends CmsKernelEvent
 
     /**
      * ModuleAclPresenceRegisterEvent constructor.
-     * @param Module $module
+     *
+     * @param ModuleInterface $module
      * @param AclPresence $aclPresence
      */
-    public function __construct(Module $module, AclPresence $aclPresence)
+    public function __construct(ModuleInterface $module, AclPresence $aclPresence)
     {
         $this->module = $module;
         $this->aclPresence = $aclPresence;

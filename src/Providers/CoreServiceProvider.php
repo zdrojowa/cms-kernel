@@ -3,15 +3,12 @@
 namespace Zdrojowa\CmsKernel\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Zdrojowa\CmsKernel\Contracts\Acl\AclRepository;
 use Zdrojowa\CmsKernel\Contracts\Core\BooterInterface;
 use Zdrojowa\CmsKernel\Contracts\Core\CoreInterface;
 use Zdrojowa\CmsKernel\Events\Booter\BooterRegisterEvent;
-use Zdrojowa\CmsKernel\Events\Core\AclRepositoryRegisterEvent;
 use Zdrojowa\CmsKernel\Events\Core\CoreBootedEvent;
 use Zdrojowa\CmsKernel\Events\Core\CoreRegisterEvent;
 use Zdrojowa\CmsKernel\Events\Core\MenuRepositoryRegisterEvent;
-use Zdrojowa\CmsKernel\Facades\Booter;
 use Zdrojowa\CmsKernel\Menu\MenuRepository;
 use Zdrojowa\CmsKernel\Utils\Config\ConfigUtils;
 use Zdrojowa\CmsKernel\Utils\Enums\CoreEnum;
@@ -28,10 +25,13 @@ class CoreServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->registerObligatoryCommands();
+
+        if (!$this->booter()->allCoreModulesBooted()) return;
+
         $this->publishConfig()->registerCommands()->registerMigrations();
 
         event(new CoreBootedEvent(app(CoreModulesEnum::CORE)));
-        Booter::markCmsEnabled();
     }
 
     /**
@@ -41,9 +41,87 @@ class CoreServiceProvider extends ServiceProvider
     {
         $this->registerConfig()->registerBooterModule();
 
-        if (!Booter::canCmsBoot()) return;
+        if (!$this->booter()->canBoot()) return;
 
-        $this->registerCoreModule()->registerAclRepository()->registerMenuRepository();
+        $this->registerCoreModule()->registerMenuRepository();
+    }
+
+    /**
+     * @return CoreServiceProvider
+     */
+    protected function registerBooterModule(): CoreServiceProvider
+    {
+        $this->app->singleton(CoreModulesEnum::BOOTER, ConfigUtils::coreModules(CoreModulesEnum::BOOTER()));
+        $this->app->bind(BooterInterface::class, CoreModulesEnum::BOOTER);
+
+        event(new BooterRegisterEvent(app(CoreModulesEnum::BOOTER)));
+
+        $this->booter()->setCoreModuleBooted(CoreModulesEnum::BOOTER());
+
+        return $this;
+    }
+
+    /**
+     * @return CoreServiceProvider
+     */
+    protected function registerCoreModule(): CoreServiceProvider
+    {
+        $this->app->singleton(CoreModulesEnum::CORE, ConfigUtils::coreModules(CoreModulesEnum::CORE()));
+        $this->app->bind(CoreInterface::class, CoreModulesEnum::CORE);
+
+        event(new CoreRegisterEvent(app(CoreModulesEnum::CORE)));
+
+        $this->booter()->setCoreModuleBooted(CoreModulesEnum::CORE());
+
+        return $this;
+    }
+
+    /**
+     * @return CoreServiceProvider
+     */
+    protected function registerMenuRepository(): CoreServiceProvider
+    {
+        $this->app->singleton(CoreModulesEnum::MENU_REPOSITORY, MenuRepository::class);
+
+        event(new MenuRepositoryRegisterEvent(app(CoreModulesEnum::MENU_REPOSITORY)));
+
+        $this->booter()->setCoreModuleBooted(CoreModulesEnum::MENU_REPOSITORY());
+
+        return $this;
+    }
+
+    /**
+     * @return CoreServiceProvider
+     */
+    protected function registerCommands(): CoreServiceProvider
+    {
+        if ($this->app->runningInConsole()) {
+            $this->commands(ConfigUtils::coreConfig(CoreEnum::CORE_COMMANDS_SECTION));
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return CoreServiceProvider
+     */
+    protected function registerObligatoryCommands(): CoreServiceProvider
+    {
+        if ($this->app->runningInConsole()) {
+            $this->commands(ConfigUtils::coreConfig(CoreEnum::CORE_OBLIGATORY_COMMANDS_SECTION));
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return CoreServiceProvider
+     */
+    protected function registerMigrations(): CoreServiceProvider
+    {
+        $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
+
+        return $this;
     }
 
     /**
@@ -69,74 +147,11 @@ class CoreServiceProvider extends ServiceProvider
     }
 
     /**
-     * @return CoreServiceProvider
+     * @return BooterInterface
      */
-    protected function registerBooterModule(): CoreServiceProvider
+    public function booter(): BooterInterface
     {
-        $this->app->singleton(CoreModulesEnum::BOOTER, ConfigUtils::coreModules(CoreModulesEnum::BOOTER()));
-        $this->app->bind(BooterInterface::class, CoreModulesEnum::BOOTER);
-
-        event(new BooterRegisterEvent(app(CoreModulesEnum::BOOTER)));
-
-        return $this;
+        return $this->app->get(CoreModulesEnum::BOOTER);
     }
 
-    /**
-     * @return CoreServiceProvider
-     */
-    protected function registerCoreModule(): CoreServiceProvider
-    {
-        $this->app->singleton(CoreModulesEnum::CORE, ConfigUtils::coreModules(CoreModulesEnum::CORE()));
-        $this->app->bind(CoreInterface::class, CoreModulesEnum::CORE);
-
-        event(new CoreRegisterEvent(app(CoreModulesEnum::CORE)));
-
-        return $this;
-    }
-
-    /**
-     * @return CoreServiceProvider
-     */
-    protected function registerAclRepository(): CoreServiceProvider
-    {
-        $this->app->singleton(CoreModulesEnum::ACL_REPOSITORY, AclRepository::class);
-
-        event(new AclRepositoryRegisterEvent(app(CoreModulesEnum::ACL_REPOSITORY)));
-
-        return $this;
-    }
-
-    /**
-     * @return CoreServiceProvider
-     */
-    protected function registerMenuRepository(): CoreServiceProvider
-    {
-        $this->app->singleton(CoreModulesEnum::MENU_REPOSITORY, MenuRepository::class);
-
-        event(new MenuRepositoryRegisterEvent(app(CoreModulesEnum::MENU_REPOSITORY)));
-
-        return $this;
-    }
-
-    /**
-     * @return CoreServiceProvider
-     */
-    protected function registerCommands(): CoreServiceProvider
-    {
-        if ($this->app->runningInConsole()) {
-            $this->commands(ConfigUtils::coreConfig(CoreEnum::CORE_COMMANDS_SECTION));
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return CoreServiceProvider
-     */
-    protected function registerMigrations(): CoreServiceProvider
-    {
-        $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
-
-        return $this;
-    }
 }

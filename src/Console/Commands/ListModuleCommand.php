@@ -4,6 +4,7 @@ namespace Zdrojowa\CmsKernel\Console\Commands;
 
 use Illuminate\Console\Command;
 use Zdrojowa\CmsKernel\Contracts\Core\CoreInterface;
+use Zdrojowa\CmsKernel\Contracts\Modules\ModuleManagerInterface;
 
 /**
  * Class ListModuleCommand
@@ -18,9 +19,9 @@ class ListModuleCommand extends Command
     protected $signature = 'cms:modules {module?}';
 
     /**
-     * @param CoreInterface $core
+     * @param ModuleManagerInterface $manager
      */
-    public function handle(CoreInterface $core)
+    public function handle(ModuleManagerInterface $manager)
     {
         $module = $this->argument('module');
 
@@ -31,7 +32,7 @@ class ListModuleCommand extends Command
 
             $data = [];
 
-            foreach ($core->getModuleManager()->getModules() as $module) {
+            foreach ($manager->getModules() as $module) {
                 $moduleData = [];
                 $moduleData['Name'] = $module->getName();
                 $moduleData['Version'] = $module->getVersion();

@@ -1,17 +1,18 @@
 <?php
 
-namespace Zdrojowa\CmsKernel\Contracts\Acl;
+namespace Zdrojowa\CmsKernel\Acl;
 
 use Illuminate\Support\Collection;
+use Zdrojowa\CmsKernel\Contracts\Acl\AclPresenceInterface;
+use Zdrojowa\CmsKernel\Contracts\Acl\AclRepositoryInterface;
 use Zdrojowa\CmsKernel\Contracts\Modules\Module;
-use Zdrojowa\CmsKernel\Events\Module\ModuleAclPresenceRegisterEvent;
 use Zdrojowa\CmsKernel\Exceptions\Acl\AclRepositoryHasPresenceException;
 
 /**
  * Class AclRepository
- * @package Zdrojowa\CmsKernel\Contracts\Acl
+ * @package Zdrojowa\CmsKernel\Acl
  */
-class AclRepository
+class AclRepository implements AclRepositoryInterface
 {
 
     /**
@@ -28,24 +29,28 @@ class AclRepository
     }
 
     /**
-     * @param Module $module
-     * @param Collection $presence
+     * @param AclPresenceInterface $presence
      *
-     * @return AclRepository
+     * @return AclRepositoryInterface
      * @throws AclRepositoryHasPresenceException
      */
-    public function addPresence(Module $module, Collection $presence): AclRepository
+    public function addPresence(AclPresenceInterface $presence): AclRepositoryInterface
     {
-        if ($this->hasModulePresence($module->getName())) {
-            throw new AclRepositoryHasPresenceException(get_class($module));
-        }
+        if ($this->hasMainPresence($presence->getName())) throw new AclRepositoryHasPresenceException($presence->getName());
 
-        $aclModulePresence = new AclPresence($module->getAclAnchor(), $module->getAclName(), $presence);
-        $this->presences->put($module->getName(), $aclModulePresence);
-
-        event(new ModuleAclPresenceRegisterEvent($module, $aclModulePresence));
+        $this->presences->put($presence->getName(), $presence);
 
         return $this;
+    }
+
+    /**
+     * @param string $moduleName
+     *
+     * @return bool
+     */
+    public function hasMainPresence(string $moduleName): bool
+    {
+        return $this->presences->has($moduleName);
     }
 
     /**
@@ -59,19 +64,9 @@ class AclRepository
     /**
      * @param string $moduleName
      *
-     * @return bool
+     * @return AclPresenceInterface|null
      */
-    public function hasModulePresence(string $moduleName): bool
-    {
-        return $this->presences->has($moduleName);
-    }
-
-    /**
-     * @param string $moduleName
-     *
-     * @return AclPresence
-     */
-    public function getModulePresence(string $moduleName): AclPresence
+    public function getMainPresence(string $moduleName): ?AclPresenceInterface
     {
         if ($this->hasModulePresence($moduleName)) return $this->presences->get($moduleName);
 
@@ -81,18 +76,15 @@ class AclRepository
     /**
      * @param string $presence
      *
-     * @return AclPresence|null
+     * @return AclPresenceInterface|null
      */
-    public function get(string $presence): ?AclPresence
+    public function get(string $presence): ?AclPresenceInterface
     {
         $exploded = explode('.', $presence);
         $currentPresence = $this->presences->get($exploded[0]);
-
         array_shift($exploded);
-
         foreach ($exploded as $toSearch) {
             if ($currentPresence === null || $currentPresence->getChildren() === null) return null;
-
             $currentPresence = $currentPresence->getChildren()->get($toSearch);
         }
 

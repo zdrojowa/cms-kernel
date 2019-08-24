@@ -1,11 +1,17 @@
 <?php
 
+use Zdrojowa\AuthModule\AuthModule;
+use Zdrojowa\CmsKernel\Acl\AclRepository;
+use Zdrojowa\CmsKernel\Console\Commands\CoreModulesBootedCommand;
 use Zdrojowa\CmsKernel\Console\Commands\ListModuleCommand;
 use Zdrojowa\CmsKernel\Core\Booter;
 use Zdrojowa\CmsKernel\Core\Core;
 use Zdrojowa\CmsKernel\Modules\ModuleManager;
 use Zdrojowa\CmsKernel\Utils\Enums\CoreEnum;
 use Zdrojowa\CmsKernel\Utils\Enums\CoreModulesEnum;
+use Zdrojowa\CmsKernel\Utils\Variabler\Providers\ObjectNameProvider;
+use Zdrojowa\CmsKernel\Utils\Variabler\Providers\ObjectPropertyProvider;
+use Zdrojowa\CmsKernel\Variabler\Variabler;
 
 return [
     // Section with declaration of cms options
@@ -15,7 +21,7 @@ return [
     // Section with declaration of reusable modules
 
     CoreEnum::MODULES_SECTION => [
-
+        AuthModule::class
     ],
 
     // Section with declaration of core modules
@@ -24,6 +30,8 @@ return [
         CoreModulesEnum::CORE => Core::class,
         CoreModulesEnum::BOOTER => Booter::class,
         CoreModulesEnum::MODULE_MANAGER => ModuleManager::class,
+        CoreModulesEnum::ACL_REPOSITORY => AclRepository::class,
+        CoreModulesEnum::VARIABLER => Variabler::class
     ],
 
     CoreEnum::CMS_MIGRATIONS_USERS_TABLE_OPTION => 'users',
@@ -36,8 +44,17 @@ return [
         ListModuleCommand::class,
     ],
 
+    CoreEnum::CORE_OBLIGATORY_COMMANDS_SECTION => [
+        CoreModulesBootedCommand::class
+    ],
+
     CoreEnum::CMS_SUPER_ADMIN_COLUMN_NAME => 'admin',
 
     CoreEnum::CMS_SUPER_PERMISSION_ANCHOR => '*',
+
+    CoreEnum::VARIABLER_PROVIDERS_SECTION => [
+        'name' => ObjectNameProvider::class,
+        'property' => ObjectPropertyProvider::class
+    ]
 
 ];

@@ -23,6 +23,6 @@ class AclPresenceDataException extends CmsKernelException
      */
     function formatMessage($data): string
     {
-        return "Bad data for acl presence";
+        return "Bad data for ".$data[0]."'s' acl presence";
     }
 }

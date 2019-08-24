@@ -4,7 +4,7 @@ namespace Zdrojowa\CmsKernel\Utils\Variabler\Providers;
 
 use ReflectionClass;
 use stdClass;
-use Zdrojowa\CmsKernel\Utils\Variabler\VariableProviderInterface;
+use Zdrojowa\CmsKernel\Contracts\Variabler\VariableProviderInterface;
 
 /**
  * Class ObjectNameProvider
@@ -19,20 +19,21 @@ class ObjectNameProvider implements VariableProviderInterface
      *
      * @return mixed
      */
-    public function replace($object, $key)
+    public function replace($key, $object = null)
     {
-        if(!is_object($object)) return $key;
+        if (!is_object($object)) return $key;
 
         try {
             $reflection = $object;
 
-            if(!$reflection instanceof  ReflectionClass) {
+            if (!$reflection instanceof ReflectionClass) {
                 $reflection = new ReflectionClass($object);
             }
 
             return $reflection->getShortName();
         } catch (\ReflectionException $e) {
             report($e);
+
             return $key;
         }
     }

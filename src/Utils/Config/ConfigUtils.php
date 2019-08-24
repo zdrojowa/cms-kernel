@@ -19,7 +19,7 @@ class ConfigUtils
      */
     public static function coreConfig(string $key)
     {
-        return config(CoreEnum::CMS_CONFIG.".".$key);
+        return config(CoreEnum::CMS_CONFIG . "." . $key);
     }
 
     /**
@@ -27,8 +27,9 @@ class ConfigUtils
      *
      * @return Repository|mixed
      */
-    public static function coreModules(CoreModulesEnum $coreModule) {
-        return self::coreConfig(CoreEnum::CORE_MODULES_SECTION.'.'.$coreModule);
+    public static function coreModules(CoreModulesEnum $coreModule)
+    {
+        return self::coreConfig(CoreEnum::CORE_MODULES_SECTION . '.' . $coreModule);
     }
 
     /**
