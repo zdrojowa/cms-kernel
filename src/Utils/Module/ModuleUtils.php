@@ -19,6 +19,8 @@ class ModuleUtils
 {
 
     /**
+     * Decode module's yaml config file to array
+     *
      * @param ModuleInterface $module
      * @param ModuleConfigEnum $config
      *
