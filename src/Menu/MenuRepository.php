@@ -3,7 +3,6 @@
 namespace Zdrojowa\CmsKernel\Menu;
 
 use Illuminate\Support\Collection;
-use Zdrojowa\CmsKernel\Contracts\Modules\Module;
 use Zdrojowa\CmsKernel\Contracts\Modules\ModuleInterface;
 use Zdrojowa\CmsKernel\Events\Module\ModuleMenuPresenceRegisterEvent;
 use Zdrojowa\CmsKernel\Exceptions\Acl\AclRepositoryHasPresenceException;

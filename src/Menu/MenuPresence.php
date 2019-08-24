@@ -3,7 +3,7 @@
 namespace Zdrojowa\CmsKernel\Menu;
 
 use Illuminate\Support\Collection;
-use Validator;
+use Illuminate\Support\Facades\Validator;
 
 /**
  * Class MenuPresence

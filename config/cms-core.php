@@ -2,6 +2,7 @@
 
 use Zdrojowa\AuthModule\AuthModule;
 use Zdrojowa\CmsKernel\Acl\AclRepository;
+use Zdrojowa\CmsKernel\Console\Commands\BooterShowErrorsCommand;
 use Zdrojowa\CmsKernel\Console\Commands\CoreModulesBootedCommand;
 use Zdrojowa\CmsKernel\Console\Commands\ListModuleCommand;
 use Zdrojowa\CmsKernel\Core\Booter;
@@ -21,6 +22,7 @@ return [
     // Section with declaration of reusable modules
 
     CoreEnum::MODULES_SECTION => [
+        AuthModule::class
     ],
 
     // Section with declaration of core modules
@@ -44,7 +46,8 @@ return [
     ],
 
     CoreEnum::CORE_OBLIGATORY_COMMANDS_SECTION => [
-        CoreModulesBootedCommand::class
+        CoreModulesBootedCommand::class,
+        BooterShowErrorsCommand::class
     ],
 
     CoreEnum::CMS_SUPER_ADMIN_COLUMN_NAME => 'admin',

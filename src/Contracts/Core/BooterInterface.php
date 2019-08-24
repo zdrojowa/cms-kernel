@@ -58,4 +58,9 @@ interface BooterInterface
      */
     public function getCoreModulesStatus(): Collection;
 
+    /**
+     * @return string
+     */
+    public function getVersion(): string;
+
 }

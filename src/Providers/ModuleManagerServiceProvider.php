@@ -13,12 +13,12 @@ use Zdrojowa\CmsKernel\Exceptions\CmsKernelException;
 use Zdrojowa\CmsKernel\Exceptions\Modules\ModuleConfigException;
 use Zdrojowa\CmsKernel\Exceptions\Modules\ModuleConfigNotFoundException;
 use Zdrojowa\CmsKernel\Exceptions\Modules\ModuleInstanceException;
+use Zdrojowa\CmsKernel\Facades\Variabler;
 use Zdrojowa\CmsKernel\Utils\Config\ConfigUtils;
 use Zdrojowa\CmsKernel\Utils\Enums\CoreEnum;
 use Zdrojowa\CmsKernel\Utils\Enums\CoreModulesEnum;
 use Zdrojowa\CmsKernel\Utils\Enums\ModuleConfigEnum;
 use Zdrojowa\CmsKernel\Utils\Module\ModuleUtils;
-use Zdrojowa\CmsKernel\Utils\Variabler\Variabler;
 
 /**
  * Class ModuleManagerServiceProvider
@@ -26,6 +26,8 @@ use Zdrojowa\CmsKernel\Utils\Variabler\Variabler;
  */
 class ModuleManagerServiceProvider extends ServiceProvider
 {
+
+    private $modules;
 
     /**
      * ModuleManagerServiceProvider constructor.
@@ -93,7 +95,7 @@ class ModuleManagerServiceProvider extends ServiceProvider
                     $module = new ReflectionClass($module);
                     $fileName = ModuleConfigEnum::MODULE_EXTRA_FILE;
 
-                    $fileName = Variabler::replace($module, $fileName);
+                    $fileName = Variabler::make($fileName, $module);
 
                     $this->publishes([
                         dirname($module->getFileName()) . "/" . ModuleConfigEnum::MODULES_CONFIG_FOLDER . $fileName => base_path(CoreEnum::MODULES_CONFIG_DIR) . "/$fileName",
@@ -139,7 +141,6 @@ class ModuleManagerServiceProvider extends ServiceProvider
 
                 event(new ModuleRegisterEvent($module));
             } catch (CmsKernelException | ReflectionException $exception) {
-                dd($exception);
                 report($exception);
 
                 continue;

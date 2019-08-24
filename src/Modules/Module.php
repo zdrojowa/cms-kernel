@@ -7,7 +7,7 @@ use ReflectionClass;
 use ReflectionException;
 use Symfony\Component\Yaml\Yaml;
 use Zdrojowa\CmsKernel\Contracts\Modules\ModuleInterface;
-use Zdrojowa\CmsKernel\Exceptions\Modules\ModuleConfigNotFoundException;
+use Zdrojowa\CmsKernel\Exceptions\CmsKernelException;
 use Zdrojowa\CmsKernel\Facades\Core;
 use Zdrojowa\CmsKernel\Facades\MenuRepository;
 use Zdrojowa\CmsKernel\Facades\Variabler;
@@ -19,12 +19,28 @@ use Zdrojowa\CmsKernel\Utils\Enums\CoreModulesEnum;
 use Zdrojowa\CmsKernel\Utils\Enums\ModuleConfigEnum;
 use Zdrojowa\CmsKernel\Utils\Module\ModuleUtils;
 use Zdrojowa\CmsKernel\Utils\Traits\Propertiable;
-use Validator;
-use Route;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Route;
 
 /**
  * Class Module
  * @package Zdrojowa\CmsKernel\Modules
+ *
+ * @property $name
+ * @property $version
+ * @property $aclAnchor
+ * @property $aclName
+ * @property $routePrefix
+ * @property $menu
+ * @property $routes
+ * @property $apiRoutes
+ * @property $permissions
+ *
+ * @method static name(): string
+ * @method static version(): string
+ * @method static aclAnchor(): string
+ * @method static aclName(): string
+ * @method static routePrefix(): string
  */
 abstract class Module implements ModuleInterface
 {
@@ -34,51 +50,6 @@ abstract class Module implements ModuleInterface
      * @var array
      */
     protected $requiredProperties = ['name', 'version', 'aclAnchor', 'aclName', 'routePrefix'];
-
-    /**
-     * @var array
-     */
-    protected $optionalProperties = ['routes'];
-
-    /**
-     * @var
-     */
-    private $name;
-
-    /**
-     * @var
-     */
-    private $version;
-
-    /**
-     * @var
-     */
-    private $aclAnchor;
-
-    /**
-     * @var
-     */
-    private $aclName;
-
-    /**
-     * @var
-     */
-    private $routePrefix;
-
-    /**
-     * @var
-     */
-    private $routes;
-
-    /**
-     * @var
-     */
-    private $apiRoutes;
-
-    /**
-     * @var
-     */
-    private $permissions;
 
     /**
      * @var array
@@ -93,20 +64,22 @@ abstract class Module implements ModuleInterface
 
     /**
      * @return mixed
+     * @throws CmsKernelException
+     * @throws ReflectionException
      */
     public function loadConfig()
     {
         $this->bindExtraProperties();
         $this->bindImportantProperties();
-
     }
 
     /**
-     *
+     * @throws CmsKernelException
+     * @throws ReflectionException
+     * @throws Exception
      */
     private function bindImportantProperties()
     {
-        try {
             $this->routes = ModuleUtils::moduleConfig($this, ModuleConfigEnum::MODULE_ROUTES_FILE(), false);
 
             $this->apiRoutes = ModuleUtils::moduleConfig($this, ModuleConfigEnum::MODULE_ROUTES_API_FILE(), false);
@@ -115,19 +88,16 @@ abstract class Module implements ModuleInterface
 
             $moduleData = ModuleUtils::moduleConfig($this, ModuleConfigEnum::MODULE_CONFIG_FILE(), true) ?? [];
 
-            $this->bindProperties($moduleData, $this->requiredProperties, $this->propertiesRules, true);
-            $this->bindProperties($moduleData, $this->optionalProperties, $this->propertiesRules, false);
+            $this->bindProperties($moduleData, $this->requiredProperties ?? [], $this->propertiesRules, true);
+            $this->bindProperties($moduleData, $this->optionalProperties ?? [], $this->propertiesRules, false);
 
             MenuRepository::addPresence($this, MenuPresence::createPresenceFromData($this->menu));
 
             app(CoreModulesEnum::ACL_REPOSITORY)->addPresence((new DataArrayAclPresenceFactory($this))->create());
-        } catch (Exception | ReflectionException | ModuleConfigNotFoundException $e) {
-            report($e);
-        }
     }
 
     /**
-     * @throws ModuleConfigNotFoundException
+     * @throws CmsKernelException
      * @throws ReflectionException
      * @throws Exception
      */
@@ -150,7 +120,7 @@ abstract class Module implements ModuleInterface
      *
      * @return mixed
      */
-    public function mapRoutes($api = false)
+    public function mapRoutes($api = false): void
     {
         $routes = $api ? $this->apiRoutes : $this->routes;
 

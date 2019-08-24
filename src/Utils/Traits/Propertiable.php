@@ -26,11 +26,11 @@ trait Propertiable
     final private function bindProperties(array $data, array $properties, array $rules = [], bool $required = false)
     {
         foreach ($properties as $property) {
-            if (!is_string($property)) throw new PropertyNameMustBeAStringException();
+            if (!is_string($property)) throw new PropertyNameMustBeAStringException($this);
 
             if (!array_key_exists($property, $data)) {
                 if ($required) {
-                    if (!array_key_exists($property, $data)) throw new PropertyIsRequiredException($property);
+                    if (!array_key_exists($property, $data)) throw new PropertyIsRequiredException([$this, $property]);
                 }
 
                 continue;

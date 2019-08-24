@@ -24,6 +24,6 @@ class ModuleConfigNotFoundException extends CmsKernelException
      */
     function formatMessage($data): string
     {
-        return $data[0]."'s config ".$data[1]." not found";
+        return $data[0]."'s config file ".$data[1]." not found";
     }
 }

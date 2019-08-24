@@ -31,7 +31,7 @@ class ModuleUtils
     public static function moduleConfig(ModuleInterface $module, ModuleConfigEnum $config, bool $required = false): ?array
     {
         $module = new ReflectionClass($module);
-        $config = Variabler::make($config, $module);
+        $config = Variabler::make($config->getValue(), $module);
         $module->dir = dirname($module->getFileName());
         $module->config = $module->dir . '/' . ModuleConfigEnum::MODULES_CONFIG_FOLDER . $config;
 

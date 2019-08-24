@@ -5,7 +5,6 @@ namespace Zdrojowa\CmsKernel\Core;
 use Illuminate\Support\Collection;
 use Zdrojowa\CmsKernel\Contracts\Core\BooterInterface;
 use Zdrojowa\CmsKernel\Utils\Config\ConfigUtils;
-use Zdrojowa\CmsKernel\Utils\Enums\BooterEnum;
 use Zdrojowa\CmsKernel\Utils\Enums\CoreEnum;
 use Zdrojowa\CmsKernel\Utils\Enums\CoreModulesEnum;
 
@@ -15,6 +14,8 @@ use Zdrojowa\CmsKernel\Utils\Enums\CoreModulesEnum;
  */
 class Booter implements BooterInterface
 {
+
+    protected $version = '0.0.1';
 
     /**
      * @var array
@@ -119,5 +120,13 @@ class Booter implements BooterInterface
     public function getCoreModulesStatus(): Collection
     {
         return $this->booted;
+    }
+
+    /**
+     * @return string
+     */
+    public function getVersion(): string
+    {
+        return $this->version;
     }
 }

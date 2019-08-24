@@ -14,6 +14,7 @@ use MyCLabs\Enum\Enum;
  * @method static MODULE_PERMISSIONS_FILE()
  * @method static MODULE_EXTRA_FILE()
  * @method static MODULES_CONFIG_FOLDER()
+ * @method static MODULE_MENU_FILE()
  */
 class ModuleConfigEnum extends Enum
 {

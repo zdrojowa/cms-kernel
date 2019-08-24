@@ -3,7 +3,6 @@
 namespace Zdrojowa\CmsKernel\Console\Commands;
 
 use Illuminate\Console\Command;
-use Zdrojowa\CmsKernel\Contracts\Core\CoreInterface;
 use Zdrojowa\CmsKernel\Contracts\Modules\ModuleManagerInterface;
 
 /**

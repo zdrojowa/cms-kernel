@@ -30,4 +30,9 @@ interface CoreInterface
      */
     public function log($level, $message, array $context = null): CoreInterface;
 
+    /**
+     * @return string
+     */
+    public function getVersion(): string;
+
 }

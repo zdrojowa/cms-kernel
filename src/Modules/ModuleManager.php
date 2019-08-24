@@ -2,18 +2,10 @@
 
 namespace Zdrojowa\CmsKernel\Modules;
 
-use Exception;
 use Illuminate\Support\Collection;
-use ReflectionException;
 use Zdrojowa\CmsKernel\Contracts\Modules\Module;
 use Zdrojowa\CmsKernel\Contracts\Modules\ModuleInterface;
 use Zdrojowa\CmsKernel\Contracts\Modules\ModuleManagerInterface;
-use Zdrojowa\CmsKernel\Events\Module\ModuleRegisterEvent;
-use Zdrojowa\CmsKernel\Exceptions\CmsKernelException;
-use Zdrojowa\CmsKernel\Exceptions\Modules\ModuleConfigException;
-use Zdrojowa\CmsKernel\Exceptions\Modules\ModuleInstanceException;
-use Zdrojowa\CmsKernel\Utils\Config\ConfigUtils;
-use Zdrojowa\CmsKernel\Utils\Enums\CoreEnum;
 
 /**
  * Class ModuleManager

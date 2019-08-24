@@ -5,7 +5,6 @@ namespace Zdrojowa\CmsKernel\Acl;
 use Illuminate\Support\Collection;
 use Zdrojowa\CmsKernel\Contracts\Acl\AclPresenceInterface;
 use Zdrojowa\CmsKernel\Contracts\Acl\AclRepositoryInterface;
-use Zdrojowa\CmsKernel\Contracts\Modules\Module;
 use Zdrojowa\CmsKernel\Exceptions\Acl\AclRepositoryHasPresenceException;
 
 /**
@@ -68,7 +67,7 @@ class AclRepository implements AclRepositoryInterface
      */
     public function getMainPresence(string $moduleName): ?AclPresenceInterface
     {
-        if ($this->hasModulePresence($moduleName)) return $this->presences->get($moduleName);
+        if ($this->hasMainPresence($moduleName)) return $this->presences->get($moduleName);
 
         return null;
     }

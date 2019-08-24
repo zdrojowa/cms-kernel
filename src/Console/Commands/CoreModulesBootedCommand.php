@@ -4,8 +4,6 @@ namespace Zdrojowa\CmsKernel\Console\Commands;
 
 use Illuminate\Console\Command;
 use Zdrojowa\CmsKernel\Contracts\Core\BooterInterface;
-use Zdrojowa\CmsKernel\Core\Booter;
-use Zdrojowa\CmsKernel\Utils\Enums\CoreModulesEnum;
 
 /**
  * Class CoreModulesBootedCommand
