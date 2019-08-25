@@ -1,7 +1,5 @@
 <?php
 
-use xd\xd\xdmodule;
-use Zdrojowa\AuthModule\AuthModule;
 use Zdrojowa\CmsKernel\Acl\AclRepository;
 use Zdrojowa\CmsKernel\Console\Commands\BooterShowErrorsCommand;
 use Zdrojowa\CmsKernel\Console\Commands\CoreModulesBootedCommand;
@@ -23,8 +21,6 @@ return [
     // Section with declaration of reusable modules
 
     CoreEnum::MODULES_SECTION => [
-        AuthModule::class,
-        xdmodule::class,
     ],
 
     // Section with declaration of core modules
