@@ -2,16 +2,16 @@
 
 namespace Zdrojowa\CmsKernel\Tests\Core;
 
-use Zdrojowa\CmsKernel\Contracts\Core\CoreInterface;
+use Zdrojowa\CmsKernel\Contracts\Core\Core;
+use Zdrojowa\CmsKernel\Support\Enums\Core\CoreModules;
 use Zdrojowa\CmsKernel\Tests\TestCase;
-use Zdrojowa\CmsKernel\Utils\Enums\CoreModulesEnum;
 
 class CoreTest extends TestCase
 {
 
     public function testCoreInstance()
     {
-        $this->assertInstanceOf(CoreInterface::class, $this->core());
+        $this->assertInstanceOf(Core::class, $this->core());
     }
 
     public function testGetVersion()
@@ -21,11 +21,11 @@ class CoreTest extends TestCase
 
     public function testAclRepository()
     {
-        $this->assertSame($this->core()->aclRepository(), $this->app->get(CoreModulesEnum::ACL_REPOSITORY));
+        $this->assertSame($this->core()->aclRepository(), $this->app->get(CoreModules::ACL_REPOSITORY));
     }
 
     public function testModuleManager()
     {
-        $this->assertSame($this->core()->moduleManager(), $this->app->get(CoreModulesEnum::MODULE_MANAGER));
+        $this->assertSame($this->core()->moduleManager(), $this->app->get(CoreModules::MODULE_MANAGER));
     }
 }

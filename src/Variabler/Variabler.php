@@ -3,13 +3,13 @@
 namespace Zdrojowa\CmsKernel\Variabler;
 
 use Illuminate\Config\Repository;
-use Zdrojowa\CmsKernel\Contracts\Variabler\VariableProviderInterface;
-use Zdrojowa\CmsKernel\Contracts\Variabler\VariablerInterface;
-use Zdrojowa\CmsKernel\Exceptions\Variabler\ProviderInstanceException;
-use Zdrojowa\CmsKernel\Exceptions\Variabler\ProviderNotFoundException;
-use Zdrojowa\CmsKernel\Utils\Config\ConfigUtils;
-use Zdrojowa\CmsKernel\Utils\Enums\CoreEnum;
-use Zdrojowa\CmsKernel\Utils\Enums\VariableEnum;
+use Zdrojowa\CmsKernel\Contracts\Variabler\VariableProvider;
+use Zdrojowa\CmsKernel\Contracts\Variabler\Variabler as VariablerContract;
+use Zdrojowa\CmsKernel\Support\Config\Config;
+use Zdrojowa\CmsKernel\Support\Enums\Core\Core;
+use Zdrojowa\CmsKernel\Support\Enums\Variabler\Variabler as VariablerEnum;
+use Zdrojowa\CmsKernel\Variabler\Exceptions\ProviderInstanceException;
+use Zdrojowa\CmsKernel\Variabler\Exceptions\ProviderNotFoundException;
 
 /**
  * Class Variabler
@@ -18,7 +18,7 @@ use Zdrojowa\CmsKernel\Utils\Enums\VariableEnum;
  * @method property($data, $object)
  * @method name($data, $object)
  */
-class Variabler implements VariablerInterface
+class Variabler implements VariablerContract
 {
 
     /**
@@ -31,7 +31,7 @@ class Variabler implements VariablerInterface
      */
     public function __construct()
     {
-        $this->providers = ConfigUtils::coreConfig(CoreEnum::VARIABLER_PROVIDERS_SECTION);
+        $this->providers = Config::get(Core::VARIABLER_PROVIDERS);
     }
 
     /**
@@ -80,7 +80,7 @@ class Variabler implements VariablerInterface
      */
     private function replaceObjectPropertyVariable($data, object $object = null)
     {
-        preg_match('/' . VariableEnum::OBJECT_PROPERTY_VARIABLE_START . '(.*?)' . VariableEnum::OBJECT_PROPERTY_VARIABLE_END . '/', $data, $matches);
+        preg_match('/' . VariablerEnum::PROPERTY_VARIABLE_START . '(.*?)' . VariablerEnum::PROPERTY_VARIABLE_END . '/', $data, $matches);
 
         if (!empty($matches[0]) && !empty($matches[1])) {
             $variabled = $this->property($matches[1], $object);
@@ -104,7 +104,7 @@ class Variabler implements VariablerInterface
      */
     private function replaceObjectCustomVariable(string $data, string $providerName, object $object)
     {
-        $tag = $this->getKey(VariableEnum::OBJECT_CUSTOM_VARIABLE_START(), VariableEnum::OBJECT_CUSTOM_VARIABLE_END(), $providerName);
+        $tag = $this->getKey(VariablerEnum::CUSTOM_VARIABLE_START(), VariablerEnum::CUSTOM_VARIABLE_END(), $providerName);
 
         if (strpos($data, $tag) !== false) {
             $data = str_replace($tag, $this->$providerName($data, $object), $data);
@@ -114,13 +114,13 @@ class Variabler implements VariablerInterface
     }
 
     /**
-     * @param VariableEnum $tag
-     * @param VariableEnum $secondTag
+     * @param VariablerEnum $tag
+     * @param VariablerEnum $secondTag
      * @param $key
      *
      * @return string
      */
-    public function getKey(VariableEnum $tag, VariableEnum $secondTag, $key)
+    public function getKey(VariablerEnum $tag, VariablerEnum $secondTag, $key)
     {
         return $tag . $key . $secondTag;
     }
@@ -139,7 +139,7 @@ class Variabler implements VariablerInterface
 
         $provider = app($this->providers[$name]);
 
-        if (!is_subclass_of($provider, VariableProviderInterface::class)) throw new ProviderInstanceException(get_class($provider));
+        if (!is_subclass_of($provider, VariableProvider::class)) throw new ProviderInstanceException(get_class($provider));
 
         return $provider->replace($arguments[0], $arguments[1]);
     }

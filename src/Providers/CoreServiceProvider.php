@@ -3,16 +3,16 @@
 namespace Zdrojowa\CmsKernel\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Zdrojowa\CmsKernel\Contracts\Core\BooterInterface;
-use Zdrojowa\CmsKernel\Contracts\Core\CoreInterface;
-use Zdrojowa\CmsKernel\Events\Booter\BooterRegisterEvent;
-use Zdrojowa\CmsKernel\Events\Core\CoreBootedEvent;
-use Zdrojowa\CmsKernel\Events\Core\CoreRegisterEvent;
-use Zdrojowa\CmsKernel\Events\Core\MenuRepositoryRegisterEvent;
+use Zdrojowa\CmsKernel\Booter\Events\BooterRegisterEvent;
+use Zdrojowa\CmsKernel\Contracts\Booter\Booter;
+use Zdrojowa\CmsKernel\Contracts\Core\Core;
+use Zdrojowa\CmsKernel\Core\Events\CoreBootedEvent;
+use Zdrojowa\CmsKernel\Core\Events\CoreRegisterEvent;
+use Zdrojowa\CmsKernel\Menu\Events\MenuRepositoryRegisterEvent;
 use Zdrojowa\CmsKernel\Menu\MenuRepository;
-use Zdrojowa\CmsKernel\Utils\Config\ConfigUtils;
-use Zdrojowa\CmsKernel\Utils\Enums\CoreEnum;
-use Zdrojowa\CmsKernel\Utils\Enums\CoreModulesEnum;
+use Zdrojowa\CmsKernel\Support\Config\Config;
+use Zdrojowa\CmsKernel\Support\Enums\Core\Core as CoreEnum;
+use Zdrojowa\CmsKernel\Support\Enums\Core\CoreModules;
 
 /**
  * Class CoreServiceProvider
@@ -31,7 +31,7 @@ class CoreServiceProvider extends ServiceProvider
 
         $this->publishConfig()->registerCommands()->registerMigrations();
 
-        event(new CoreBootedEvent(app(CoreModulesEnum::CORE)));
+        event(new CoreBootedEvent(app(CoreModules::CORE)));
     }
 
     /**
@@ -51,12 +51,12 @@ class CoreServiceProvider extends ServiceProvider
      */
     protected function registerBooterModule(): CoreServiceProvider
     {
-        $this->app->singleton(CoreModulesEnum::BOOTER, ConfigUtils::coreModules(CoreModulesEnum::BOOTER()));
-        $this->app->bind(BooterInterface::class, CoreModulesEnum::BOOTER);
+        $this->app->singleton(CoreModules::BOOTER, Config::coreModules(CoreModules::BOOTER()));
+        $this->app->bind(Booter::class, CoreModules::BOOTER);
 
-        event(new BooterRegisterEvent(app(CoreModulesEnum::BOOTER)));
+        event(new BooterRegisterEvent(app(CoreModules::BOOTER)));
 
-        $this->booter()->setCoreModuleBooted(CoreModulesEnum::BOOTER());
+        $this->booter()->setCoreModuleBooted(CoreModules::BOOTER());
 
         return $this;
     }
@@ -66,12 +66,12 @@ class CoreServiceProvider extends ServiceProvider
      */
     protected function registerCoreModule(): CoreServiceProvider
     {
-        $this->app->singleton(CoreModulesEnum::CORE, ConfigUtils::coreModules(CoreModulesEnum::CORE()));
-        $this->app->bind(CoreInterface::class, CoreModulesEnum::CORE);
+        $this->app->singleton(CoreModules::CORE, Config::coreModules(CoreModules::CORE()));
+        $this->app->bind(Core::class, CoreModules::CORE);
 
-        event(new CoreRegisterEvent(app(CoreModulesEnum::CORE)));
+        event(new CoreRegisterEvent(app(CoreModules::CORE)));
 
-        $this->booter()->setCoreModuleBooted(CoreModulesEnum::CORE());
+        $this->booter()->setCoreModuleBooted(CoreModules::CORE());
 
         return $this;
     }
@@ -81,11 +81,11 @@ class CoreServiceProvider extends ServiceProvider
      */
     protected function registerMenuRepository(): CoreServiceProvider
     {
-        $this->app->singleton(CoreModulesEnum::MENU_REPOSITORY, MenuRepository::class);
+        $this->app->singleton(CoreModules::MENU_REPOSITORY, MenuRepository::class);
 
-        event(new MenuRepositoryRegisterEvent(app(CoreModulesEnum::MENU_REPOSITORY)));
+        event(new MenuRepositoryRegisterEvent(app(CoreModules::MENU_REPOSITORY)));
 
-        $this->booter()->setCoreModuleBooted(CoreModulesEnum::MENU_REPOSITORY());
+        $this->booter()->setCoreModuleBooted(CoreModules::MENU_REPOSITORY());
 
         return $this;
     }
@@ -96,7 +96,7 @@ class CoreServiceProvider extends ServiceProvider
     protected function registerCommands(): CoreServiceProvider
     {
         if ($this->app->runningInConsole()) {
-            $this->commands(ConfigUtils::coreConfig(CoreEnum::CORE_COMMANDS_SECTION));
+            $this->commands(Config::get(CoreEnum::COMMANDS));
         }
 
         return $this;
@@ -108,7 +108,7 @@ class CoreServiceProvider extends ServiceProvider
     protected function registerObligatoryCommands(): CoreServiceProvider
     {
         if ($this->app->runningInConsole()) {
-            $this->commands(ConfigUtils::coreConfig(CoreEnum::CORE_OBLIGATORY_COMMANDS_SECTION));
+            $this->commands(Config::get(CoreEnum::OBLIGATORY_COMMANDS));
         }
 
         return $this;
@@ -141,17 +141,17 @@ class CoreServiceProvider extends ServiceProvider
      */
     protected function registerConfig(): CoreServiceProvider
     {
-        $this->mergeConfigFrom(__DIR__ . '/../../config/cms-core.php', CoreEnum::CMS_CONFIG);
+        $this->mergeConfigFrom(__DIR__ . '/../../config/cms-core.php', CoreEnum::CONFIG);
 
         return $this;
     }
 
     /**
-     * @return BooterInterface
+     * @return Booter
      */
-    public function booter(): BooterInterface
+    public function booter(): Booter
     {
-        return $this->app->get(CoreModulesEnum::BOOTER);
+        return $this->app->get(CoreModules::BOOTER);
     }
 
 }

@@ -2,13 +2,13 @@
 
 namespace Zdrojowa\CmsKernel\Tests\Core;
 
-use Zdrojowa\CmsKernel\Contracts\Variabler\VariablerInterface;
-use Zdrojowa\CmsKernel\Exceptions\Variabler\ProviderInstanceException;
-use Zdrojowa\CmsKernel\Exceptions\Variabler\ProviderNotFoundException;
+use Zdrojowa\CmsKernel\Contracts\Variabler\Variabler;
+use Zdrojowa\CmsKernel\Support\Enums\Core\Core;
 use Zdrojowa\CmsKernel\Tests\Helpers\ExampleClass;
 use Zdrojowa\CmsKernel\Tests\Propertiable\PropertiableTest;
 use Zdrojowa\CmsKernel\Tests\TestCase;
-use Zdrojowa\CmsKernel\Utils\Enums\CoreEnum;
+use Zdrojowa\CmsKernel\Variabler\Exceptions\ProviderInstanceException;
+use Zdrojowa\CmsKernel\Variabler\Exceptions\ProviderNotFoundException;
 use Zdrojowa\CmsKernel\Variabler\Providers\ObjectNameProvider;
 use Zdrojowa\CmsKernel\Variabler\Providers\ObjectPropertyProvider;
 
@@ -28,7 +28,7 @@ class VariablerTest extends TestCase
 
         $config = $this->app['config'];
 
-        $config->set(CoreEnum::CMS_CONFIG . '.' . CoreEnum::VARIABLER_PROVIDERS_SECTION, [
+        $config->set(Core::CONFIG . '.' . Core::VARIABLER_PROVIDERS, [
             'name' => ObjectNameProvider::class,
             'property' => ObjectPropertyProvider::class,
             'testInstance' => PropertiableTest::class,
@@ -37,7 +37,7 @@ class VariablerTest extends TestCase
 
     public function testInstance()
     {
-        $this->assertInstanceOf(VariablerInterface::class, $this->variabler());
+        $this->assertInstanceOf(Variabler::class, $this->variabler());
     }
 
     public function testClassNameVariable()

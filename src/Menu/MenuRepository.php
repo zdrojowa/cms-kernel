@@ -3,9 +3,9 @@
 namespace Zdrojowa\CmsKernel\Menu;
 
 use Illuminate\Support\Collection;
-use Zdrojowa\CmsKernel\Contracts\Modules\ModuleInterface;
-use Zdrojowa\CmsKernel\Events\Module\ModuleMenuPresenceRegisterEvent;
-use Zdrojowa\CmsKernel\Exceptions\Acl\AclRepositoryHasPresenceException;
+use Zdrojowa\CmsKernel\Acl\Exceptions\AclRepositoryHasPresenceException;
+use Zdrojowa\CmsKernel\Contracts\Modules\Module;
+use Zdrojowa\CmsKernel\Modules\Events\ModuleMenuPresenceRegisterEvent;
 
 /**
  * Class MenuRepository
@@ -27,13 +27,13 @@ class MenuRepository
     }
 
     /**
-     * @param ModuleInterface $module
+     * @param Module $module
      * @param Collection $presence
      *
      * @return MenuRepository
      * @throws AclRepositoryHasPresenceException
      */
-    public function addPresence(ModuleInterface $module, Collection $presence): MenuRepository
+    public function addPresence(Module $module, Collection $presence): MenuRepository
     {
         if ($this->hasModulePresence($module->getName())) {
             throw new AclRepositoryHasPresenceException(get_class($module));

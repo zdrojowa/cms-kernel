@@ -3,12 +3,12 @@
 namespace Zdrojowa\CmsKernel\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Zdrojowa\CmsKernel\Contracts\Acl\AclRepositoryInterface;
-use Zdrojowa\CmsKernel\Contracts\Core\BooterInterface;
-use Zdrojowa\CmsKernel\Contracts\Modules\ModuleManagerInterface;
-use Zdrojowa\CmsKernel\Events\Core\AclRepositoryRegisterEvent;
-use Zdrojowa\CmsKernel\Utils\Config\ConfigUtils;
-use Zdrojowa\CmsKernel\Utils\Enums\CoreModulesEnum;
+use Zdrojowa\CmsKernel\Acl\Events\AclRepositoryRegisterEvent;
+use Zdrojowa\CmsKernel\Contracts\Acl\Repository\AclRepository;
+use Zdrojowa\CmsKernel\Contracts\Booter\Booter;
+use Zdrojowa\CmsKernel\Contracts\Modules\ModuleManager;
+use Zdrojowa\CmsKernel\Support\Config\Config;
+use Zdrojowa\CmsKernel\Support\Enums\Core\CoreModules;
 
 /**
  * Class AclRepositoryServiceProvider
@@ -43,31 +43,31 @@ class AclRepositoryServiceProvider extends ServiceProvider
      */
     protected function registerAclRepository(): AclRepositoryServiceProvider
     {
-        $this->app->singleton(CoreModulesEnum::ACL_REPOSITORY, ConfigUtils::coreModules(CoreModulesEnum::ACL_REPOSITORY()));
-        $this->app->bind(AclRepositoryInterface::class, CoreModulesEnum::ACL_REPOSITORY());
+        $this->app->singleton(CoreModules::ACL_REPOSITORY, Config::coreModules(CoreModules::ACL_REPOSITORY()));
+        $this->app->bind(AclRepository::class, CoreModules::ACL_REPOSITORY());
 
-        event(new AclRepositoryRegisterEvent(app(CoreModulesEnum::ACL_REPOSITORY)));
+        event(new AclRepositoryRegisterEvent(app(CoreModules::ACL_REPOSITORY)));
 
-        $this->booter()->setCoreModuleBooted(CoreModulesEnum::ACL_REPOSITORY());
+        $this->booter()->setCoreModuleBooted(CoreModules::ACL_REPOSITORY());
 
         return $this;
     }
 
     /**
-     * @return BooterInterface
+     * @return Booter
      */
-    protected function booter(): BooterInterface
+    protected function booter(): Booter
     {
-        return $this->app->get(CoreModulesEnum::BOOTER);
+        return $this->app->get(CoreModules::BOOTER);
     }
 
-    protected function aclRepository(): AclRepositoryInterface
+    protected function aclRepository(): AclRepository
     {
-        return $this->app->get(CoreModulesEnum::ACL_REPOSITORY);
+        return $this->app->get(CoreModules::ACL_REPOSITORY);
     }
 
-    protected function moduleManager(): ModuleManagerInterface
+    protected function moduleManager(): ModuleManager
     {
-        return $this->app->get(CoreModulesEnum::MODULE_MANAGER);
+        return $this->app->get(CoreModules::MODULE_MANAGER);
     }
 }

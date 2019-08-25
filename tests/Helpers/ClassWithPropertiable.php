@@ -2,7 +2,7 @@
 
 namespace Zdrojowa\CmsKernel\Tests\Helpers;
 
-use Zdrojowa\CmsKernel\Utils\Traits\Propertiable;
+use Zdrojowa\CmsKernel\Support\Traits\Propertiable;
 
 class ClassWithPropertiable
 {

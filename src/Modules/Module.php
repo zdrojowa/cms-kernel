@@ -2,27 +2,26 @@
 
 namespace Zdrojowa\CmsKernel\Modules;
 
-use Exception;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Validator;
 use ReflectionClass;
 use ReflectionException;
 use Symfony\Component\Yaml\Yaml;
-use Zdrojowa\CmsKernel\Contracts\Acl\AclPresenceInterface;
-use Zdrojowa\CmsKernel\Contracts\Modules\ModuleInterface;
-use Zdrojowa\CmsKernel\Exceptions\Acl\AclPresenceDataException;
+use Zdrojowa\CmsKernel\Acl\Exceptions\AclPresenceDataException;
+use Zdrojowa\CmsKernel\Acl\Factories\AclPresenceFactory;
+use Zdrojowa\CmsKernel\Contracts\Acl\Presence\AclPresence;
+use Zdrojowa\CmsKernel\Contracts\Modules\Module as ModuleContract;
 use Zdrojowa\CmsKernel\Exceptions\CmsExceptionHandler;
 use Zdrojowa\CmsKernel\Exceptions\CmsKernelException;
-use Zdrojowa\CmsKernel\Facades\Core;
-use Zdrojowa\CmsKernel\Facades\MenuRepository;
-use Zdrojowa\CmsKernel\Facades\Variabler;
-use Zdrojowa\CmsKernel\Factories\Acl\DataArrayAclPresenceFactory;
+use Zdrojowa\CmsKernel\Support\Facades\MenuRepository;
+use Zdrojowa\CmsKernel\Support\Facades\Variabler;
 use Zdrojowa\CmsKernel\Menu\MenuPresence;
-use Zdrojowa\CmsKernel\Utils\Config\ConfigUtils;
-use Zdrojowa\CmsKernel\Utils\Enums\CoreEnum;
-use Zdrojowa\CmsKernel\Utils\Enums\ModuleConfigEnum;
-use Zdrojowa\CmsKernel\Utils\Module\ModuleUtils;
-use Zdrojowa\CmsKernel\Utils\Traits\Propertiable;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Route;
+use Zdrojowa\CmsKernel\Support\Config\Config;
+use Zdrojowa\CmsKernel\Support\Enums\Modules\Module as ModuleEnum;
+use Zdrojowa\CmsKernel\Support\Enums\Modules\ModuleConfig;
+use Zdrojowa\CmsKernel\Support\Facades\ModuleManager as ModuleManagerFacade;
+use Zdrojowa\CmsKernel\Support\Modules\Module as ModuleSupport;
+use Zdrojowa\CmsKernel\Support\Traits\Propertiable;
 
 /**
  * Class Module
@@ -44,18 +43,12 @@ use Illuminate\Support\Facades\Route;
  * @method static aclName(): string
  * @method static routePrefix(): string
  */
-abstract class Module implements ModuleInterface
+abstract class Module implements ModuleContract
 {
     use Propertiable;
 
-    /**
-     * @var array
-     */
     protected $requiredProperties = ['name', 'version', 'aclAnchor', 'aclName', 'routePrefix'];
 
-    /**
-     * @var array
-     */
     protected $propertiesRules = [
         'name' => 'string',
         'version' => 'string',
@@ -65,8 +58,9 @@ abstract class Module implements ModuleInterface
     ];
 
     /**
-     * @return mixed
+     * @return mixed|void
      * @throws CmsKernelException
+     * @throws Exceptions\ModuleConfigNotFoundException
      * @throws ReflectionException
      */
     public function loadConfig()
@@ -77,10 +71,10 @@ abstract class Module implements ModuleInterface
         return;
     }
 
-    public function getAclPresence(): ?AclPresenceInterface
+    public function getAclPresence(): ?AclPresence
     {
         try {
-            return (new DataArrayAclPresenceFactory($this))->create();
+            return (new AclPresenceFactory($this))->create();
         } catch (AclPresenceDataException $e) {
             CmsExceptionHandler::handle($e);
 
@@ -89,40 +83,40 @@ abstract class Module implements ModuleInterface
     }
 
     /**
-     * @throws CmsKernelException
+     * @throws Exceptions\ModuleConfigNotFoundException
      * @throws ReflectionException
-     * @throws Exception
+     * @throws CmsKernelException
      */
     private function bindImportantProperties()
     {
-            $this->routes = ModuleUtils::moduleConfig($this, ModuleConfigEnum::MODULE_ROUTES_FILE(), false);
+        $this->routes = ModuleSupport::config($this, ModuleConfig::ROUTES_FILE(), false);
 
-            $this->apiRoutes = ModuleUtils::moduleConfig($this, ModuleConfigEnum::MODULE_ROUTES_API_FILE(), false);
-            $this->permissions = ModuleUtils::moduleConfig($this, ModuleConfigEnum::MODULE_PERMISSIONS_FILE(), false);
-            $this->menu = ModuleUtils::moduleConfig($this, ModuleConfigEnum::MODULE_MENU_FILE());
+        $this->apiRoutes = ModuleSupport::config($this, ModuleConfig::ROUTES_API_FILE(), false);
+        $this->permissions = ModuleSupport::config($this, ModuleConfig::PERMISSIONS_FILE(), false);
+        $this->menu = ModuleSupport::config($this, ModuleConfig::MENU_FILE());
 
-            $moduleData = ModuleUtils::moduleConfig($this, ModuleConfigEnum::MODULE_CONFIG_FILE(), true) ?? [];
+        $moduleData = ModuleSupport::config($this, ModuleConfig::CONFIG_FILE(), true) ?? [];
 
-            $this->bindProperties($moduleData, $this->requiredProperties ?? [], $this->propertiesRules, true);
-            $this->bindProperties($moduleData, $this->optionalProperties ?? [], $this->propertiesRules, false);
+        $this->bindProperties($moduleData, $this->requiredProperties ?? [], $this->propertiesRules, true);
+        $this->bindProperties($moduleData, $this->optionalProperties ?? [], $this->propertiesRules, false);
 
-            MenuRepository::addPresence($this, MenuPresence::createPresenceFromData($this->menu));
+        MenuRepository::addPresence($this, MenuPresence::createPresenceFromData($this->menu));
     }
 
     /**
      * @throws CmsKernelException
+     * @throws Exceptions\ModuleConfigNotFoundException
      * @throws ReflectionException
-     * @throws Exception
      */
     private function bindExtraProperties()
     {
-        $configFile = Variabler::make(ModuleConfigEnum::MODULE_EXTRA_FILE, $this);
+        $configFile = Variabler::make(ModuleConfig::EXTRA_FILE, $this);
 
-        $file = base_path(CoreEnum::MODULES_CONFIG_DIR) . "/" . $configFile;
+        $file = base_path(ModuleEnum::CONFIG_DIR) . "/" . $configFile;
         if (file_exists($file)) {
-            $extra = array_merge(ModuleUtils::moduleConfig($this, ModuleConfigEnum::MODULE_EXTRA_FILE()) ?? [], Yaml::parseFile($file, Yaml::PARSE_OBJECT) ?? []);
+            $extra = array_merge(ModuleSupport::config($this, ModuleConfig::EXTRA_FILE()) ?? [], Yaml::parseFile($file, Yaml::PARSE_OBJECT) ?? []);
         } else {
-            $extra = ModuleUtils::moduleConfig($this, ModuleConfigEnum::MODULE_EXTRA_FILE()) ?? [];
+            $extra = ModuleSupport::config($this, ModuleConfig::EXTRA_FILE()) ?? [];
         }
 
         $this->bindProperties($extra, array_keys($extra));
@@ -141,7 +135,7 @@ abstract class Module implements ModuleInterface
 
         foreach ($routes as $routeName => $routeConfig) {
             if ($this->checkRouteStructure($routeConfig)) {
-                if (!isset($routeConfig['methods'])) $routeConfig['methods'] = ConfigUtils::getAvailableHttpMethods();
+                if (!isset($routeConfig['methods'])) $routeConfig['methods'] = Config::getAvailableHttpMethods();
 
                 Route::match($routeConfig['methods'], $api ? '/api' . $routeConfig['path'] : $routeConfig['path'], $routeConfig['controller'])->middleware($api ? 'api' : [])->middleware($routeConfig['middlewares'] ?? [])->name($this->getRoutePrefix() . "::" . $routeName);
             }
@@ -250,7 +244,7 @@ abstract class Module implements ModuleInterface
     {
         $reflection = new ReflectionClass(get_called_class());
 
-        return Core::moduleManager()->getModule($reflection->getShortName())->$name ?? null;
+        return ModuleManagerFacade::getModule($reflection->getShortName())->$name ?? null;
     }
 
     /**

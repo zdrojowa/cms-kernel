@@ -7,9 +7,9 @@ use Orchestra\Testbench\TestCase as OrchestraTestCase;
 use \Zdrojowa\CmsKernel\Providers\AclRepositoryServiceProvider;
 use \Zdrojowa\CmsKernel\Providers\CoreServiceProvider;
 use \Zdrojowa\CmsKernel\Providers\ModuleManagerServiceProvider;
-use \Zdrojowa\CmsKernel\Providers\VariablerSerivceProvider;
-use Zdrojowa\CmsKernel\Utils\Enums\CoreEnum;
-use Zdrojowa\CmsKernel\Utils\Enums\CoreModulesEnum;
+use \Zdrojowa\CmsKernel\Providers\VariablerServiceProvider;
+use Zdrojowa\CmsKernel\Support\Enums\Core\Core;
+use Zdrojowa\CmsKernel\Support\Enums\Core\CoreModules;
 
 class TestCase extends OrchestraTestCase
 {
@@ -20,8 +20,8 @@ class TestCase extends OrchestraTestCase
 
         $config = $app['config'];
 
-        $config->set(CoreEnum::CMS_CONFIG . '.' . CoreEnum::MODULES_SECTION, []);
-        $config->set(CoreEnum::CMS_CONFIG . '.' . CoreEnum::CMS_DEBUG, true);
+        $config->set(Core::CONFIG . '.' . Core::MODULES, []);
+        $config->set(Core::CONFIG . '.' . Core::DEBUG, true);
     }
 
     /**
@@ -35,7 +35,7 @@ class TestCase extends OrchestraTestCase
     {
         return [
             CoreServiceProvider::class,
-            VariablerSerivceProvider::class,
+            VariablerServiceProvider::class,
             AclRepositoryServiceProvider::class,
             ModuleManagerServiceProvider::class,
         ];
@@ -43,26 +43,26 @@ class TestCase extends OrchestraTestCase
 
     protected function booter()
     {
-        return $this->app->get(CoreModulesEnum::BOOTER);
+        return $this->app->get(CoreModules::BOOTER);
     }
 
     protected function core()
     {
-        return $this->app->get(CoreModulesEnum::CORE);
+        return $this->app->get(CoreModules::CORE);
     }
 
     protected function variabler()
     {
-        return $this->app->get(CoreModulesEnum::VARIABLER);
+        return $this->app->get(CoreModules::VARIABLER);
     }
 
     protected function moduleManager()
     {
-        return $this->app->get(CoreModulesEnum::MODULE_MANAGER);
+        return $this->app->get(CoreModules::MODULE_MANAGER);
     }
 
     public function aclRepository()
     {
-        return $this->app->get(CoreModulesEnum::ACL_REPOSITORY);
+        return $this->app->get(CoreModules::ACL_REPOSITORY);
     }
 }

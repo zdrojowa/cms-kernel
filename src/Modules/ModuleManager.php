@@ -3,20 +3,20 @@
 namespace Zdrojowa\CmsKernel\Modules;
 
 use Illuminate\Support\Collection;
-use Zdrojowa\CmsKernel\Contracts\Modules\ModuleInterface;
-use Zdrojowa\CmsKernel\Contracts\Modules\ModuleManagerInterface;
+use Zdrojowa\CmsKernel\Contracts\Modules\Module as ModuleContract;
+use Zdrojowa\CmsKernel\Contracts\Modules\ModuleManager as ModuleManagerContract;
 use Zdrojowa\CmsKernel\Exceptions\CmsExceptionHandler;
 use Zdrojowa\CmsKernel\Exceptions\CmsKernelException;
-use Zdrojowa\CmsKernel\Exceptions\Modules\ModuleConfigException;
-use Zdrojowa\CmsKernel\Exceptions\Modules\ModuleInstanceException;
-use Zdrojowa\CmsKernel\Utils\Config\ConfigUtils;
-use Zdrojowa\CmsKernel\Utils\Enums\CoreEnum;
+use Zdrojowa\CmsKernel\Modules\Exceptions\ModuleConfigException;
+use Zdrojowa\CmsKernel\Modules\Exceptions\ModuleInstanceException;
+use Zdrojowa\CmsKernel\Support\Config\Config;
+use Zdrojowa\CmsKernel\Support\Enums\Core\Core;
 
 /**
  * Class ModuleManager
  * @package Zdrojowa\CmsKernel\Modules
  */
-class ModuleManager implements ModuleManagerInterface
+class ModuleManager implements ModuleManagerContract
 {
 
     /**
@@ -62,11 +62,11 @@ class ModuleManager implements ModuleManagerInterface
     }
 
     /**
-     * @param ModuleInterface $module
+     * @param ModuleContract $module
      *
-     * @return ModuleManagerInterface
+     * @return ModuleManager
      */
-    public function addModule(ModuleInterface $module): ModuleManagerInterface
+    public function addModule(ModuleContract $module): ModuleManagerContract
     {
         $module->loadConfig();
 
@@ -81,9 +81,9 @@ class ModuleManager implements ModuleManagerInterface
     /**
      * @param string $name
      *
-     * @return ModuleManagerInterface|null
+     * @return ModuleManager|null
      */
-    public function getModule(string $name): ?ModuleInterface
+    public function getModule(string $name): ?ModuleContract
     {
         return $this->modules->get($name);
     }
@@ -98,7 +98,7 @@ class ModuleManager implements ModuleManagerInterface
 
     public function initialize()
     {
-        $modules = ConfigUtils::coreConfig(CoreEnum::MODULES_SECTION);
+        $modules = Config::get(Core::MODULES);
 
         try {
             $this->checkModulesConfigStructure($modules);
@@ -138,7 +138,7 @@ class ModuleManager implements ModuleManagerInterface
      */
     protected function checkModuleInstance($module)
     {
-        if (is_subclass_of($module, ModuleInterface::class)) return true;
+        if (is_subclass_of($module, Module::class)) return true;
 
         throw new ModuleInstanceException(get_class($module));
     }

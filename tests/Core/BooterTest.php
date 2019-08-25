@@ -2,16 +2,16 @@
 
 namespace Zdrojowa\CmsKernel\Tests\Core;
 
-use Zdrojowa\CmsKernel\Contracts\Core\BooterInterface;
+use Zdrojowa\CmsKernel\Contracts\Booter\Booter;
+use Zdrojowa\CmsKernel\Support\Enums\Core\CoreModules;
 use Zdrojowa\CmsKernel\Tests\TestCase;
-use Zdrojowa\CmsKernel\Utils\Enums\CoreModulesEnum;
 
 class BooterTest extends TestCase
 {
 
     public function testBooterInstance()
     {
-        $this->assertInstanceOf(BooterInterface::class, $this->booter());
+        $this->assertInstanceOf(Booter::class, $this->booter());
     }
 
     public function testIsCorrectlyBooted()
@@ -19,7 +19,7 @@ class BooterTest extends TestCase
         $this->assertFalse($this->booter()->hasError());
         $this->assertEmpty($this->booter()->getErrors());
         $this->assertTrue($this->booter()->allCoreModulesBooted());
-        $this->assertTrue($this->booter()->isCoreModuleBooted(CoreModulesEnum::CORE()));
+        $this->assertTrue($this->booter()->isCoreModuleBooted(CoreModules::CORE()));
     }
 
     public function testAddErrors()

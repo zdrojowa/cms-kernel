@@ -4,14 +4,14 @@ namespace Zdrojowa\CmsKernel\Variabler\Providers;
 
 use ReflectionClass;
 use ReflectionException;
-use Zdrojowa\CmsKernel\Contracts\Variabler\VariableProviderInterface;
+use Zdrojowa\CmsKernel\Contracts\Variabler\VariableProvider;
 use Zdrojowa\CmsKernel\Exceptions\CmsExceptionHandler;
 
 /**
  * Class ObjectNameProvider
  * @package Zdrojowa\CmsKernel\Utils\Variabler\Providers
  */
-class ObjectNameProvider implements VariableProviderInterface
+class ObjectNameProvider implements VariableProvider
 {
 
     /**

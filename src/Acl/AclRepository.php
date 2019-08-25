@@ -3,15 +3,15 @@
 namespace Zdrojowa\CmsKernel\Acl;
 
 use Illuminate\Support\Collection;
-use Zdrojowa\CmsKernel\Contracts\Acl\AclPresenceInterface;
-use Zdrojowa\CmsKernel\Contracts\Acl\AclRepositoryInterface;
-use Zdrojowa\CmsKernel\Exceptions\Acl\AclRepositoryHasPresenceException;
+use Zdrojowa\CmsKernel\Acl\Exceptions\AclRepositoryHasPresenceException;
+use Zdrojowa\CmsKernel\Contracts\Acl\Repository\AclRepository as AclRepositoryContract;
+use Zdrojowa\CmsKernel\Contracts\Acl\Presence\AclPresence as AclPresenceContract;
 
 /**
  * Class AclRepository
  * @package Zdrojowa\CmsKernel\Acl
  */
-class AclRepository implements AclRepositoryInterface
+class AclRepository implements AclRepositoryContract
 {
 
     /**
@@ -28,12 +28,12 @@ class AclRepository implements AclRepositoryInterface
     }
 
     /**
-     * @param AclPresenceInterface $presence
+     * @param AclPresenceContract $presence
      *
-     * @return AclRepositoryInterface
+     * @return AclRepository
      * @throws AclRepositoryHasPresenceException
      */
-    public function addPresence(AclPresenceInterface $presence): AclRepositoryInterface
+    public function addPresence(AclPresenceContract $presence): AclRepositoryContract
     {
         if ($this->hasMainPresence($presence->getName())) throw new AclRepositoryHasPresenceException($presence->getName());
 
@@ -63,9 +63,9 @@ class AclRepository implements AclRepositoryInterface
     /**
      * @param string $moduleName
      *
-     * @return AclPresenceInterface|null
+     * @return AclPresence|null
      */
-    public function getMainPresence(string $moduleName): ?AclPresenceInterface
+    public function getMainPresence(string $moduleName): ?AclPresenceContract
     {
         if ($this->hasMainPresence($moduleName)) return $this->presences->get($moduleName);
 
@@ -75,9 +75,9 @@ class AclRepository implements AclRepositoryInterface
     /**
      * @param string $presence
      *
-     * @return AclPresenceInterface|null
+     * @return AclPresence|null
      */
-    public function get(string $presence): ?AclPresenceInterface
+    public function get(string $presence): ?AclPresenceContract
     {
         $exploded = explode('.', $presence);
         $currentPresence = $this->presences->get($exploded[0]);

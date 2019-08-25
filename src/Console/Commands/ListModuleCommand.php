@@ -3,7 +3,7 @@
 namespace Zdrojowa\CmsKernel\Console\Commands;
 
 use Illuminate\Console\Command;
-use Zdrojowa\CmsKernel\Contracts\Modules\ModuleManagerInterface;
+use Zdrojowa\CmsKernel\Contracts\Modules\ModuleManager;
 
 /**
  * Class ListModuleCommand
@@ -18,9 +18,9 @@ class ListModuleCommand extends Command
     protected $signature = 'cms:modules {module?}';
 
     /**
-     * @param ModuleManagerInterface $manager
+     * @param ModuleManager $manager
      */
-    public function handle(ModuleManagerInterface $manager)
+    public function handle(ModuleManager $manager)
     {
         $module = $this->argument('module');
 

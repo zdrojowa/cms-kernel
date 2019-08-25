@@ -2,13 +2,13 @@
 
 namespace Zdrojowa\CmsKernel\Variabler\Providers;
 
-use Zdrojowa\CmsKernel\Contracts\Variabler\VariableProviderInterface;
+use Zdrojowa\CmsKernel\Contracts\Variabler\VariableProvider;
 
 /**
  * Class ObjectPropertyProvider
  * @package Zdrojowa\CmsKernel\Utils\Variabler\Providers
  */
-class ObjectPropertyProvider implements VariableProviderInterface
+class ObjectPropertyProvider implements VariableProvider
 {
 
     /**

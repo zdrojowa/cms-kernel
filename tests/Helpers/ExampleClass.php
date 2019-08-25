@@ -18,7 +18,8 @@ class ExampleClass
      * ExampleClass constructor.
      *
      * @param string $name
-     * @param $value
+     * @param string $stringValue
+     * @param array $arrayValue
      */
     public function __construct(string $name, string $stringValue, array $arrayValue)
     {

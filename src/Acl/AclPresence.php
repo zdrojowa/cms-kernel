@@ -3,13 +3,13 @@
 namespace Zdrojowa\CmsKernel\Acl;
 
 use Illuminate\Support\Collection;
-use Zdrojowa\CmsKernel\Contracts\Acl\AclPresenceInterface;
+use Zdrojowa\CmsKernel\Contracts\Acl\Presence\AclPresence as AclPresenceContract;
 
 /**
  * Class AclPresence
- * @package Zdrojowa\CmsKernel\Contracts\Acl
+ * @package Zdrojowa\CmsKernel\Acl
  */
-class AclPresence implements AclPresenceInterface
+class AclPresence implements AclPresenceContract
 {
 
     /**

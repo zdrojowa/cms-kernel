@@ -5,11 +5,11 @@ namespace Zdrojowa\CmsKernel\Providers;
 use Illuminate\Support\ServiceProvider;
 use ReflectionClass;
 use ReflectionException;
-use Zdrojowa\CmsKernel\Contracts\Core\BooterInterface;
-use Zdrojowa\CmsKernel\Contracts\Modules\ModuleInterface;
-use Zdrojowa\CmsKernel\Contracts\Modules\ModuleManagerInterface;
+use Zdrojowa\CmsKernel\Contracts\Booter\Booter;
+use Zdrojowa\CmsKernel\Contracts\Modules\Module;
+use Zdrojowa\CmsKernel\Contracts\Modules\ModuleManager;
 use Zdrojowa\CmsKernel\Exceptions\CmsExceptionHandler;
-use Zdrojowa\CmsKernel\Utils\Enums\CoreModulesEnum;
+use Zdrojowa\CmsKernel\Support\Enums\Core\CoreModules;
 
 /**
  * Class ModuleAssetsServiceProvider
@@ -33,12 +33,12 @@ class ModuleAssetsServiceProvider extends ServiceProvider
     }
 
     /**
-     * @param ModuleManagerInterface $manager
+     * @param ModuleManager $manager
      *
      * @return ModuleAssetsServiceProvider
      * @throws ReflectionException
      */
-    protected function publishModulesAssets(ModuleManagerInterface $manager): ModuleAssetsServiceProvider
+    protected function publishModulesAssets(ModuleManager $manager): ModuleAssetsServiceProvider
     {
         foreach ($manager->getModules() as $module) {
             $this->loadAndPublishModuleAssets($module);
@@ -48,11 +48,11 @@ class ModuleAssetsServiceProvider extends ServiceProvider
     }
 
     /**
-     * @param ModuleInterface $module
+     * @param Module $module
      *
      * @throws ReflectionException
      */
-    protected function loadAndPublishModuleAssets(ModuleInterface $module)
+    protected function loadAndPublishModuleAssets(Module $module)
     {
         $reflection = new ReflectionClass($module);
         $moduleSrc = dirname($reflection->getFileName());
@@ -90,18 +90,18 @@ class ModuleAssetsServiceProvider extends ServiceProvider
     }
 
     /**
-     * @return BooterInterface
+     * @return Booter
      */
-    protected function booter(): BooterInterface
+    protected function booter(): Booter
     {
-        return $this->app->get(CoreModulesEnum::BOOTER);
+        return $this->app->get(CoreModules::BOOTER);
     }
 
     /**
-     * @return ModuleManagerInterface
+     * @return ModuleManager
      */
-    protected function moduleManager(): ModuleManagerInterface
+    protected function moduleManager(): ModuleManager
     {
-        return $this->app->get(CoreModulesEnum::MODULE_MANAGER);
+        return $this->app->get(CoreModules::MODULE_MANAGER);
     }
 }

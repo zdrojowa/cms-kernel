@@ -3,8 +3,8 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use Zdrojowa\CmsKernel\Utils\Config\ConfigUtils;
-use Zdrojowa\CmsKernel\Utils\Enums\CoreEnum;
+use Zdrojowa\CmsKernel\Support\Config\Config;
+use Zdrojowa\CmsKernel\Support\Enums\Core\Core;
 
 class CreatePermissionPackagesUsersRelationship extends Migration
 {
@@ -15,8 +15,8 @@ class CreatePermissionPackagesUsersRelationship extends Migration
      */
     public function up()
     {
-        Schema::table(ConfigUtils::coreConfig(CoreEnum::CMS_MIGRATIONS_USERS_TABLE_OPTION), function(Blueprint $table) {
-           $table->foreign(ConfigUtils::coreConfig(CoreEnum::CMS_MIGRATIONS_USERS_TABLE_COLUMN_NAME))->references('id')->on(ConfigUtils::coreConfig(CoreEnum::CMS_MIGRATIONS_PERMISSIONS_TABLE_OPTION))->onDelete('set null');
+        Schema::table(Config::get(Core::USERS_TABLE), function(Blueprint $table) {
+            $table->foreign(Config::get(Core::USERS_TABLE_COLUMN))->references('id')->on(Config::get(Core::PERMISSIONS_TABLE))->onDelete('set null');
         });
     }
 
@@ -27,8 +27,8 @@ class CreatePermissionPackagesUsersRelationship extends Migration
      */
     public function down()
     {
-        Schema::table(ConfigUtils::coreConfig(CoreEnum::CMS_MIGRATIONS_USERS_TABLE_OPTION), function(Blueprint $table) {
-           $table->dropForeign(ConfigUtils::coreConfig(CoreEnum::CMS_MIGRATIONS_PERMISSIONS_USERS_FOREIGN_KEY));
+        Schema::table(Config::get(Core::USERS_TABLE), function(Blueprint $table) {
+            $table->dropForeign(Config::get(Core::PERMISSIONS_FOREIGN_KEY));
         });
     }
 }
