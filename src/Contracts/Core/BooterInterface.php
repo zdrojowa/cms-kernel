@@ -24,7 +24,7 @@ interface BooterInterface
      *
      * @return array|null
      */
-    public function getErrors(): ?array;
+    public function getErrors(): array;
 
     /**
      * Add error

@@ -3,12 +3,12 @@
 namespace Zdrojowa\CmsKernel\Factories\Acl;
 
 use Illuminate\Support\Collection;
-use Zdrojowa\CmsKernel\Contracts\Acl\AclPresence;
+use Zdrojowa\CmsKernel\Acl\AclPresence;
 use Zdrojowa\CmsKernel\Contracts\Factories\AclPresenceFactory;
 use Zdrojowa\CmsKernel\Contracts\Modules\ModuleInterface;
 use Zdrojowa\CmsKernel\Exceptions\Acl\AclPresenceDataException;
 use Zdrojowa\CmsKernel\Contracts\Acl\AclPresenceInterface;
-use Validator;
+use Illuminate\Support\Facades\Validator;
 
 /**
  * Class DataArrayAclPresenceFactory
@@ -16,6 +16,8 @@ use Validator;
  */
 class DataArrayAclPresenceFactory implements AclPresenceFactory
 {
+
+    private $module;
 
     /**
      * @var array
@@ -61,7 +63,7 @@ class DataArrayAclPresenceFactory implements AclPresenceFactory
 
             $aclPresence = new AclPresence($anchor, $probablyAclPresence['name']);
 
-            if (isset($probablyAclPresence['children'])) $aclPresence->setChildren(self::createPresenceFromData($probablyAclPresence['children']));
+            if (isset($probablyAclPresence['children'])) $aclPresence->setChildren($this->createChildren($probablyAclPresence['children']));
 
             $aclPresences->put($aclPresence->getAnchor(), $aclPresence);
         }

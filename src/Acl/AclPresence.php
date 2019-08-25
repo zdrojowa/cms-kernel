@@ -1,8 +1,9 @@
 <?php
 
-namespace Zdrojowa\CmsKernel\Contracts\Acl;
+namespace Zdrojowa\CmsKernel\Acl;
 
 use Illuminate\Support\Collection;
+use Zdrojowa\CmsKernel\Contracts\Acl\AclPresenceInterface;
 
 /**
  * Class AclPresence

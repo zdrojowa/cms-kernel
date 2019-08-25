@@ -2,15 +2,13 @@
 
 namespace Zdrojowa\CmsKernel\Providers;
 
-use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 use ReflectionClass;
 use ReflectionException;
 use Zdrojowa\CmsKernel\Contracts\Core\BooterInterface;
-use Zdrojowa\CmsKernel\Contracts\Modules\Module;
 use Zdrojowa\CmsKernel\Contracts\Modules\ModuleInterface;
 use Zdrojowa\CmsKernel\Contracts\Modules\ModuleManagerInterface;
-use Zdrojowa\CmsKernel\Modules\ModuleManager;
+use Zdrojowa\CmsKernel\Exceptions\CmsExceptionHandler;
 use Zdrojowa\CmsKernel\Utils\Enums\CoreModulesEnum;
 
 /**
@@ -29,8 +27,8 @@ class ModuleAssetsServiceProvider extends ServiceProvider
 
         try {
             $this->publishModulesAssets($this->moduleManager());
-        } catch (ReflectionException $e) {
-            report($e);
+        } catch (ReflectionException $exception) {
+            CmsExceptionHandler::handle($exception);
         }
     }
 

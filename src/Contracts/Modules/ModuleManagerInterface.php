@@ -27,13 +27,11 @@ interface ModuleManagerInterface
     public function has(string $name): bool;
 
     /**
-     * @param string $name
-     *
      * @param ModuleInterface $module
      *
      * @return ModuleManagerInterface
      */
-    public function addModule(string $name, ModuleInterface $module): ModuleManagerInterface;
+    public function addModule(ModuleInterface $module): ModuleManagerInterface;
 
     /**
      * @param string $name
@@ -46,4 +44,6 @@ interface ModuleManagerInterface
      * @return Collection
      */
     public function getModules(): Collection;
+
+    public function initialize();
 }

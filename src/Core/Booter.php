@@ -15,7 +15,7 @@ use Zdrojowa\CmsKernel\Utils\Enums\CoreModulesEnum;
 class Booter implements BooterInterface
 {
 
-    protected $version = '0.0.1';
+    public $version = '0.0.1';
 
     /**
      * @var array
@@ -63,7 +63,7 @@ class Booter implements BooterInterface
     /**
      * @inheritdoc
      */
-    public function getErrors(): ?array
+    public function getErrors(): array
     {
         return $this->errors;
     }
@@ -81,7 +81,7 @@ class Booter implements BooterInterface
      */
     public function isCoreModuleBooted(CoreModulesEnum $coreModule): bool
     {
-        return $this->booted->get($coreModule);
+        return $this->booted->get($coreModule->getValue());
     }
 
     /**

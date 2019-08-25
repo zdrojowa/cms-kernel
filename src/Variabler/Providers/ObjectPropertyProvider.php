@@ -1,6 +1,6 @@
 <?php
 
-namespace Zdrojowa\CmsKernel\Utils\Variabler\Providers;
+namespace Zdrojowa\CmsKernel\Variabler\Providers;
 
 use Zdrojowa\CmsKernel\Contracts\Variabler\VariableProviderInterface;
 

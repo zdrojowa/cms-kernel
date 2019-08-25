@@ -1,11 +1,11 @@
 <?php
 
-namespace Zdrojowa\CmsKernel\Utils\Variabler\Providers;
+namespace Zdrojowa\CmsKernel\Variabler\Providers;
 
 use ReflectionClass;
 use ReflectionException;
-use stdClass;
 use Zdrojowa\CmsKernel\Contracts\Variabler\VariableProviderInterface;
+use Zdrojowa\CmsKernel\Exceptions\CmsExceptionHandler;
 
 /**
  * Class ObjectNameProvider
@@ -33,7 +33,7 @@ class ObjectNameProvider implements VariableProviderInterface
 
             return $reflection->getShortName();
         } catch (ReflectionException $e) {
-            report($e);
+            CmsExceptionHandler::handle($e);
 
             return $key;
         }

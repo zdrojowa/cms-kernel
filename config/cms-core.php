@@ -1,5 +1,6 @@
 <?php
 
+use xd\xd\xdmodule;
 use Zdrojowa\AuthModule\AuthModule;
 use Zdrojowa\CmsKernel\Acl\AclRepository;
 use Zdrojowa\CmsKernel\Console\Commands\BooterShowErrorsCommand;
@@ -10,8 +11,8 @@ use Zdrojowa\CmsKernel\Core\Core;
 use Zdrojowa\CmsKernel\Modules\ModuleManager;
 use Zdrojowa\CmsKernel\Utils\Enums\CoreEnum;
 use Zdrojowa\CmsKernel\Utils\Enums\CoreModulesEnum;
-use Zdrojowa\CmsKernel\Utils\Variabler\Providers\ObjectNameProvider;
-use Zdrojowa\CmsKernel\Utils\Variabler\Providers\ObjectPropertyProvider;
+use Zdrojowa\CmsKernel\Variabler\Providers\ObjectNameProvider;
+use Zdrojowa\CmsKernel\Variabler\Providers\ObjectPropertyProvider;
 use Zdrojowa\CmsKernel\Variabler\Variabler;
 
 return [
@@ -22,7 +23,8 @@ return [
     // Section with declaration of reusable modules
 
     CoreEnum::MODULES_SECTION => [
-        AuthModule::class
+        AuthModule::class,
+        xdmodule::class,
     ],
 
     // Section with declaration of core modules
@@ -57,6 +59,8 @@ return [
     CoreEnum::VARIABLER_PROVIDERS_SECTION => [
         'name' => ObjectNameProvider::class,
         'property' => ObjectPropertyProvider::class
-    ]
+    ],
+
+    CoreEnum::CMS_DEBUG => false,
 
 ];

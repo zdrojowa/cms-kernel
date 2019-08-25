@@ -10,6 +10,7 @@ use Zdrojowa\CmsKernel\Utils\Enums\CoreEnum;
  * Trait for using in authenticatable models to check permissions based on table which can be configured in config file
  *
  * @package Zdrojowa\CmsKernel\Utils\Traits
+ * @method hasOne($model, string $foreignKey)
  */
 trait hasPermissions
 {
@@ -46,8 +47,6 @@ trait hasPermissions
     public function isAdmin(): bool
     {
         $adminColumn = ConfigUtils::coreConfig(CoreEnum::CMS_SUPER_ADMIN_COLUMN_NAME);
-
-        dd($this);
 
         return $this->$adminColumn;
     }

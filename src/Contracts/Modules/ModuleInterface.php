@@ -2,9 +2,13 @@
 
 namespace Zdrojowa\CmsKernel\Contracts\Modules;
 
+use Zdrojowa\CmsKernel\Contracts\Acl\AclPresenceInterface;
+
 /**
  * Interface ModuleInterface
  * @package Zdrojowa\CmsKernel\Contracts\Modules
+ * @method static name()
+ * @property string name
  */
 interface ModuleInterface
 {
@@ -63,6 +67,11 @@ interface ModuleInterface
      * @return array|null
      */
     public function getPermissions(): array;
+
+    /**
+     * @return AclPresenceInterface
+     */
+    public function getAclPresence(): ?AclPresenceInterface;
 
     /**
      * @param $name

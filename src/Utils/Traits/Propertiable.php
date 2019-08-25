@@ -23,7 +23,7 @@ trait Propertiable
      *
      * @throws CmsKernelException
      */
-    final private function bindProperties(array $data, array $properties, array $rules = [], bool $required = false)
+    final public function bindProperties(array $data, array $properties, array $rules = [], bool $required = false)
     {
         foreach ($properties as $property) {
             if (!$this->validateBinder($property, $data, $rules, $required)) continue;
@@ -41,7 +41,7 @@ trait Propertiable
      * @return bool
      * @throws CmsKernelException
      */
-    final private function validateBinder(string $property, array $data, array $rules = [], bool $required = false): bool
+    final private function validateBinder($property, array $data, array $rules = [], bool $required = false): bool
     {
         // Check if property is valid string
         if (!is_string($property)) throw new PropertyNameMustBeAStringException($this);

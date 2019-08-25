@@ -5,6 +5,8 @@ namespace Zdrojowa\CmsKernel\Variabler;
 use Illuminate\Config\Repository;
 use Zdrojowa\CmsKernel\Contracts\Variabler\VariableProviderInterface;
 use Zdrojowa\CmsKernel\Contracts\Variabler\VariablerInterface;
+use Zdrojowa\CmsKernel\Exceptions\Variabler\ProviderInstanceException;
+use Zdrojowa\CmsKernel\Exceptions\Variabler\ProviderNotFoundException;
 use Zdrojowa\CmsKernel\Utils\Config\ConfigUtils;
 use Zdrojowa\CmsKernel\Utils\Enums\CoreEnum;
 use Zdrojowa\CmsKernel\Utils\Enums\VariableEnum;
@@ -40,6 +42,7 @@ class Variabler implements VariablerInterface
      */
     public function make($data, object $object = null)
     {
+
         if (is_array($data)) {
             foreach ($data as $key => $value) {
                 $data[$key] = self::make($value, $object);
@@ -57,9 +60,10 @@ class Variabler implements VariablerInterface
      */
     private function replaceVariable($data, object $object = null)
     {
+
         if (is_string($data)) {
             foreach ($this->providers as $name => $provider) {
-                $data = $this->replaceObjectCustomVariable($data, $name, $provider, $object);
+                $data = $this->replaceObjectCustomVariable($data, $name, $object);
             }
 
             $data = $this->replaceObjectPropertyVariable($data, $object);
@@ -94,12 +98,11 @@ class Variabler implements VariablerInterface
     /**
      * @param string $data
      * @param string $providerName
-     * @param string $provider
      * @param object $object
      *
      * @return mixed|string
      */
-    private function replaceObjectCustomVariable(string $data, string $providerName, string $provider, object $object)
+    private function replaceObjectCustomVariable(string $data, string $providerName, object $object)
     {
         $tag = $this->getKey(VariableEnum::OBJECT_CUSTOM_VARIABLE_START(), VariableEnum::OBJECT_CUSTOM_VARIABLE_END(), $providerName);
 
@@ -125,14 +128,18 @@ class Variabler implements VariablerInterface
     /**
      * @param $name
      * @param $arguments
+     *
+     * @return mixed
+     * @throws ProviderInstanceException
+     * @throws ProviderNotFoundException
      */
     public function __call($name, $arguments)
     {
-        if (!array_key_exists($name, $this->providers)) return;
+        if (!array_key_exists($name, $this->providers)) throw new ProviderNotFoundException($name);
 
         $provider = app($this->providers[$name]);
 
-        if (!is_subclass_of($provider, VariableProviderInterface::class)) return;
+        if (!is_subclass_of($provider, VariableProviderInterface::class)) throw new ProviderInstanceException(get_class($provider));
 
         return $provider->replace($arguments[0], $arguments[1]);
     }

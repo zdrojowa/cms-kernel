@@ -3,7 +3,7 @@
 namespace Zdrojowa\CmsKernel\Exceptions\Modules;
 
 use Psr\Log\LogLevel;
-use Zdrojowa\CmsKernel\Contracts\Modules\Module;
+use Zdrojowa\CmsKernel\Contracts\Modules\ModuleInterface;
 use Zdrojowa\CmsKernel\Exceptions\CmsKernelException;
 
 /**
@@ -24,6 +24,6 @@ class ModuleInstanceException extends CmsKernelException
      */
     function formatMessage($data): string
     {
-        return "Class $data must be an instance of ".Module::class;
+        return "Class " . $data . " must be an instance of " . ModuleInterface::class;
     }
 }

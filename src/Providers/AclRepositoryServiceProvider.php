@@ -2,10 +2,10 @@
 
 namespace Zdrojowa\CmsKernel\Providers;
 
-use AclRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
-use Zdrojowa\CmsKernel\Contracts\Acl\AclRepository;
+use Zdrojowa\CmsKernel\Contracts\Acl\AclRepositoryInterface;
 use Zdrojowa\CmsKernel\Contracts\Core\BooterInterface;
+use Zdrojowa\CmsKernel\Contracts\Modules\ModuleManagerInterface;
 use Zdrojowa\CmsKernel\Events\Core\AclRepositoryRegisterEvent;
 use Zdrojowa\CmsKernel\Utils\Config\ConfigUtils;
 use Zdrojowa\CmsKernel\Utils\Enums\CoreModulesEnum;
@@ -16,6 +16,18 @@ use Zdrojowa\CmsKernel\Utils\Enums\CoreModulesEnum;
  */
 class AclRepositoryServiceProvider extends ServiceProvider
 {
+
+    public function boot()
+    {
+        if (!$this->booter()->allCoreModulesBooted()) return;
+
+        foreach ($this->moduleManager()->getModules() as $module) {
+            if ($module->getAclPresence() === null) continue;
+
+            $this->aclRepository()->addPresence($module->getAclPresence());
+        }
+    }
+
     /**
      *
      */
@@ -47,5 +59,15 @@ class AclRepositoryServiceProvider extends ServiceProvider
     protected function booter(): BooterInterface
     {
         return $this->app->get(CoreModulesEnum::BOOTER);
+    }
+
+    protected function aclRepository(): AclRepositoryInterface
+    {
+        return $this->app->get(CoreModulesEnum::ACL_REPOSITORY);
+    }
+
+    protected function moduleManager(): ModuleManagerInterface
+    {
+        return $this->app->get(CoreModulesEnum::MODULE_MANAGER);
     }
 }

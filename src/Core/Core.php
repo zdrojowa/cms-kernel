@@ -18,7 +18,7 @@ class Core implements CoreInterface
     /**
      * @var string
      */
-    protected $version = '0.0.1';
+    public $version = '0.0.1';
 
     /**
      * @inheritdoc

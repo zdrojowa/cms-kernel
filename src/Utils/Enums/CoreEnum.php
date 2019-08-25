@@ -30,4 +30,6 @@ class CoreEnum
     public const MODULES_CONFIG_DIR = 'modules';
 
     public const VARIABLER_PROVIDERS_SECTION = 'cms-variabler-providers-section';
+
+    public const CMS_DEBUG = 'cms-debug';
 }

@@ -6,7 +6,10 @@ use Exception;
 use ReflectionClass;
 use ReflectionException;
 use Symfony\Component\Yaml\Yaml;
+use Zdrojowa\CmsKernel\Contracts\Acl\AclPresenceInterface;
 use Zdrojowa\CmsKernel\Contracts\Modules\ModuleInterface;
+use Zdrojowa\CmsKernel\Exceptions\Acl\AclPresenceDataException;
+use Zdrojowa\CmsKernel\Exceptions\CmsExceptionHandler;
 use Zdrojowa\CmsKernel\Exceptions\CmsKernelException;
 use Zdrojowa\CmsKernel\Facades\Core;
 use Zdrojowa\CmsKernel\Facades\MenuRepository;
@@ -15,7 +18,6 @@ use Zdrojowa\CmsKernel\Factories\Acl\DataArrayAclPresenceFactory;
 use Zdrojowa\CmsKernel\Menu\MenuPresence;
 use Zdrojowa\CmsKernel\Utils\Config\ConfigUtils;
 use Zdrojowa\CmsKernel\Utils\Enums\CoreEnum;
-use Zdrojowa\CmsKernel\Utils\Enums\CoreModulesEnum;
 use Zdrojowa\CmsKernel\Utils\Enums\ModuleConfigEnum;
 use Zdrojowa\CmsKernel\Utils\Module\ModuleUtils;
 use Zdrojowa\CmsKernel\Utils\Traits\Propertiable;
@@ -71,6 +73,19 @@ abstract class Module implements ModuleInterface
     {
         $this->bindExtraProperties();
         $this->bindImportantProperties();
+
+        return;
+    }
+
+    public function getAclPresence(): ?AclPresenceInterface
+    {
+        try {
+            return (new DataArrayAclPresenceFactory($this))->create();
+        } catch (AclPresenceDataException $e) {
+            CmsExceptionHandler::handle($e);
+
+            return null;
+        }
     }
 
     /**
@@ -92,8 +107,6 @@ abstract class Module implements ModuleInterface
             $this->bindProperties($moduleData, $this->optionalProperties ?? [], $this->propertiesRules, false);
 
             MenuRepository::addPresence($this, MenuPresence::createPresenceFromData($this->menu));
-
-            app(CoreModulesEnum::ACL_REPOSITORY)->addPresence((new DataArrayAclPresenceFactory($this))->create());
     }
 
     /**

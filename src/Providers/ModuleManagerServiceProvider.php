@@ -6,13 +6,8 @@ use Illuminate\Support\ServiceProvider;
 use ReflectionClass;
 use ReflectionException;
 use Zdrojowa\CmsKernel\Contracts\Core\BooterInterface;
-use Zdrojowa\CmsKernel\Contracts\Modules\ModuleInterface;
 use Zdrojowa\CmsKernel\Contracts\Modules\ModuleManagerInterface;
-use Zdrojowa\CmsKernel\Events\Module\ModuleRegisterEvent;
-use Zdrojowa\CmsKernel\Exceptions\CmsKernelException;
-use Zdrojowa\CmsKernel\Exceptions\Modules\ModuleConfigException;
 use Zdrojowa\CmsKernel\Exceptions\Modules\ModuleConfigNotFoundException;
-use Zdrojowa\CmsKernel\Exceptions\Modules\ModuleInstanceException;
 use Zdrojowa\CmsKernel\Facades\Variabler;
 use Zdrojowa\CmsKernel\Utils\Config\ConfigUtils;
 use Zdrojowa\CmsKernel\Utils\Enums\CoreEnum;
@@ -27,20 +22,6 @@ use Zdrojowa\CmsKernel\Utils\Module\ModuleUtils;
 class ModuleManagerServiceProvider extends ServiceProvider
 {
 
-    private $modules;
-
-    /**
-     * ModuleManagerServiceProvider constructor.
-     *
-     * @param $app
-     */
-    public function __construct($app)
-    {
-        parent::__construct($app);
-
-        $this->modules = ConfigUtils::coreConfig(CoreEnum::MODULES_SECTION);
-    }
-
     /**
      *
      */
@@ -48,7 +29,8 @@ class ModuleManagerServiceProvider extends ServiceProvider
     {
         if (!$this->booter()->allCoreModulesBooted()) return;
 
-        $this->initializeModules();
+        $this->app->get(CoreModulesEnum::MODULE_MANAGER)->initialize();
+
         $this->publishModulesExtra();
     }
 
@@ -117,62 +99,5 @@ class ModuleManagerServiceProvider extends ServiceProvider
     protected function moduleManager(): ModuleManagerInterface
     {
         return $this->app->get(CoreModulesEnum::MODULE_MANAGER);
-    }
-
-    /**
-     * @return ModuleManagerServiceProvider
-     * @throws ModuleConfigException
-     */
-    protected function initializeModules(): ModuleManagerServiceProvider
-    {
-        $this->checkModulesConfigStructure($this->modules);
-
-        foreach ($this->modules as $module) {
-            try {
-                $module = app($module);
-
-                $this->checkModuleInstance($module);
-
-                $module->loadConfig();
-                $module->mapRoutes();
-                $module->mapRoutes(true);
-
-                $this->moduleManager()->addModule($module->getName(), $module);
-
-                event(new ModuleRegisterEvent($module));
-            } catch (CmsKernelException | ReflectionException $exception) {
-                report($exception);
-
-                continue;
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param $modules
-     *
-     * @return bool
-     * @throws ModuleConfigException
-     */
-    protected function checkModulesConfigStructure($modules)
-    {
-        if (is_array($modules)) return true;
-
-        throw new ModuleConfigException();
-    }
-
-    /**
-     * @param $module
-     *
-     * @return bool
-     * @throws ModuleInstanceException
-     */
-    protected function checkModuleInstance($module)
-    {
-        if (is_subclass_of($module, ModuleInterface::class)) return true;
-
-        throw new ModuleInstanceException(get_class($module));
     }
 }
