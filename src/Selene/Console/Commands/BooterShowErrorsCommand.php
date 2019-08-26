@@ -15,7 +15,7 @@ class BooterShowErrorsCommand extends Command
     /**
      * @var string
      */
-    protected $signature = 'booter:errors';
+    protected $signature = 'selene:errors';
 
     /**
      * @param Booter $booter

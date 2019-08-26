@@ -14,7 +14,7 @@ class CoreModulesBootedCommand extends Command
     /**
      * @var string
      */
-    protected $signature = 'booter:status';
+    protected $signature = 'selene:status';
 
     /**
      * @param Booter $booter

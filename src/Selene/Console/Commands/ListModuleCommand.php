@@ -15,7 +15,7 @@ class ListModuleCommand extends Command
     /**
      * @var string
      */
-    protected $signature = 'cms:modules {module?}';
+    protected $signature = 'selene:modules {module?}';
 
     /**
      * @param ModuleManager $manager
