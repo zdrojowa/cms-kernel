@@ -41,6 +41,8 @@
         "laravel": {
             "providers": [
                 "Zdrojowa\\CmsKernel\\Providers\\CoreServiceProvider",
+                "Zdrojowa\\CmsKernel\\Providers\\VariablerServiceProvider",
+                "Zdrojowa\\CmsKernel\\Providers\\AclRepositoryServiceProvider",
                 "Zdrojowa\\CmsKernel\\Providers\\ModuleManagerServiceProvider",
                 "Zdrojowa\\CmsKernel\\Providers\\ModuleAssetsServiceProvider"
             ]
