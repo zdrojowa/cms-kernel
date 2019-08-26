@@ -130,7 +130,7 @@ class CoreServiceProvider extends ServiceProvider
     protected function publishConfig(): CoreServiceProvider
     {
         $this->publishes([
-            __DIR__ . '/../../config/cms-core.php' => config_path('cms-core.php'),
+            __DIR__ . '/../../config/selene.php' => config_path('selene.php'),
         ]);
 
         return $this;
@@ -141,7 +141,7 @@ class CoreServiceProvider extends ServiceProvider
      */
     protected function registerConfig(): CoreServiceProvider
     {
-        $this->mergeConfigFrom(__DIR__ . '/../../config/cms-core.php', CoreEnum::CONFIG);
+        $this->mergeConfigFrom(__DIR__ . '/../../config/selene.php', CoreEnum::CONFIG);
 
         return $this;
     }

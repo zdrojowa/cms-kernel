@@ -7,7 +7,7 @@ namespace Selene\Support\Enums\Core;
  */
 class Core
 {
-    public const CONFIG = 'cms-core';
+    public const CONFIG = 'selene';
 
     public const ENABLED = 'enabled';
     public const DEBUG = 'debug';
