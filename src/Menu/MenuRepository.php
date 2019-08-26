@@ -3,10 +3,14 @@
 namespace Zdrojowa\CmsKernel\Menu;
 
 use Illuminate\Support\Collection;
+use Zdrojowa\CmsKernel\Acl\Exceptions\AclRepositoryHasPresenceException;
 use Zdrojowa\CmsKernel\Contracts\Modules\Module;
-use Zdrojowa\CmsKernel\Events\Module\ModuleMenuPresenceRegisterEvent;
-use Zdrojowa\CmsKernel\Exceptions\Acl\AclRepositoryHasPresenceException;
+use Zdrojowa\CmsKernel\Modules\Events\ModuleMenuPresenceRegisterEvent;
 
+/**
+ * Class MenuRepository
+ * @package Zdrojowa\CmsKernel\Menu
+ */
 class MenuRepository
 {
     /**
@@ -75,6 +79,7 @@ class MenuRepository
 
     /**
      * @param string $presence
+     *
      * @return mixed|null
      */
     public function get(string $presence): ?MenuPresence

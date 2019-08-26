@@ -3,8 +3,8 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use Zdrojowa\CmsKernel\Utils\Config\ConfigUtils;
-use Zdrojowa\CmsKernel\Utils\Enums\CoreEnum;
+use Zdrojowa\CmsKernel\Support\Config\Config;
+use Zdrojowa\CmsKernel\Support\Enums\Core\Core;
 
 class ModifyUsersTable extends Migration
 {
@@ -15,9 +15,9 @@ class ModifyUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table(ConfigUtils::coreConfig(CoreEnum::CMS_MIGRATIONS_USERS_TABLE_OPTION), function(Blueprint $table) {
-            $table->boolean(ConfigUtils::coreConfig(CoreEnum::CMS_SUPER_ADMIN_COLUMN_NAME))->default(0);
-            $table->integer(ConfigUtils::coreConfig(CoreEnum::CMS_MIGRATIONS_USERS_TABLE_COLUMN_NAME))->nullable()->unsigned();
+        Schema::table(Config::get(Core::USERS_TABLE), function(Blueprint $table) {
+            $table->boolean(Config::get(Core::ADMIN_COLUMN))->default(0);
+            $table->integer(Config::get(Core::USERS_TABLE))->nullable()->unsigned();
         });
     }
 
@@ -28,9 +28,9 @@ class ModifyUsersTable extends Migration
      */
     public function down()
     {
-        Schema::table(ConfigUtils::coreConfig(CoreEnum::CMS_MIGRATIONS_USERS_TABLE_OPTION), function(Blueprint $table) {
-            $table->dropColumn(ConfigUtils::coreConfig(CoreEnum::CMS_SUPER_ADMIN_COLUMN_NAME));
-            $table->dropColumn(ConfigUtils::coreConfig(CoreEnum::CMS_MIGRATIONS_USERS_TABLE_COLUMN_NAME));
+        Schema::table(Config::get(Core::USERS_TABLE), function(Blueprint $table) {
+            $table->dropColumn(Config::get(Core::ADMIN_COLUMN));
+            $table->dropColumn(Config::get(Core::USERS_TABLE));
         });
     }
 }

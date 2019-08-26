@@ -5,16 +5,16 @@ namespace Zdrojowa\CmsKernel\Providers;
 use Illuminate\Support\ServiceProvider;
 use ReflectionClass;
 use ReflectionException;
-use Zdrojowa\CmsKernel\Contracts\Core\BooterInterface;
-use Zdrojowa\CmsKernel\Contracts\Core\CoreInterface;
-use Zdrojowa\CmsKernel\Contracts\Modules\ModuleManagerInterface;
-use Zdrojowa\CmsKernel\Exceptions\Modules\ModuleConfigNotFoundException;
-use Zdrojowa\CmsKernel\Utils\Config\ConfigUtils;
-use Zdrojowa\CmsKernel\Utils\Enums\CoreEnum;
-use Zdrojowa\CmsKernel\Utils\Enums\CoreModulesEnum;
-use Zdrojowa\CmsKernel\Utils\Enums\ModuleConfigEnum;
-use Zdrojowa\CmsKernel\Utils\Module\ModuleUtils;
-use Zdrojowa\CmsKernel\Utils\Variabler\Variabler;
+use Zdrojowa\CmsKernel\Contracts\Booter\Booter;
+use Zdrojowa\CmsKernel\Contracts\Modules\ModuleManager;
+use Zdrojowa\CmsKernel\Exceptions\CmsExceptionHandler;
+use Zdrojowa\CmsKernel\Modules\Exceptions\ModuleConfigNotFoundException;
+use Zdrojowa\CmsKernel\Support\Config\Config;
+use Zdrojowa\CmsKernel\Support\Enums\Core\CoreModules;
+use Zdrojowa\CmsKernel\Support\Enums\Modules\Module as ModuleEnum;
+use Zdrojowa\CmsKernel\Support\Enums\Modules\ModuleConfig;
+use Zdrojowa\CmsKernel\Support\Facades\Variabler;
+use Zdrojowa\CmsKernel\Support\Modules\Module;
 
 /**
  * Class ModuleManagerServiceProvider
@@ -28,9 +28,10 @@ class ModuleManagerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if (!$this->booter()->canCmsBoot() || !$this->core()->hasModuleManager()) return;
+        if (!$this->booter()->allCoreModulesBooted()) return;
 
-        $this->core()->getModuleManager()->initialize();
+        $this->app->get(CoreModules::MODULE_MANAGER)->initialize();
+
         $this->publishModulesExtra();
     }
 
@@ -39,10 +40,9 @@ class ModuleManagerServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        if (!$this->booter()->canCmsBoot()) return;
+        if (!$this->booter()->canBoot()) return;
 
         $this->registerModuleManager();
-        $this->core()->setModuleManager(app(ModuleManagerInterface::class));
     }
 
     /**
@@ -50,26 +50,20 @@ class ModuleManagerServiceProvider extends ServiceProvider
      */
     protected function registerModuleManager(): ModuleManagerServiceProvider
     {
-        $this->app->singleton(CoreModulesEnum::MODULE_MANAGER, ConfigUtils::coreModules(CoreModulesEnum::MODULE_MANAGER()));
-        $this->app->bind(ModuleManagerInterface::class, CoreModulesEnum::MODULE_MANAGER);
+        $this->app->singleton(CoreModules::MODULE_MANAGER, Config::coreModules(CoreModules::MODULE_MANAGER()));
+        $this->app->bind(ModuleManager::class, CoreModules::MODULE_MANAGER);
+
+        $this->booter()->setCoreModuleBooted(CoreModules::MODULE_MANAGER());
 
         return $this;
     }
 
     /**
-     * @return CoreInterface
+     * @return Booter
      */
-    protected function core(): CoreInterface
+    protected function booter(): Booter
     {
-        return app(CoreModulesEnum::CORE);
-    }
-
-    /**
-     * @return BooterInterface
-     */
-    protected function booter(): BooterInterface
-    {
-        return app(CoreModulesEnum::BOOTER);
+        return $this->app->get(CoreModules::BOOTER);
     }
 
     /**
@@ -77,26 +71,34 @@ class ModuleManagerServiceProvider extends ServiceProvider
      */
     protected function publishModulesExtra(): ModuleManagerServiceProvider
     {
-        foreach ($this->core()->getModuleManager()->getModules() as $module) {
+        foreach ($this->moduleManager()->getModules() as $module) {
             try {
-                $extraData = ModuleUtils::moduleConfig($module, ModuleConfigEnum::MODULE_EXTRA_FILE());
+                $extraData = Module::config($module, ModuleConfig::EXTRA_FILE());
                 if ($extraData) {
                     $module = new ReflectionClass($module);
-                    $fileName = ModuleConfigEnum::MODULE_EXTRA_FILE;
+                    $fileName = ModuleConfig::EXTRA_FILE;
 
-                    $fileName = Variabler::replace($module, $fileName);
+                    $fileName = Variabler::make($fileName, $module);
 
                     $this->publishes([
-                        dirname($module->getFileName()) . "/" . ModuleConfigEnum::MODULES_CONFIG_FOLDER . $fileName => base_path(CoreEnum::MODULES_CONFIG_DIR) . "/$fileName",
+                        dirname($module->getFileName()) . "/" . ModuleConfig::CONFIG_FOLDER . $fileName => base_path(ModuleEnum::CONFIG_DIR) . "/$fileName",
                     ]);
                 }
             } catch (ReflectionException | ModuleConfigNotFoundException $e) {
-                report($e);
+                CmsExceptionHandler::handle($e);
             }
 
 
         }
 
         return $this;
+    }
+
+    /**
+     * @return ModuleManager
+     */
+    protected function moduleManager(): ModuleManager
+    {
+        return $this->app->get(CoreModules::MODULE_MANAGER);
     }
 }

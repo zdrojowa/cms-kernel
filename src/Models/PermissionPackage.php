@@ -3,8 +3,8 @@
 namespace Zdrojowa\CmsKernel\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Zdrojowa\CmsKernel\Utils\Config\ConfigUtils;
-use Zdrojowa\CmsKernel\Utils\Enums\CoreEnum;
+use Zdrojowa\CmsKernel\Support\Config\Config;
+use Zdrojowa\CmsKernel\Support\Enums\Core\Core;
 
 /**
  * Class PermissionPackage
@@ -23,7 +23,7 @@ class PermissionPackage extends Model
      */
     protected $casts = [
         'name' => 'string',
-        'anchors' => 'array'
+        'anchors' => 'array',
     ];
 
     /**
@@ -40,7 +40,7 @@ class PermissionPackage extends Model
     {
         parent::__construct($attributes);
 
-        $this->setTable(ConfigUtils::coreConfig(CoreEnum::CMS_MIGRATIONS_PERMISSIONS_TABLE_OPTION));
+        $this->setTable(Config::get(Core::PERMISSIONS_TABLE));
     }
 
     /**
@@ -48,13 +48,13 @@ class PermissionPackage extends Model
      *
      * @return bool
      */
-    public function hasPermission(string $permission): bool {
+    public function hasPermission(string $permission): bool
+    {
         foreach ($this->anchors as $anchor) {
-            if($anchor === ConfigUtils::coreConfig(CoreEnum::CMS_SUPER_PERMISSION_ANCHOR) || $anchor === $permission) return true;
+            if ($anchor === Config::get(Core::ADMIN_ANCHOR) || $anchor === $permission) return true;
         }
 
         return false;
     }
-
 
 }

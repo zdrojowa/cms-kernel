@@ -16,14 +16,15 @@
     "homepage": "https://github.com/zdrojowa/cms-kernel",
     "keywords": ["Laravel", "CMS kernel"],
     "require": {
+      "php": ">=7.2",
         "illuminate/support": "~5",
         "myclabs/php-enum": "^1.7",
         "symfony/yaml": "^4.3"
     },
     "require-dev": {
-        "phpunit/phpunit": "~7.0",
+      "phpunit/phpunit": "~8.0",
         "mockery/mockery": "^1.1",
-        "orchestra/testbench": "~3.0",
+      "orchestra/testbench": "^3.8",
         "sempro/phpunit-pretty-print": "^1.0"
     },
     "autoload": {

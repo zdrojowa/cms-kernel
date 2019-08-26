@@ -23,7 +23,7 @@ class PropertyIsRequiredException extends CmsKernelException
      */
     public function formatMessage($property): string
     {
-        return "Property $property is required";
+        return get_class($property[0]).": ".$property[1]." is required";
     }
 
 }

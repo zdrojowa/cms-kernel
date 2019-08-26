@@ -2,31 +2,30 @@
 
 namespace Zdrojowa\CmsKernel\Modules;
 
-use Exception;
 use Illuminate\Support\Collection;
-use ReflectionException;
-use Zdrojowa\CmsKernel\Contracts\Modules\Module;
-use Zdrojowa\CmsKernel\Contracts\Modules\ModuleManagerInterface;
-use Zdrojowa\CmsKernel\Events\Module\ModuleRegisterEvent;
+use Zdrojowa\CmsKernel\Contracts\Modules\Module as ModuleContract;
+use Zdrojowa\CmsKernel\Contracts\Modules\ModuleManager as ModuleManagerContract;
+use Zdrojowa\CmsKernel\Exceptions\CmsExceptionHandler;
 use Zdrojowa\CmsKernel\Exceptions\CmsKernelException;
-use Zdrojowa\CmsKernel\Exceptions\Modules\ModuleConfigException;
-use Zdrojowa\CmsKernel\Exceptions\Modules\ModuleInstanceException;
-use Zdrojowa\CmsKernel\Utils\Config\ConfigUtils;
-use Zdrojowa\CmsKernel\Utils\Enums\CoreEnum;
+use Zdrojowa\CmsKernel\Modules\Exceptions\ModuleConfigException;
+use Zdrojowa\CmsKernel\Modules\Exceptions\ModuleInstanceException;
+use Zdrojowa\CmsKernel\Support\Config\Config;
+use Zdrojowa\CmsKernel\Support\Enums\Core\Core;
 
 /**
  * Class ModuleManager
  * @package Zdrojowa\CmsKernel\Modules
  */
-class ModuleManager implements ModuleManagerInterface
+class ModuleManager implements ModuleManagerContract
 {
+
     /**
      * @var string
      */
-    private $version = '0.0.1';
+    public $version = '0.0.2';
 
     /**
-     * @var Collection $modules
+     * @var Collection
      */
     private $modules;
 
@@ -40,6 +39,7 @@ class ModuleManager implements ModuleManagerInterface
 
     /**
      * Get current ModuleManager version
+     *
      * @return string
      */
     public function version(): string
@@ -62,15 +62,18 @@ class ModuleManager implements ModuleManagerInterface
     }
 
     /**
-     * @param string $name
+     * @param ModuleContract $module
      *
-     * @param Module $module
-     *
-     * @return ModuleManagerInterface
+     * @return ModuleManager
      */
-    public function addModule(string $name, Module $module): ModuleManagerInterface
+    public function addModule(ModuleContract $module): ModuleManagerContract
     {
-        $this->modules->put($name, $module);
+        $module->loadConfig();
+
+        $module->mapRoutes();
+        $module->mapRoutes(true);
+
+        $this->modules->put($module->name, $module);
 
         return $this;
     }
@@ -78,9 +81,9 @@ class ModuleManager implements ModuleManagerInterface
     /**
      * @param string $name
      *
-     * @return ModuleManagerInterface|null
+     * @return ModuleManager|null
      */
-    public function getModule(string $name): ?Module
+    public function getModule(string $name): ?ModuleContract
     {
         return $this->modules->get($name);
     }
@@ -93,28 +96,23 @@ class ModuleManager implements ModuleManagerInterface
         return $this->modules;
     }
 
-    /**
-     *
-     * @throws Exception
-     */
-    public function initialize(): void
+    public function initialize()
     {
-        $modules = ConfigUtils::coreConfig(CoreEnum::MODULES_SECTION);
-        $this->checkModulesConfigStructure($modules);
-        foreach ($modules as  $module) {
+        $modules = Config::get(Core::MODULES);
+
+        try {
+            $this->checkModulesConfigStructure($modules);
+        } catch (ModuleConfigException $exception) {
+            CmsExceptionHandler::handle($exception);
+        }
+
+        foreach ($modules as $module) {
             try {
                 $module = app($module);
-
                 $this->checkModuleInstance($module);
-
-                $this->addModule($module->getName(), $module);
-
-                event(new ModuleRegisterEvent($module));
-            } catch (CmsKernelException | ReflectionException $exception) {
-                dd($exception);
-                report($exception);
-
-                continue;
+                $this->addModule($module);
+            } catch (CmsKernelException $exception) {
+                CmsExceptionHandler::handle($exception);
             }
         }
     }
@@ -123,9 +121,9 @@ class ModuleManager implements ModuleManagerInterface
      * @param $modules
      *
      * @return bool
-     * @throws Exception
+     * @throws ModuleConfigException
      */
-    private function checkModulesConfigStructure($modules)
+    protected function checkModulesConfigStructure($modules): bool
     {
         if (is_array($modules)) return true;
 
@@ -136,9 +134,9 @@ class ModuleManager implements ModuleManagerInterface
      * @param $module
      *
      * @return bool
-     * @throws Exception
+     * @throws ModuleInstanceException
      */
-    private function checkModuleInstance($module)
+    protected function checkModuleInstance($module)
     {
         if (is_subclass_of($module, Module::class)) return true;
 

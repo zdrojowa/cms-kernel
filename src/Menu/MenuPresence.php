@@ -3,7 +3,7 @@
 namespace Zdrojowa\CmsKernel\Menu;
 
 use Illuminate\Support\Collection;
-use Validator;
+use Illuminate\Support\Facades\Validator;
 
 /**
  * Class MenuPresence
@@ -126,6 +126,7 @@ class MenuPresence
 
     /**
      * @param array $itemContent
+     *
      * @return bool
      */
     public static function checkStructure(array $itemContent): bool
@@ -137,6 +138,7 @@ class MenuPresence
 
     /**
      * @param $data
+     *
      * @return bool
      */
     public static function checkDataStructure($data): bool
@@ -156,6 +158,7 @@ class MenuPresence
 
     /**
      * @param $data
+     *
      * @return Collection|null
      */
     public static function createPresenceFromData($data): ?Collection
