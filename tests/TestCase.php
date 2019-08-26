@@ -4,12 +4,17 @@ namespace Selene\Tests;
 
 use Illuminate\Foundation\Application;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
+use Selene\Acl\AclRepository;
+use Selene\Booter\Booter;
+use Selene\Core\Core;
+use Selene\Modules\ModuleManager;
 use Selene\Providers\AclRepositoryServiceProvider;
 use Selene\Providers\CoreServiceProvider;
 use Selene\Providers\ModuleManagerServiceProvider;
 use Selene\Providers\VariablerServiceProvider;
-use Selene\Support\Enums\Core\Core;
+use Selene\Support\Enums\Core\Core as CoreEnum;
 use Selene\Support\Enums\Core\CoreModules;
+use Selene\Variabler\Variabler;
 
 class TestCase extends OrchestraTestCase
 {
@@ -20,8 +25,15 @@ class TestCase extends OrchestraTestCase
 
         $config = $app['config'];
 
-        $config->set(Core::CONFIG . '.' . Core::MODULES, []);
-        $config->set(Core::CONFIG . '.' . Core::DEBUG, true);
+        $config->set(CoreEnum::CONFIG . '.' . CoreEnum::MODULES, []);
+        $config->set(CoreEnum::CONFIG . '.' . CoreEnum::CORE_MODULES, [
+            'core' => Core::class,
+            'booter' => Booter::class,
+            'module-manager' => ModuleManager::class,
+            'acl-repository' => AclRepository::class,
+            'variabler' => Variabler::class,
+        ]);
+        $config->set(CoreEnum::CONFIG . '.' . CoreEnum::DEBUG, true);
     }
 
     /**

@@ -1,7 +1,7 @@
 {
     "name": "zdrojowa/cms-kernel",
-    "description": ":description",
-    "version": "0.0.3",
+    "description": "Modular content management kernel",
+    "version": "0.0.4",
     "license": "MIT",
     "authors": [
         {
