@@ -1,9 +1,9 @@
 <?php
 
-namespace Zdrojowa\CmsKernel\Tests\Modules;
+namespace Selene\Tests\Modules;
 
-use Zdrojowa\CmsKernel\Tests\Helpers\TestValidModule\ValidModule;
-use Zdrojowa\CmsKernel\Tests\TestCase;
+use Selene\Tests\Helpers\TestValidModule\ValidModule;
+use Selene\Tests\TestCase;
 
 class ModuleTest extends TestCase
 {
@@ -47,7 +47,7 @@ class ModuleTest extends TestCase
         $route = [
             "test" => [
                 "path" => "/test/test/test/test",
-                "controller" => "Zdrojowa\CmsKernel\Tests\Helpers\TestValidModule\TestController@test",
+                "controller" => "Selene\Tests\Helpers\TestValidModule\TestController@test",
             ],
         ];
 

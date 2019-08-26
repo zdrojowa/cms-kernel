@@ -29,22 +29,22 @@
     },
     "autoload": {
         "psr-4": {
-            "Zdrojowa\\CmsKernel\\": "src"
+            "Selene\\": "src/Selene/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Zdrojowa\\CmsKernel\\Tests\\": "tests"
+            "Selene\\Tests\\": "tests/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Zdrojowa\\CmsKernel\\Providers\\CoreServiceProvider",
-                "Zdrojowa\\CmsKernel\\Providers\\VariablerServiceProvider",
-                "Zdrojowa\\CmsKernel\\Providers\\AclRepositoryServiceProvider",
-                "Zdrojowa\\CmsKernel\\Providers\\ModuleManagerServiceProvider",
-                "Zdrojowa\\CmsKernel\\Providers\\ModuleAssetsServiceProvider"
+                "Selene\\Providers\\CoreServiceProvider",
+                "Selene\\Providers\\VariablerServiceProvider",
+                "Selene\\Providers\\AclRepositoryServiceProvider",
+                "Selene\\Providers\\ModuleManagerServiceProvider",
+                "Selene\\Providers\\ModuleAssetsServiceProvider"
             ]
         }
     }

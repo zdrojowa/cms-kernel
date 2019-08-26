@@ -1,14 +1,14 @@
 <?php
 
-namespace Zdrojowa\CmsKernel\Tests\Modules;
+namespace Selene\Tests\Modules;
 
-use Zdrojowa\CmsKernel\Contracts\Modules\ModuleManager;
-use Zdrojowa\CmsKernel\Modules\Exceptions\ModuleConfigException;
-use Zdrojowa\CmsKernel\Modules\Exceptions\ModuleInstanceException;
-use Zdrojowa\CmsKernel\Support\Enums\Core\Core;
-use Zdrojowa\CmsKernel\Tests\Helpers\ExampleClass;
-use Zdrojowa\CmsKernel\Tests\Helpers\TestValidModule\ValidModule;
-use Zdrojowa\CmsKernel\Tests\TestCase;
+use Selene\Contracts\Modules\ModuleManager;
+use Selene\Modules\Exceptions\ModuleConfigException;
+use Selene\Modules\Exceptions\ModuleInstanceException;
+use Selene\Support\Enums\Core\Core;
+use Selene\Tests\Helpers\ExampleClass;
+use Selene\Tests\Helpers\TestValidModule\ValidModule;
+use Selene\Tests\TestCase;
 
 class ModuleManagerTest extends TestCase
 {

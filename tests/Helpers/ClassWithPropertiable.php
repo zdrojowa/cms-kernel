@@ -1,8 +1,8 @@
 <?php
 
-namespace Zdrojowa\CmsKernel\Tests\Helpers;
+namespace Selene\Tests\Helpers;
 
-use Zdrojowa\CmsKernel\Support\Traits\Propertiable;
+use Selene\Support\Traits\Propertiable;
 
 class ClassWithPropertiable
 {

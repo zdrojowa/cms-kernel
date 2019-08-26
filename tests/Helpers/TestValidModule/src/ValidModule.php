@@ -1,8 +1,8 @@
 <?php
 
-namespace Zdrojowa\CmsKernel\Tests\Helpers\TestValidModule;
+namespace Selene\Tests\Helpers\TestValidModule;
 
-use Zdrojowa\CmsKernel\Modules\Module;
+use Selene\Modules\Module;
 
 class ValidModule extends Module
 {

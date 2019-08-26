@@ -1,10 +1,10 @@
 <?php
 
-namespace Zdrojowa\CmsKernel\Tests\Helpers;
+namespace Selene\Tests\Helpers;
 
 /**
  * Class ExampleClass
- * @package Zdrojowa\CmsKernel\Tests\Helpers
+ * @package Selene\Tests\Helpers
  */
 class ExampleClass
 {

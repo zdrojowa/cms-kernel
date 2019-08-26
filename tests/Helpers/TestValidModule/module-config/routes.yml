@@ -1,4 +1,4 @@
 test:
   path: /test/test/test/test
-  controller: Zdrojowa\CmsKernel\Tests\Helpers\TestValidModule\TestController@test
+  controller: Selene\Tests\Helpers\TestValidModule\TestController@test
 

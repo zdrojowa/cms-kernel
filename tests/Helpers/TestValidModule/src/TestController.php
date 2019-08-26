@@ -1,6 +1,6 @@
 <?php
 
-namespace Zdrojowa\CmsKernel\Tests\Helpers\TestValidModule;
+namespace Selene\Tests\Helpers\TestValidModule;
 
 use Illuminate\Routing\Controller;
 

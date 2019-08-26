@@ -1,15 +1,15 @@
 <?php
 
-namespace Zdrojowa\CmsKernel\Tests;
+namespace Selene\Tests;
 
 use Illuminate\Foundation\Application;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
-use \Zdrojowa\CmsKernel\Providers\AclRepositoryServiceProvider;
-use \Zdrojowa\CmsKernel\Providers\CoreServiceProvider;
-use \Zdrojowa\CmsKernel\Providers\ModuleManagerServiceProvider;
-use \Zdrojowa\CmsKernel\Providers\VariablerServiceProvider;
-use Zdrojowa\CmsKernel\Support\Enums\Core\Core;
-use Zdrojowa\CmsKernel\Support\Enums\Core\CoreModules;
+use Selene\Providers\AclRepositoryServiceProvider;
+use Selene\Providers\CoreServiceProvider;
+use Selene\Providers\ModuleManagerServiceProvider;
+use Selene\Providers\VariablerServiceProvider;
+use Selene\Support\Enums\Core\Core;
+use Selene\Support\Enums\Core\CoreModules;
 
 class TestCase extends OrchestraTestCase
 {

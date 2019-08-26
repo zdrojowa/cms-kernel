@@ -1,9 +1,9 @@
 <?php
 
-namespace Zdrojowa\CmsKernel\Tests\Acl;
+namespace Selene\Tests\Acl;
 
-use Zdrojowa\CmsKernel\Acl\AclPresence;
-use Zdrojowa\CmsKernel\Tests\TestCase;
+use Selene\Acl\AclPresence;
+use Selene\Tests\TestCase;
 
 class AclPresenceTest extends TestCase
 {

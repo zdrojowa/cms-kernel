@@ -1,10 +1,10 @@
 <?php
 
-namespace Zdrojowa\CmsKernel\Tests\Core;
+namespace Selene\Tests\Core;
 
-use Zdrojowa\CmsKernel\Contracts\Core\Core;
-use Zdrojowa\CmsKernel\Support\Enums\Core\CoreModules;
-use Zdrojowa\CmsKernel\Tests\TestCase;
+use Selene\Contracts\Core\Core;
+use Selene\Support\Enums\Core\CoreModules;
+use Selene\Tests\TestCase;
 
 class CoreTest extends TestCase
 {

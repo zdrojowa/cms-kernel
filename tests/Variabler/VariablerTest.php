@@ -1,16 +1,16 @@
 <?php
 
-namespace Zdrojowa\CmsKernel\Tests\Core;
+namespace Selene\Tests\Core;
 
-use Zdrojowa\CmsKernel\Contracts\Variabler\Variabler;
-use Zdrojowa\CmsKernel\Support\Enums\Core\Core;
-use Zdrojowa\CmsKernel\Tests\Helpers\ExampleClass;
-use Zdrojowa\CmsKernel\Tests\Propertiable\PropertiableTest;
-use Zdrojowa\CmsKernel\Tests\TestCase;
-use Zdrojowa\CmsKernel\Variabler\Exceptions\ProviderInstanceException;
-use Zdrojowa\CmsKernel\Variabler\Exceptions\ProviderNotFoundException;
-use Zdrojowa\CmsKernel\Variabler\Providers\ObjectNameProvider;
-use Zdrojowa\CmsKernel\Variabler\Providers\ObjectPropertyProvider;
+use Selene\Contracts\Variabler\Variabler;
+use Selene\Support\Enums\Core\Core;
+use Selene\Tests\Helpers\ExampleClass;
+use Selene\Tests\Propertiable\PropertiableTest;
+use Selene\Tests\TestCase;
+use Selene\Variabler\Exceptions\ProviderInstanceException;
+use Selene\Variabler\Exceptions\ProviderNotFoundException;
+use Selene\Variabler\Providers\ObjectNameProvider;
+use Selene\Variabler\Providers\ObjectPropertyProvider;
 
 class VariablerTest extends TestCase
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace Zdrojowa\CmsKernel\Tests\Core;
+namespace Selene\Tests\Core;
 
-use Zdrojowa\CmsKernel\Contracts\Booter\Booter;
-use Zdrojowa\CmsKernel\Support\Enums\Core\CoreModules;
-use Zdrojowa\CmsKernel\Tests\TestCase;
+use Selene\Contracts\Booter\Booter;
+use Selene\Support\Enums\Core\CoreModules;
+use Selene\Tests\TestCase;
 
 class BooterTest extends TestCase
 {

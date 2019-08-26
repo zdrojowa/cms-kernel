@@ -1,12 +1,12 @@
 <?php
 
-namespace Zdrojowa\CmsKernel\Tests\Propertiable;
+namespace Selene\Tests\Propertiable;
 
-use Zdrojowa\CmsKernel\Exceptions\PropertyBinder\PropertyCanNotPassValidationException;
-use Zdrojowa\CmsKernel\Exceptions\PropertyBinder\PropertyIsRequiredException;
-use Zdrojowa\CmsKernel\Exceptions\PropertyBinder\PropertyNameMustBeAStringException;
-use Zdrojowa\CmsKernel\Tests\Helpers\ClassWithPropertiable;
-use Zdrojowa\CmsKernel\Tests\TestCase;
+use Selene\Exceptions\PropertyBinder\PropertyCanNotPassValidationException;
+use Selene\Exceptions\PropertyBinder\PropertyIsRequiredException;
+use Selene\Exceptions\PropertyBinder\PropertyNameMustBeAStringException;
+use Selene\Tests\Helpers\ClassWithPropertiable;
+use Selene\Tests\TestCase;
 
 class PropertiableTest extends TestCase
 {
