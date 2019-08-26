@@ -18,7 +18,7 @@ class Booter implements BooterContract
     /**
      * @var string
      */
-    public $version = '0.0.1';
+    public $version = '1.0.0';
 
     /**
      * @var array
