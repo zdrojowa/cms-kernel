@@ -1,0 +1,4 @@
+test:
+  path: /test/test/test/test
+  controller: Selene\Tests\Helpers\TestValidModule\TestController@test
+

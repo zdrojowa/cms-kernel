@@ -1,0 +1,7 @@
+name: ValidModule
+version: 0.0.1
+
+aclAnchor: test
+aclName: ValidModule
+
+routePrefix: ValidModule

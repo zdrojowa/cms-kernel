@@ -1,0 +1,51 @@
+{
+    "name": "zdrojowa/cms-kernel",
+    "description": "Modular content management kernel",
+    "version": "1.0.0",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jakub Kosinski",
+            "email": "j.kosinski@zdrojowainvest.pl"
+        },
+        {
+            "name": "Gustaw Bzinkowski",
+            "email": "g.bzinkowski@zdrojowainvest.pl"
+        }
+    ],
+    "homepage": "https://github.com/zdrojowa/cms-kernel",
+    "keywords": ["Laravel", "CMS kernel"],
+    "require": {
+      "php": ">=7.2",
+        "illuminate/support": "~5",
+        "myclabs/php-enum": "^1.7",
+        "symfony/yaml": "^4.3"
+    },
+    "require-dev": {
+      "phpunit/phpunit": "~8.0",
+        "mockery/mockery": "^1.1",
+      "orchestra/testbench": "^3.8",
+        "sempro/phpunit-pretty-print": "^1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Selene\\": "src/Selene/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Selene\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Selene\\Providers\\CoreServiceProvider",
+                "Selene\\Providers\\VariablerServiceProvider",
+                "Selene\\Providers\\AclRepositoryServiceProvider",
+                "Selene\\Providers\\ModuleManagerServiceProvider",
+                "Selene\\Providers\\ModuleAssetsServiceProvider"
+            ]
+        }
+    }
+}
