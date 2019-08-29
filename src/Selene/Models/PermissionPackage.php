@@ -23,13 +23,8 @@ class PermissionPackage extends Model
      */
     protected $casts = [
         'name' => 'string',
-        'anchors' => 'array',
+        'anchors' => 'array'
     ];
-
-    /**
-     * @var
-     */
-    private $anchors;
 
     /**
      * PermissionPackage constructor.
@@ -50,6 +45,8 @@ class PermissionPackage extends Model
      */
     public function hasPermission(string $permission): bool
     {
+        if($this->anchors === null || !is_array($this->anchors)) return false;
+
         foreach ($this->anchors as $anchor) {
             if ($anchor === Config::get(Core::ADMIN_ANCHOR) || $anchor === $permission) return true;
         }

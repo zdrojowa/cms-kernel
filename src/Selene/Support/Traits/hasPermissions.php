@@ -22,7 +22,7 @@ trait hasPermissions
      */
     public function permissions()
     {
-        return $this->hasOne('Selene\Models\PermissionPackage', Config::get(Core::USERS_TABLE_COLUMN));
+        return $this->hasOne('Selene\Models\PermissionPackage', 'id', Config::get(Core::USERS_TABLE_COLUMN));
     }
 
     /**
@@ -36,7 +36,7 @@ trait hasPermissions
     {
         if ($this->isAdmin()) return true;
 
-        return $this->permissions()->hasPermission($permission);
+        return $this->permissions->hasPermission($permission);
     }
 
     /**
