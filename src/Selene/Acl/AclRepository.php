@@ -3,6 +3,7 @@
 namespace Selene\Acl;
 
 use Illuminate\Support\Collection;
+use RecursiveIteratorIterator;
 use Selene\Acl\Exceptions\AclRepositoryHasPresenceException;
 use Selene\Contracts\Acl\Repository\AclRepository as AclRepositoryContract;
 use Selene\Contracts\Acl\Presence\AclPresence as AclPresenceContract;
@@ -81,13 +82,56 @@ class AclRepository implements AclRepositoryContract
     {
         $exploded = explode('.', $presence);
         $currentPresence = $this->presences->get($exploded[0]);
+
         array_shift($exploded);
+
         foreach ($exploded as $toSearch) {
             if ($currentPresence === null || $currentPresence->getChildren() === null) return null;
+
             $currentPresence = $currentPresence->getChildren()->get($toSearch);
         }
 
         return $currentPresence;
     }
 
+    /**
+     * @return array
+     */
+    public function getAclPresencesAnchors(): array
+    {
+        $anchors = [];
+
+        $repositoryIterator = new RecursiveIteratorIterator(new AclPresenceIterator($this->getPresences()->toArray()), RecursiveIteratorIterator::SELF_FIRST);
+
+        foreach ($repositoryIterator as $presence) {
+            if($repositoryIterator->getDepth() !== 0) {
+                array_push($anchors, $this->makeAnchor($repositoryIterator, $presence));
+            }
+        }
+
+        return $anchors;
+    }
+
+    /**
+     * @param RecursiveIteratorIterator $iterator
+     * @param AclPresenceContract $presence
+     *
+     * @return string
+     */
+    protected function makeAnchor(RecursiveIteratorIterator $iterator, AclPresenceContract $presence)
+    {
+        $depth = 0;
+        $anchor = '';
+
+        while ($depth !== $iterator->getDepth()) {
+            if ($depth !== 0) $anchor .= '.';
+
+            $anchor .= $iterator->getSubIterator($depth)->current()->getAnchor();
+            $depth++;
+        }
+
+        $anchor .= '.' . $presence->getAnchor();
+
+        return $anchor;
+    }
 }

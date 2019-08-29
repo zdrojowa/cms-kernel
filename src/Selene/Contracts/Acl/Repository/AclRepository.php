@@ -43,4 +43,9 @@ interface AclRepository
      * @return AclPresence|null
      */
     public function get(string $presence): ?AclPresence;
+
+    /**
+     * @return array
+     */
+    public function getAclPresencesAnchors(): array;
 }

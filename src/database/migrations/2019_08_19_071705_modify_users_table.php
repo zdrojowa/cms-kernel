@@ -17,7 +17,7 @@ class ModifyUsersTable extends Migration
     {
         Schema::table(Config::get(Core::USERS_TABLE), function(Blueprint $table) {
             $table->boolean(Config::get(Core::ADMIN_COLUMN))->default(0);
-            $table->integer(Config::get(Core::USERS_TABLE))->nullable()->unsigned();
+            $table->integer(Config::get(Core::USERS_TABLE_COLUMN))->nullable()->unsigned();
         });
     }
 
@@ -30,7 +30,7 @@ class ModifyUsersTable extends Migration
     {
         Schema::table(Config::get(Core::USERS_TABLE), function(Blueprint $table) {
             $table->dropColumn(Config::get(Core::ADMIN_COLUMN));
-            $table->dropColumn(Config::get(Core::USERS_TABLE));
+            $table->dropColumn(Config::get(Core::USERS_TABLE_COLUMN));
         });
     }
 }

@@ -137,6 +137,14 @@ abstract class Module implements ModuleContract
             if ($this->checkRouteStructure($routeConfig)) {
                 if (!isset($routeConfig['methods'])) $routeConfig['methods'] = Config::getAvailableHttpMethods();
 
+                if($routeConfig['permission']) {
+                    $middlewares = $routeConfig['middlewares'] ?? [];
+
+                    array_unshift($middlewares, 'Selene\Middleware\CheckPermissions:'.$routeConfig['permission'].',true');
+
+                    $routeConfig['middlewares'] = $middlewares;
+                }
+
                 Route::match($routeConfig['methods'], $api ? '/api' . $routeConfig['path'] : $routeConfig['path'], $routeConfig['controller'])->middleware($api ? 'api' : [])->middleware($routeConfig['middlewares'] ?? [])->name($this->getRoutePrefix() . "::" . $routeName);
             }
         }

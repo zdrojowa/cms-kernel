@@ -3,13 +3,16 @@
 namespace Selene\Acl;
 
 use Illuminate\Support\Collection;
+use IteratorAggregate;
+use JsonSerializable;
 use Selene\Contracts\Acl\Presence\AclPresence as AclPresenceContract;
+use Traversable;
 
 /**
  * Class AclPresence
  * @package Selene\Acl
  */
-class AclPresence implements AclPresenceContract
+class AclPresence implements AclPresenceContract, JsonSerializable, IteratorAggregate
 {
 
     /**
@@ -89,5 +92,35 @@ class AclPresence implements AclPresenceContract
         if ($this->children === null || $this->children->count() === 0) return false;
 
         return true;
+    }
+
+    /**
+     * Specify data which should be serialized to JSON
+     * @link https://php.net/manual/en/jsonserializable.jsonserialize.php
+     * @return mixed data which can be serialized by <b>json_encode</b>,
+     * which is a value of any type other than a resource.
+     * @since 5.4.0
+     */
+    public function jsonSerialize()
+    {
+        return [
+            'data' => [
+                'name' => $this->name,
+                'anchor' => $this->anchor
+            ],
+            'children' => $this->children ? $this->children->toArray() : []
+        ];
+    }
+
+    /**
+     * Retrieve an external iterator
+     * @link https://php.net/manual/en/iteratoraggregate.getiterator.php
+     * @return Traversable An instance of an object implementing <b>Iterator</b> or
+     * <b>Traversable</b>
+     * @since 5.0.0
+     */
+    public function getIterator()
+    {
+        return new AclPresenceIterator([$this]);
     }
 }

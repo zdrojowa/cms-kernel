@@ -23,7 +23,7 @@ abstract class CmsKernelException extends Exception
      */
     public function __construct($data = '', $code = 0, Throwable $previous = null)
     {
-        parent::__construct($this->formatMessage($data), $code, $previous);
+        parent::__construct($this->formatMessage($data) ?? $this->getMessage(), $code, $previous);
     }
 
     /**

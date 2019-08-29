@@ -2,6 +2,8 @@
 
 namespace Selene\Providers;
 
+use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Selene\Acl\Events\AclRepositoryRegisterEvent;
 use Selene\Contracts\Acl\Repository\AclRepository;
@@ -26,6 +28,16 @@ class AclRepositoryServiceProvider extends ServiceProvider
 
             $this->aclRepository()->addPresence($module->getAclPresence());
         }
+
+        foreach ($this->aclRepository()->getAclPresencesAnchors() as $anchor) {
+            Gate::define($anchor, function($user) use ($anchor) {
+               return $user->hasPermission($anchor);
+            });
+        }
+
+        Blade::if('permission', function($anchor) {
+            return Gate::allows($anchor);
+        });
     }
 
     /**

@@ -45,5 +45,4 @@ interface AclPresence
      * @return mixed
      */
     public function getName();
-
 }

@@ -19,7 +19,7 @@ class CmsExceptionHandler
     public function throw()
     {
         if ($this->debug) {
-            throw new $this->exception($this->exception->getMessage());
+            throw $this->exception;
         }
 
         report($this->exception);
