@@ -37,7 +37,7 @@ class MenuPresence
      */
     protected static $rules = [
         'name' => 'string|required',
-        'permission' => 'sometimes|required|string',
+        'permission' => 'required',
         'route' => 'sometimes|string',
         'children' => 'sometimes|array',
     ];
@@ -52,13 +52,12 @@ class MenuPresence
      * @param string $permission
      * @param Collection|null $children
      */
-    public function __construct(string $anchor, string $name, string $route = null, string $icon = null, string $permission = '', Collection $children = null)
+    public function __construct(string $anchor, string $name, string $route = null, string $icon = null, Collection $children = null)
     {
         $this->anchor = $anchor;
         $this->name = $name;
         $this->route = $route;
         $this->icon = $route;
-        $this->permission = $permission;
         $this->children = $children;
     }
 
