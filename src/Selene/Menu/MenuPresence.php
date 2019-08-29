@@ -37,7 +37,7 @@ class MenuPresence
      */
     protected static $rules = [
         'name' => 'string|required',
-        'permission' => 'required',
+        'permission' => 'sometimes|required|string',
         'route' => 'sometimes|string',
         'children' => 'sometimes|array',
     ];
@@ -49,14 +49,16 @@ class MenuPresence
      * @param string $name
      * @param string $route
      * @param string|null $icon
+     * @param string $permission
      * @param Collection|null $children
      */
-    public function __construct(string $anchor, string $name, string $route = null, string $icon = null, Collection $children = null)
+    public function __construct(string $anchor, string $name, string $route = null, string $icon = null, string $permission = '', Collection $children = null)
     {
         $this->anchor = $anchor;
         $this->name = $name;
         $this->route = $route;
         $this->icon = $route;
+        $this->permission = $permission;
         $this->children = $children;
     }
 
@@ -125,6 +127,22 @@ class MenuPresence
     }
 
     /**
+     * @return string
+     */
+    public function getPermission()
+    {
+        return $this->permission;
+    }
+
+    /**
+     * @param string $permission
+     */
+    public function setPermission(string $permission)
+    {
+        $this->permission = $permission;
+    }
+
+    /**
      * @param array $itemContent
      *
      * @return bool
@@ -183,6 +201,7 @@ class MenuPresence
             if (isset($probablyMenuPresence['children'])) $menuPresence->setChildren(self::createPresenceFromData($probablyMenuPresence['children']));
             if (isset($probablyMenuPresence['route'])) $menuPresence->setRoute($probablyMenuPresence['route']);
             if (isset($probablyMenuPresence['icon'])) $menuPresence->setIcon($probablyMenuPresence['icon']);
+            if (isset($probablyMenuPresence['permission'])) $menuPresence->setPermission($probablyMenuPresence['permission']);
 
             $menuPresences->put($menuPresence->getAnchor(), $menuPresence);
         }
