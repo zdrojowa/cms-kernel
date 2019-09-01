@@ -134,4 +134,17 @@ class AclRepository implements AclRepositoryContract
 
         return $anchor;
     }
+    
+    public function getAnchor(AclPresenceContract $presence): string
+    {
+        $repositoryIterator = new RecursiveIteratorIterator(new AclPresenceIterator($this->getPresences()->toArray()), RecursiveIteratorIterator::SELF_FIRST);
+
+        foreach ($repositoryIterator as $iteratorPresence) {
+            if ($iteratorPresence === $presence) {
+                return $this->makeAnchor($repositoryIterator, $presence);
+            }
+        }
+
+        return '';
+    }
 }
