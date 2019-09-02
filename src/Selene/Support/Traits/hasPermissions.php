@@ -35,7 +35,8 @@ trait hasPermissions
     public function hasPermission(string $permission): bool
     {
         if ($this->isAdmin()) return true;
-
+        if($this->permissions === null) return false;
+        
         return $this->permissions->hasPermission($permission);
     }
 
