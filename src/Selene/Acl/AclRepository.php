@@ -104,11 +104,9 @@ class AclRepository implements AclRepositoryContract
         $repositoryIterator = new RecursiveIteratorIterator(new AclPresenceIterator($this->getPresences()->toArray()), RecursiveIteratorIterator::SELF_FIRST);
 
         foreach ($repositoryIterator as $presence) {
-            if($repositoryIterator->getDepth() !== 0) {
-                array_push($anchors, $this->makeAnchor($repositoryIterator, $presence));
-            }
+            array_push($anchors, $this->makeAnchor($repositoryIterator, $presence));
         }
-
+        
         return $anchors;
     }
 
@@ -130,11 +128,15 @@ class AclRepository implements AclRepositoryContract
             $depth++;
         }
 
-        $anchor .= '.' . $presence->getAnchor();
+        if($iterator->getDepth() !== 0) {
+            $anchor .= '.';
+        }
+
+        $anchor .= $presence->getAnchor();
 
         return $anchor;
     }
-    
+
     public function getAnchor(AclPresenceContract $presence): string
     {
         $repositoryIterator = new RecursiveIteratorIterator(new AclPresenceIterator($this->getPresences()->toArray()), RecursiveIteratorIterator::SELF_FIRST);
