@@ -119,7 +119,7 @@ class CoreServiceProvider extends ServiceProvider
      */
     protected function registerMigrations(): CoreServiceProvider
     {
-        $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
+        if(Config::get(CoreEnum::MIGRATIONS)) $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
 
         return $this;
     }

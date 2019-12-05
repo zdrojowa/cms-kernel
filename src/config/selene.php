@@ -24,6 +24,8 @@ return [
 
     ],
 
+    'migrations' => true,
+
     'core-modules' => [
         'core' => Core::class,
         'booter' => Booter::class,

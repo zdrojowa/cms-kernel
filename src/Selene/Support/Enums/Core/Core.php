@@ -30,4 +30,6 @@ class Core
     public const VARIABLER_PROVIDERS = 'variabler-providers';
 
     public const MENU_ORDER = 'menu-order';
+
+    public const MIGRATIONS = 'migrations';
 }
