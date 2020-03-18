@@ -6,3 +6,6 @@ All notable changes to `CmsKernel` will be documented in this file.
 
 ### Added
 - Everything
+
+## Version 1.3.1
+- Added dev auth
