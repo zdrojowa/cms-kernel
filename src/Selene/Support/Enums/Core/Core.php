@@ -32,4 +32,5 @@ class Core
     public const MENU_ORDER = 'menu-order';
 
     public const MIGRATIONS = 'migrations';
+    public const IS_DEV     = 'is_dev';
 }

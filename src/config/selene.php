@@ -15,7 +15,8 @@ return [
     // Section with declaration of cms options
 
     'enabled' => true,
-    'debug' => true,
+    'debug'   => true,
+    'is_dev'  => false,
 
     'modules' => [
     ],
