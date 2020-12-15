@@ -52,7 +52,7 @@ class CoreServiceProvider extends ServiceProvider
     protected function registerBooterModule(): CoreServiceProvider
     {
         $this->app->singleton(CoreModules::BOOTER, Config::coreModules(CoreModules::BOOTER()));
-        $this->app->bind(Booter::class, CoreModules::BOOTER);
+        $this->app->instance(Booter::class, CoreModules::BOOTER);
 
         event(new BooterRegisterEvent(app(CoreModules::BOOTER)));
 
@@ -67,7 +67,7 @@ class CoreServiceProvider extends ServiceProvider
     protected function registerCoreModule(): CoreServiceProvider
     {
         $this->app->singleton(CoreModules::CORE, Config::coreModules(CoreModules::CORE()));
-        $this->app->bind(Core::class, CoreModules::CORE);
+        $this->app->instance(Core::class, CoreModules::CORE);
 
         event(new CoreRegisterEvent(app(CoreModules::CORE)));
 

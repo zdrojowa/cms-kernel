@@ -31,7 +31,7 @@ class VariablerServiceProvider extends ServiceProvider
     protected function registerVariabler(): VariablerServiceProvider
     {
         $this->app->singleton(CoreModules::VARIABLER, Config::coreModules(CoreModules::VARIABLER()));
-        $this->app->bind(Variabler::class, CoreModules::VARIABLER);
+        $this->app->instance(Variabler::class, CoreModules::VARIABLER);
 
         $this->booter()->setCoreModuleBooted(CoreModules::VARIABLER());
 

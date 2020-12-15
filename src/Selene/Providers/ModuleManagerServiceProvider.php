@@ -51,7 +51,7 @@ class ModuleManagerServiceProvider extends ServiceProvider
     protected function registerModuleManager(): ModuleManagerServiceProvider
     {
         $this->app->singleton(CoreModules::MODULE_MANAGER, Config::coreModules(CoreModules::MODULE_MANAGER()));
-        $this->app->bind(ModuleManager::class, CoreModules::MODULE_MANAGER);
+        $this->app->instance(ModuleManager::class, CoreModules::MODULE_MANAGER);
 
         $this->booter()->setCoreModuleBooted(CoreModules::MODULE_MANAGER());
 

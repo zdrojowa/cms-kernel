@@ -56,7 +56,7 @@ class AclRepositoryServiceProvider extends ServiceProvider
     protected function registerAclRepository(): AclRepositoryServiceProvider
     {
         $this->app->singleton(CoreModules::ACL_REPOSITORY, Config::coreModules(CoreModules::ACL_REPOSITORY()));
-        $this->app->bind(AclRepository::class, CoreModules::ACL_REPOSITORY());
+        $this->app->instance(AclRepository::class, CoreModules::ACL_REPOSITORY());
 
         event(new AclRepositoryRegisterEvent(app(CoreModules::ACL_REPOSITORY)));
 
