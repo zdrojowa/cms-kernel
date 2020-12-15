@@ -9,3 +9,6 @@ All notable changes to `CmsKernel` will be documented in this file.
 
 ## Version 2.0.2
 - Added dev auth
+
+## Version 2.0.3
+- Changed composer
